@@ -1,5 +1,4 @@
 
-# Specification 'json-ld-streaming'
+# Working Group Note on JSON-LD used in a streaming environment
 
-This is the repository for json-ld-streaming. You're welcome to contribute! Let's make the Web rock our socks
-off!
+T.B.D.
