@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Spec proposal</title>
+    <title>Streaming JSON-LD</title>
     <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove"></script>
     <script class='remove'>
       // See https://github.com/w3c/respec/wiki/ for how to configure ReSpec
@@ -24,7 +24,28 @@
   <body>
     <section id="abstract">
       <p>
-        This specification does neat stuff.
+        JSON-LD [[JSON-LD]] offers a JSON-based serialization for Linked Data.
+        One of the primary uses of JSON-LD is its ability for RDF exchange across the Web.
+        This can be done by first <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#serialize-rdf-as-json-ld-algorithm">serializing RDF to JSON-LD</a>,
+        after which others can <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#deserialize-json-ld-to-rdf-algorithm">deserializing JSON-LD to RDF</a>.
+    </p>
+    <p>
+        Since RDF datasets may contain many triples,
+        and JSON-LD documents don't have size limits,
+        such documents could become very large.
+        For these cases, the ability to serialize and parse JSON-LD in a <em>streaming</em> way offers many advantages,
+        as large documents can be parsed with only a limited amount of memory,
+        and processed chunks can be emitted as soon as they are processed,
+        as opposed to waiting until the whole dataset or document has been processed.
+    </p>
+    <p>
+        The <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/">recommended processing algorithms</a>
+        do not work in a streaming manner, as these first load all required data in memory,
+        after which this data can be processed.
+        This note discusses the processing of JSON-LD in a streaming way.
+        Concretely, a set of guidelines is introduced for efficiently serializing and deserializing of JSON-LD in a streaming way.
+        These guidelines are encapsulated in a JSON-LD streaming profile,
+        so that implementations can detect JSON-LD documents that conform to this profile, and may apply streaming optimizations.
       </p>
     </section>
     <section id="sotd">
@@ -36,8 +57,27 @@
     <section id="introduction">
       <h2>Introduction</h2>
       <p>
-        See <a href="https://github.com/w3c/respec/wiki/User's-Guide">ReSpec's user guide</a>
-        for how toget started!
+          This document discusses the concerns on serializing and deserializing JSON-LD in a streaming manner.
+          This document is primarily intended for the following audiences:
+      </p>
+      <ul>
+          <li>
+              Software developers who want to implement the streaming algorithms to serialize or deserialize JSON-LD documents.
+          </li>
+          <li>
+              Web authors and developers who want to publish JSON-LD in a streaming manner.
+          </li>
+          <li>
+              Web authors and developers who want to consume JSON-LD in a streaming manner.
+          </li>
+      </ul>
+      <p>
+          To understand the basics in this note you must first be familiar with
+          <a data-cite="RFC8259" data-no-xref="">JSON</a>, which is detailed in [[RFC8259]]. You must also understand the
+          JSON-LD syntax defined in the <a data-cite="JSON-LD11" data-no-xref="">JSON-LD 1.1 Syntax specification</a> [[JSON-LD11]],
+          which is the base syntax used for streaming processing.
+          To understand how JSON-LD maps to RDF, it is helpful to be
+          familiar with the basic RDF concepts [[RDF11-CONCEPTS]].
       </p>
     </section>
   </body>
