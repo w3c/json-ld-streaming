@@ -309,9 +309,50 @@
     
     <section id="streaming-processing">
       <h2>Streaming Processing</h2>
-      <p class="ednote">
-          TODO: some guidelines on streaming processing if there's a streaming profile.
+      <p>
+          Whenever a JSON-LD document is present in <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>,
+          a processor MAY process it in a streaming way.
       </p>
+      <p>
+          This section describes high-level guidelines for processing JSON-LD in a streaming way.
+          Concretely, guidelines are given for <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#deserialize-json-ld-to-rdf-algorithm">deserializing JSON-LD to RDF</a>, and <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#serialize-rdf-as-json-ld-algorithm">serializing RDF to JSON-LD</a>.
+          Further details on processing can be found in <a href="https://www.w3.org/TR/json-ld-api/">the JSON-LD processing algorithms</a>
+      </p>
+      <section>
+        <h3 id="streaming-deserialization">Deserialization</h3>
+        <p>
+            A streaming deserializer MAY be implemented by considering a JSON-LD document as a stream of incoming characters.
+            By reading character-by-character, a deserializer can detect the contained JSON nodes and its key-value pairs.
+        </p>
+        <p>
+            A streaming deserializer MAY assume that the <a href="#key-ordering-required">required key ordering of a <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document</a> is present. If a different order is detected, an error MAY be thrown with error code <code>"invalid streaming key order"</code>.
+        </p>
+        <p>
+            The first expected entry in a node is <code>@context</code>.
+            If such an entry is present, all following entries in this node can make us of it, possibly inheriting parts of the context from parent nodes.
+            If such an entry is not present, only contexts from parent nodes are considered for this node.
+        </p>
+        <p>
+            If an <code>@id</code> entry is detected, the RDF subject for the current node is defined for later usage.
+            If no such entry is detected, the subject for this node is set to a blank node.
+        </p>
+        <p>
+            If an <code>@type</code> entry is detected,
+            it is checked whether or not it defines a type-scoped context according to the current node's context.
+            If this defines a type-scoped context, the context for the current node is overridden.
+            <br />
+            Additionally, the <code>@type</code> must emit <code>rdf:type</code> triples based on the current node's subject and values.
+        </p>
+        <p>
+            For every other property, the default JSON-LD algorithms are followed assuming the current node's subject.
+        </p>
+      </section>
+      <section>
+        <h3 id="streaming-serialization">Serialization</h3>
+        <p>
+            TODO
+        </p>
+      </section>
     </section>
   </body>
 </html>
