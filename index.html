@@ -27,7 +27,7 @@
         JSON-LD [[JSON-LD]] offers a JSON-based serialization for Linked Data.
         One of the primary uses of JSON-LD is its ability for RDF exchange across the Web.
         This can be done by first <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#serialize-rdf-as-json-ld-algorithm">serializing RDF to JSON-LD</a>,
-        after which others can <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#deserialize-json-ld-to-rdf-algorithm">deserializing JSON-LD to RDF</a>.
+        after which others can <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#deserialize-json-ld-to-rdf-algorithm">deserialize JSON-LD to RDF</a>.
     </p>
     <p>
         Since RDF datasets may contain many triples,
@@ -43,7 +43,7 @@
         do not work in a streaming manner, as these first load all required data in memory,
         after which this data can be processed.
         This note discusses the processing of JSON-LD in a streaming way.
-        Concretely, a set of guidelines is introduced for efficiently serializing and deserializing of JSON-LD in a streaming way.
+        Concretely, a set of guidelines is introduced for efficiently serializing and deserializing JSON-LD in a streaming way.
         These guidelines are encapsulated in a JSON-LD streaming profile,
         so that implementations can detect JSON-LD documents that conform to this profile, and may apply streaming optimizations.
       </p>
@@ -78,6 +78,239 @@
           which is the base syntax used for streaming processing.
           To understand how JSON-LD maps to RDF, it is helpful to be
           familiar with the basic RDF concepts [[RDF11-CONCEPTS]].
+      </p>
+    </section>
+    
+    <section id="streaming-document-form">
+      <h2>Streaming Document Form</h2>
+      <p>
+          There are <a class="externalDFN" href="https://www.w3.org/TR/json-ld/#forms-of-json-ld">multiple ways of describing data in JSON-LD</a>,
+          each having their own use cases.
+          This section introduces a <em>streaming JSON-LD document form</em>,
+          which enables JSON-LD documents to be processed in a streaming manner.
+      </p>
+
+      <section>
+        <h3 id="key-ordering-importance">Importance of Key Ordering</h3>
+        <p>
+            The order in which key-value pairs occur in JSON-LD nodes conveys no meaning.
+            For instance, the following two JSON-LD documents have the same meaning, even though they are syntactically different.
+        </p>
+        <pre class="example" title="Name, homepage and image come after @id">
+          {
+            "@context": "http://schema.org/",
+            "@id": "https://www.rubensworks.net/#me",
+            "name": "Ruben Taelman",
+            "url": "https://www.rubensworks.net/",
+            "image": "https://www.rubensworks.net/img/ruben.jpg"
+          }
+        </pre>
+        <pre class="example" title="Name, homepage and image come before @id">
+          {
+            "@context": "http://schema.org/",
+            "name": "Ruben Taelman",
+            "url": "https://www.rubensworks.net/",
+            "image": "https://www.rubensworks.net/img/ruben.jpg",
+            "@id": "https://www.rubensworks.net/#me"
+          }
+        </pre>
+        <p>
+            In a streaming JSON-LD document, the ordering of (some) keys is important.
+            This is because streaming JSON-LD processors may require the presence of some keys before others can be processed,
+            and ordering keys in certain ways may lead to better processing performance.
+        </p>
+        <p>
+            In the two snippets before, the first example can be processed more efficiently by a streaming processor.
+            Concretely, a streaming JSON-LD deserializer can emit an RDF triple each time a property (<code>"name"</code>, <code>"url"</code>, <code>"image"</code>) has been read, because the <code>"@id"</code> has been defined before.
+            This is because the <code>"@id"</code> defines the RDF subject,
+            the property key defines the RDF predicate,
+            and the property value defines RDF object.
+            This ensures that all required information is needed for constructing and emitting and RDF triple each time a property is encountered.
+        </p>
+        <p>
+            For the second example, where the <code>"@id"</code> is only defined at the end,
+            a streaming deserializer would have to <em>buffer</em> the properties until the <code>"@id"</code> key is encountered.
+            Since the RDF subject of our triples is defined via <code>"@id"</code>,
+            the RDF triples can only be emitted after this last key has been read.
+        </p>
+      </section>
+      
+      <section>
+        <h3 id="key-ordering-required">Required Key Ordering</h3>
+        <p>
+            In order for a JSON-LD document to be a in a <dfn data-dfn-type="dfn" id="dfn-streaming-document-form">streaming document form</dfn>,
+            the keys in each JSON node MUST be ordered according to the following order.
+        </p>
+        <ol>
+            <li><code>@context</code></li>
+            <li><code>@type</code> where its value indicates a <a class="externalDFN" href="https://www.w3.org/TR/json-ld/#dfn-type-scoped-context">type-scoped context</a>.</li>
+            <li><code>@id</code></li>
+            <li><em>Any other property</em></li>
+        </ol>
+        <div class="note" role="note" id="key-ordering-required-note-omit">
+            <p class="">
+            Each of these keys is optional, and may be omitted.
+            Only those that are present must occur in the following order.
+            </p>
+        </div>
+        <p>
+            Hereafter, a couple of JSON-LD document examples are listed that either adhere or not adhere to the <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>.
+        </p>
+        <pre class="example" title="Valid streaming document with @context, @id, and other properties">
+          {
+            "@context": {
+              "name": "http://schema.org/name",
+              "url": "http://schema.org/url",
+              "image": "http://schema.org/image"
+            },
+            "@id": "https://www.rubensworks.net/#me",
+            "name": "Ruben Taelman",
+            "url": "https://www.rubensworks.net/",
+            "image": "https://www.rubensworks.net/img/ruben.jpg"
+          }
+        </pre>
+        <pre class="example" title="Valid streaming document with nested nodes">
+          {
+            "@context": {
+              "name": "http://schema.org/name",
+              "url": "http://schema.org/url",
+              "image": "http://schema.org/image",
+              "knows": "http://schema.org/knows"
+            },
+            "@id": "https://www.rubensworks.net/#me",
+            "name": "Ruben Taelman",
+            "url": "https://www.rubensworks.net/",
+            "image": "https://www.rubensworks.net/img/ruben.jpg",
+            "knows": {
+              "@id": "https://greggkellogg.net/foaf#me",
+              "name": "Gregg Kellogg",
+            }
+          }
+        </pre>
+        <pre class="example" title="Valid streaming document with nested nodes and embedded context">
+          {
+            "@context": {
+              "name": "http://schema.org/name",
+              "url": "http://schema.org/url",
+              "image": "http://schema.org/image",
+              "knows": "http://schema.org/knows"
+            },
+            "@id": "https://www.rubensworks.net/#me",
+            "name": "Ruben Taelman",
+            "url": "https://www.rubensworks.net/",
+            "image": "https://www.rubensworks.net/img/ruben.jpg",
+            "knows": {
+              "@context": {
+                "name": "http://xmlns.com/foaf/0.1/name"
+              },
+              "@id": "https://greggkellogg.net/foaf#me",
+              "name": "Gregg Kellogg",
+            }
+          }
+        </pre>
+        <pre class="example" title="Valid streaming document with @context, @type-scoped context, @id, and other properties">
+          {
+            "@context": {
+              "Person": {
+                "@id": "http://schema.org/Person",
+                "@context": {
+                  "name": "http://schema.org/name",
+                  "url": "http://schema.org/url",
+                  "image": "http://schema.org/image"
+                }
+              }
+            },
+            "@id": "https://www.rubensworks.net/#me",
+            "@type": "Person",
+            "name": "Ruben Taelman",
+            "url": "https://www.rubensworks.net/",
+            "image": "https://www.rubensworks.net/img/ruben.jpg"
+          }
+        </pre>
+        <pre class="example" title="Valid streaming document with @context, plain @type, @id, and other properties">
+          {
+            "@context": {
+              "Person": "http://schema.org/Person",
+              "name": "http://schema.org/name",
+              "url": "http://schema.org/url",
+              "image": "http://schema.org/image"
+            },
+            "@id": "https://www.rubensworks.net/#me",
+            "name": "Ruben Taelman",
+            "url": "https://www.rubensworks.net/",
+            "image": "https://www.rubensworks.net/img/ruben.jpg",
+            "@type": "Person" <span class="comment">// Defines no type-scoped context, so may appear anywhere</span>
+          }
+        </pre>
+        <pre class="example" title="Valid streaming document with @context and without @id">
+          {
+            "@context": {
+              "name": "http://schema.org/name",
+              "url": "http://schema.org/url",
+              "image": "http://schema.org/image"
+            },
+            <span class="comment">// @id is not required, will produce a blank node</span>
+            "name": "Ruben Taelman",
+            "url": "https://www.rubensworks.net/",
+            "image": "https://www.rubensworks.net/img/ruben.jpg"
+          }
+        </pre>
+        <pre class="example" title="Valid streaming document without @context and @id">
+          {
+            <span class="comment">// @context and @id is not required</span>
+            "http://schema.org/name": "Ruben Taelman",
+            "http://schema.org/url": "https://www.rubensworks.net/",
+            "http://schema.org/image": "https://www.rubensworks.net/img/ruben.jpg"
+          }
+        </pre>
+        <pre class="example" title="Invalid streaming document where @context comes too late">
+          {
+            "@id": "https://www.rubensworks.net/#me",
+            "@context": { <span class="comment">// @context must come before @id</span>
+              "name": "http://schema.org/name",
+              "url": "http://schema.org/url",
+              "image": "http://schema.org/image"
+            },
+            "name": "Ruben Taelman",
+            "url": "https://www.rubensworks.net/",
+            "image": "https://www.rubensworks.net/img/ruben.jpg"
+          }
+        </pre>
+        <pre class="example" title="Invalid streaming document where @id comes too late">
+          {
+            "http://schema.org/name": "Ruben Taelman",
+            "@id": "https://www.rubensworks.net/#me", <span class="comment">// @id must come before name</span>
+            "http://schema.org/url": "https://www.rubensworks.net/",
+            "http://schema.org/image": "https://www.rubensworks.net/img/ruben.jpg"
+          }
+        </pre>
+      </section>
+      
+      <section>
+        <h3 id="streaming-profile">Streaming Profile</h3>
+        <p>
+            JSON-LD documents can be signaled or requested in <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>.
+            The profile URI identifying the <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>
+            is <code>http://www.w3.org/ns/json-ld#streaming</code>.
+        </p>
+        <p>
+            The following example illustrates how this profile parameter can be used to request an a streaming document over HTTP.
+        </p>
+        <div class="example" title="HTTP Request with profile requesting a streaming document">
+          <pre data-content-type="http" data-ignore="" aria-busy="false"><code class="hljs http"><span class="hljs-keyword">GET</span> <span class="hljs-string">/ordinary-json-document.json</span> HTTP/1.1
+<span class="hljs-attribute">Host</span>: example.com
+<span class="hljs-attribute">Accept</span>: application/ld+json;<span class="hl-bold">profile=http://www.w3.org/ns/json-ld#streaming</span></code></pre>
+          <p>Requests the server to return the requested resource as JSON-LD
+            in <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>.</p>
+        </div>
+      </section>
+
+    </section>
+    
+    <section id="streaming-processing">
+      <h2>Streaming Processing</h2>
+      <p class="ednote">
+          TODO: some guidelines on streaming processing if there's a streaming profile.
       </p>
     </section>
   </body>
