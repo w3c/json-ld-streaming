@@ -139,14 +139,22 @@
         <h3 id="key-ordering-required">Required Key Ordering</h3>
         <p>
             In order for a JSON-LD document to be a in a <dfn data-dfn-type="dfn" id="dfn-streaming-document-form">streaming document form</dfn>,
-            the keys in each JSON node MUST be ordered according to the following order.
+            the keys in each JSON node MUST be ordered according to the following order:
         </p>
         <ol>
             <li><code>@context</code></li>
             <li><code>@type</code> where its value indicates a <a class="externalDFN" href="https://www.w3.org/TR/json-ld/#dfn-type-scoped-context">type-scoped context</a>.</li>
-            <li><code>@id</code></li>
-            <li><em>Any other property</em></li>
+            <li><em>Other properties</em></li>
         </ol>
+        <p>
+            Each of these keys is optional, and may be omitted.
+            Only those that are present must occur in the following order.
+        </p>
+        <p>
+            This order is important because the <code>@context</code> and <code>@type</code> entries
+            can change the meaning of all following entries in the node and its children.
+            This means that these MUST always be processed before all other entries.
+        </p>
         <div class="note" role="note" id="key-ordering-json">
             <p class="">
                 Entries in nodes have a defined order when serialized as JSON.
@@ -154,143 +162,188 @@
                 This means that streaming processors MUST make use of JSON parsers that preserve this order to be effective.
             </p>
         </div>
-        <div class="note" role="note" id="key-ordering-required-note-omit">
+      </section>
+      
+      <section>
+        <h3 id="key-ordering-recommended">Recommended Key Ordering</h3>
+        <p>
+            In addition to the <a href="#key-ordering-required">required key ordering</a>,
+            an <code>@id</code> key SHOULD be present as first of the other properties.
+        </p>
+        <p>
+            By placing <code>@id</code> before other properties in a node,
+            streaming deserializers can determine the subject of this node early on,
+            and they can immediately emit following properties as RDF triples as soon as they are read.
+        </p>
+        <p>
+            While not recommended, <code>@id</code> can also come after any other properties,
+            which requires the streaming deserializer to <em>buffer</em> these properties
+            until an <code>@id</code> is read, or the node closes.
+        </p>
+        <div class="note" role="note" id="key-ordering-recommended-for-who">
             <p class="">
-            Each of these keys is optional, and may be omitted.
-            Only those that are present must occur in the following order.
+            This recommended key ordering SHOULD be followed by streaming document authors.
+            Streaming processors implementations MUST NOT assume that a given streaming document will adhere to this recommendation.
             </p>
         </div>
-        <p>
-            Hereafter, a couple of JSON-LD document examples are listed that either adhere or not adhere to the <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>.
-        </p>
-        <pre class="example" title="Valid streaming document with @context, @id, and other properties">
-          {
-            "@context": {
-              "name": "http://schema.org/name",
-              "url": "http://schema.org/url",
-              "image": "http://schema.org/image"
-            },
-            "@id": "https://www.rubensworks.net/#me",
-            "name": "Ruben Taelman",
-            "url": "https://www.rubensworks.net/",
-            "image": "https://www.rubensworks.net/img/ruben.jpg"
-          }
-        </pre>
-        <pre class="example" title="Valid streaming document with nested nodes">
-          {
-            "@context": {
-              "name": "http://schema.org/name",
-              "url": "http://schema.org/url",
-              "image": "http://schema.org/image",
-              "knows": "http://schema.org/knows"
-            },
-            "@id": "https://www.rubensworks.net/#me",
-            "name": "Ruben Taelman",
-            "url": "https://www.rubensworks.net/",
-            "image": "https://www.rubensworks.net/img/ruben.jpg",
-            "knows": {
-              "@id": "https://greggkellogg.net/foaf#me",
-              "name": "Gregg Kellogg",
-            }
-          }
-        </pre>
-        <pre class="example" title="Valid streaming document with nested nodes and embedded context">
-          {
-            "@context": {
-              "name": "http://schema.org/name",
-              "url": "http://schema.org/url",
-              "image": "http://schema.org/image",
-              "knows": "http://schema.org/knows"
-            },
-            "@id": "https://www.rubensworks.net/#me",
-            "name": "Ruben Taelman",
-            "url": "https://www.rubensworks.net/",
-            "image": "https://www.rubensworks.net/img/ruben.jpg",
-            "knows": {
-              "@context": {
-                "name": "http://xmlns.com/foaf/0.1/name"
-              },
-              "@id": "https://greggkellogg.net/foaf#me",
-              "name": "Gregg Kellogg",
-            }
-          }
-        </pre>
-        <pre class="example" title="Valid streaming document with @context, @type-scoped context, @id, and other properties">
-          {
-            "@context": {
-              "Person": {
-                "@id": "http://schema.org/Person",
-                "@context": {
-                  "name": "http://schema.org/name",
-                  "url": "http://schema.org/url",
-                  "image": "http://schema.org/image"
+      </section>
+      
+      <section>
+          <h3 id="streaming-document-examples">Examples</h3>
+          <p>
+              Hereafter, a couple of JSON-LD document examples are listed that either adhere, adhere with non-recommended order, or not adhere
+              to the <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>.
+          </p>
+          <section>
+              <h3 id="streaming-document-examples-valid">Valid Examples</h3>
+              <pre class="example" title="Valid streaming document with @context, @id, and other properties">
+                {
+                  "@context": {
+                    "name": "http://schema.org/name",
+                    "url": "http://schema.org/url",
+                    "image": "http://schema.org/image"
+                  },
+                  "@id": "https://www.rubensworks.net/#me",
+                  "name": "Ruben Taelman",
+                  "url": "https://www.rubensworks.net/",
+                  "image": "https://www.rubensworks.net/img/ruben.jpg"
                 }
-              }
-            },
-            "@id": "https://www.rubensworks.net/#me",
-            "@type": "Person",
-            "name": "Ruben Taelman",
-            "url": "https://www.rubensworks.net/",
-            "image": "https://www.rubensworks.net/img/ruben.jpg"
-          }
-        </pre>
-        <pre class="example" title="Valid streaming document with @context, plain @type, @id, and other properties">
-          {
-            "@context": {
-              "Person": "http://schema.org/Person",
-              "name": "http://schema.org/name",
-              "url": "http://schema.org/url",
-              "image": "http://schema.org/image"
-            },
-            "@id": "https://www.rubensworks.net/#me",
-            "name": "Ruben Taelman",
-            "url": "https://www.rubensworks.net/",
-            "image": "https://www.rubensworks.net/img/ruben.jpg",
-            "@type": "Person" <span class="comment">// Defines no type-scoped context, so may appear anywhere</span>
-          }
-        </pre>
-        <pre class="example" title="Valid streaming document with @context and without @id">
-          {
-            "@context": {
-              "name": "http://schema.org/name",
-              "url": "http://schema.org/url",
-              "image": "http://schema.org/image"
-            },
-            <span class="comment">// @id is not required, will produce a blank node</span>
-            "name": "Ruben Taelman",
-            "url": "https://www.rubensworks.net/",
-            "image": "https://www.rubensworks.net/img/ruben.jpg"
-          }
-        </pre>
-        <pre class="example" title="Valid streaming document without @context and @id">
-          {
-            <span class="comment">// @context and @id is not required</span>
-            "http://schema.org/name": "Ruben Taelman",
-            "http://schema.org/url": "https://www.rubensworks.net/",
-            "http://schema.org/image": "https://www.rubensworks.net/img/ruben.jpg"
-          }
-        </pre>
-        <pre class="example" title="Invalid streaming document where @context comes too late">
-          {
-            "@id": "https://www.rubensworks.net/#me",
-            "@context": { <span class="comment">// @context must come before @id</span>
-              "name": "http://schema.org/name",
-              "url": "http://schema.org/url",
-              "image": "http://schema.org/image"
-            },
-            "name": "Ruben Taelman",
-            "url": "https://www.rubensworks.net/",
-            "image": "https://www.rubensworks.net/img/ruben.jpg"
-          }
-        </pre>
-        <pre class="example" title="Invalid streaming document where @id comes too late">
-          {
-            "http://schema.org/name": "Ruben Taelman",
-            "@id": "https://www.rubensworks.net/#me", <span class="comment">// @id must come before name</span>
-            "http://schema.org/url": "https://www.rubensworks.net/",
-            "http://schema.org/image": "https://www.rubensworks.net/img/ruben.jpg"
-          }
-        </pre>
+              </pre>
+              <pre class="example" title="Valid streaming document with @context, blank @id, and other properties">
+                {
+                  "@context": {
+                    "name": "http://schema.org/name",
+                    "url": "http://schema.org/url",
+                    "image": "http://schema.org/image"
+                  },
+                  "@id": "_:blank_node",
+                  "name": "Ruben Taelman",
+                  "url": "https://www.rubensworks.net/",
+                  "image": "https://www.rubensworks.net/img/ruben.jpg"
+                }
+              </pre>
+              <pre class="example" title="Valid streaming document with nested nodes">
+                {
+                  "@context": {
+                    "name": "http://schema.org/name",
+                    "url": "http://schema.org/url",
+                    "image": "http://schema.org/image",
+                    "knows": "http://schema.org/knows"
+                  },
+                  "@id": "https://www.rubensworks.net/#me",
+                  "name": "Ruben Taelman",
+                  "url": "https://www.rubensworks.net/",
+                  "image": "https://www.rubensworks.net/img/ruben.jpg",
+                  "knows": {
+                    "@id": "https://greggkellogg.net/foaf#me",
+                    "name": "Gregg Kellogg",
+                  }
+                }
+              </pre>
+              <pre class="example" title="Valid streaming document with nested nodes and embedded context">
+                {
+                  "@context": {
+                    "name": "http://schema.org/name",
+                    "url": "http://schema.org/url",
+                    "image": "http://schema.org/image",
+                    "knows": "http://schema.org/knows"
+                  },
+                  "@id": "https://www.rubensworks.net/#me",
+                  "name": "Ruben Taelman",
+                  "url": "https://www.rubensworks.net/",
+                  "image": "https://www.rubensworks.net/img/ruben.jpg",
+                  "knows": {
+                    "@context": {
+                      "name": "http://xmlns.com/foaf/0.1/name"
+                    },
+                    "@id": "https://greggkellogg.net/foaf#me",
+                    "name": "Gregg Kellogg",
+                  }
+                }
+              </pre>
+              <pre class="example" title="Valid streaming document with @context, @type-scoped context, @id, and other properties">
+                {
+                  "@context": {
+                    "Person": {
+                      "@id": "http://schema.org/Person",
+                      "@context": {
+                        "name": "http://schema.org/name",
+                        "url": "http://schema.org/url",
+                        "image": "http://schema.org/image"
+                      }
+                    }
+                  },
+                  "@id": "https://www.rubensworks.net/#me",
+                  "@type": "Person",
+                  "name": "Ruben Taelman",
+                  "url": "https://www.rubensworks.net/",
+                  "image": "https://www.rubensworks.net/img/ruben.jpg"
+                }
+              </pre>
+              <pre class="example" title="Valid streaming document with @context, plain @type, @id, and other properties">
+                {
+                  "@context": {
+                    "Person": "http://schema.org/Person",
+                    "name": "http://schema.org/name",
+                    "url": "http://schema.org/url",
+                    "image": "http://schema.org/image"
+                  },
+                  "@id": "https://www.rubensworks.net/#me",
+                  "name": "Ruben Taelman",
+                  "url": "https://www.rubensworks.net/",
+                  "image": "https://www.rubensworks.net/img/ruben.jpg",
+                  "@type": "Person" <span class="comment">// Defines no type-scoped context, so may appear anywhere</span>
+                }
+              </pre>
+          </section>
+          <section>
+              <h3 id="streaming-document-examples-nonrec">Valid, Non-recommended Examples</h3>
+              <pre class="example" title="Non-recommended streaming document with @context and without @id">
+                {
+                  "@context": {
+                    "name": "http://schema.org/name",
+                    "url": "http://schema.org/url",
+                    "image": "http://schema.org/image"
+                  },
+                  <span class="comment">// @id is missing, considered a blank node</span>
+                  "name": "Ruben Taelman",
+                  "url": "https://www.rubensworks.net/",
+                  "image": "https://www.rubensworks.net/img/ruben.jpg"
+                }
+              </pre>
+              <pre class="example" title="Valid streaming document without @context and @id">
+                {
+                  <span class="comment">// @context is not required, but @id is recommended here</span>
+                  "http://schema.org/name": "Ruben Taelman",
+                  "http://schema.org/url": "https://www.rubensworks.net/",
+                  "http://schema.org/image": "https://www.rubensworks.net/img/ruben.jpg"
+                }
+              </pre>
+          </section>
+          <section>
+              <h3 id="streaming-document-examples-invalid">Invalid Examples</h3>
+              <pre class="example" title="Invalid streaming document where @context comes too late">
+                {
+                  "@id": "https://www.rubensworks.net/#me",
+                  "@context": { <span class="comment">// @context must come before @id</span>
+                    "name": "http://schema.org/name",
+                    "url": "http://schema.org/url",
+                    "image": "http://schema.org/image"
+                  },
+                  "name": "Ruben Taelman",
+                  "url": "https://www.rubensworks.net/",
+                  "image": "https://www.rubensworks.net/img/ruben.jpg"
+                }
+              </pre>
+              <pre class="example" title="Invalid streaming document where @id comes too late">
+                {
+                  "http://schema.org/name": "Ruben Taelman",
+                  "@id": "https://www.rubensworks.net/#me", <span class="comment">// @id must come before name</span>
+                  "http://schema.org/url": "https://www.rubensworks.net/",
+                  "http://schema.org/image": "https://www.rubensworks.net/img/ruben.jpg"
+                }
+              </pre>
+          </section>
       </section>
       
       <section>
@@ -359,15 +412,16 @@
             If such an entry is not present, only contexts from parent nodes are considered for this node.
         </p>
         <p>
-            If an <code>@id</code> entry is detected, the RDF subject for the current node is defined for later usage.
-            If no such entry is detected, the subject for this node is set to a blank node.
-        </p>
-        <p>
             If an <code>@type</code> entry is detected,
             it is checked whether or not it defines a type-scoped context according to the current node's context.
             If this defines a type-scoped context, the context for the current node is overridden.
             <br />
             Additionally, the <code>@type</code> must emit <code>rdf:type</code> triples based on the current node's subject and values.
+            This subject will possibly only be determined later on, which will require buffering of these incomplete triples.
+        </p>
+        <p>
+            If an <code>@id</code> entry is detected, the RDF subject for the current node is defined for later usage.
+            Any other entries that are detected before <code>@id</code> must be buffered until <code>@id</code> is found, or the node closes (which sets the subject to a blank node).
         </p>
         <p>
             For every other property, the default JSON-LD algorithms are followed assuming the current node's subject.
