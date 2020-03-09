@@ -147,6 +147,13 @@
             <li><code>@id</code></li>
             <li><em>Any other property</em></li>
         </ol>
+        <div class="note" role="note" id="key-ordering-json">
+            <p class="">
+                Entries in nodes have a defined order when serialized as JSON.
+                <a href="https://tools.ietf.org/html/rfc8259#section-4">However, this this order is not always kept by JSON parsing libraries</a>.
+                This means that streaming processors MUST make use of JSON parsers that preserve this order to be effective.
+            </p>
+        </div>
         <div class="note" role="note" id="key-ordering-required-note-omit">
             <p class="">
             Each of these keys is optional, and may be omitted.
