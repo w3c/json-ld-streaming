@@ -453,16 +453,46 @@
         </pre>
       </section>
       <section>
-        <h3 id="triple-ordering-required">Recommended Triple Ordering</h3>
+        <h3 id="triple-ordering-recommended">Recommended Triple Ordering</h3>
         <p>
-            TODO
+            This section introduces <em>recommendations</em> for defining the order in an RDF dataset,
+            such that it can be processed more efficiently by <em>streaming JSON-LD processors</em>.
         </p>
-      </section>
-      <section>
-        <h3 id="streaming-rdf-profile">Streaming RDF Profile</h3>
-        <p>
-            TODO
-        </p>
+        <ol>
+            <li>
+                <strong>Group triples with the same named graph.</strong>
+                <br />
+                Allows grouping of <code>@graph</code> nodes.
+            </li>
+            <li>
+                <strong>Group triples with the same subject.</strong>
+                <br />
+                Allows grouping of <code>@id</code> keys.
+            </li>
+            <li>
+                <strong>Group triples with the same predicate.</strong>
+                <br />
+                Allows grouping of property keys.
+            </li>
+            <li>
+                <strong>Group triples with a given term as named graph together with triples having this term as subject.</strong>
+                <br />
+                Allows the combination of <code>@graph</code> nodes with <code>@id</code>.
+            </li>
+            <li>
+                <strong>Group triples with a given term as object with triples having this term as object.</strong>
+                <br />
+                Allows nesting of nodes within other nodes.
+            </li>
+        </ol>
+        <div class="note" role="note" id="triple-ordering-recommended-how">
+            <p class="">
+            One straightforward way to follow most of these recommendations is by sorting all triples (or quads)
+            in the order <em>graph</em>, <em>subject</em>, <em>predicate</em>, <em>object</em>.
+            <br />
+            Existing triple stored may already perform this kind of grouping automatically.
+            </p>
+        </div>
       </section>
     </section>
     
