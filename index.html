@@ -683,7 +683,7 @@
             By reading character-by-character, a deserializer can detect the contained JSON nodes and its key-value pairs.
         </p>
         <p>
-            A streaming deserializer MAY assume that the <a href="#key-ordering-required">required key ordering of a <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document</a> is present. If a different order is detected, an error MAY be thrown with error code <code>"invalid streaming key order"</code>.
+            A streaming deserializer MAY assume that the <a href="#key-ordering-required">required key ordering</a> of a <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document</a> is present. If a different order is detected, an error MAY be thrown with error code <code>"invalid streaming key order"</code>.
         </p>
         <p>
             The first expected entry in a node is <code>@context</code>.
@@ -709,7 +709,39 @@
       <section>
         <h3 id="streaming-serialization">Serialization</h3>
         <p>
-            TODO
+            A streaming JSON-LD serializer reads triples one by one,
+            and outputs a JSON-LD document character-by-character,
+            which can be emitted in a streaming manner.
+            <br />
+            This MAY potentially be a JSON-LD document in the <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>.
+        </p>
+        <p>
+            A streaming serializer can benefit from having <a href="#triple-ordering-recommended">triples ordered</a> following a <a href="#dfn-streaming-RDF-dataset-form" class="internalDFN" data-link-type="dfn">streaming RDF dataset form</a>.
+        </p>
+        <p>
+            As a basis, a streaming serializer can produce an array of nodes,
+            where each node represent a single RDF triple/quad.
+        </p>
+        <p>
+            On top of this base case, several optimizations can be applied to achieve a more compact representation in JSON-LD.
+            These optimizations are dependent on the surrounding triples, which is determine by the overall triple order.
+        </p>
+        <p>
+            When a <a class="externalDFN" href="https://www.w3.org/TR/json-ld-syntaxt/#the-context">JSON-LD context</a>
+            is passed to a streaming serializer, <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#compaction">compaction techniques</a>
+            MAY be applied.
+            For instance, instead of writing properties as full IRIs, they can be <em>compacted</em> based on the presence of terms and prefixes in the context.
+        </p>
+        <p>
+            Due to the chained nature of RDF lists, serializing them to JSON-LD with the <code>@list</code> keyword in a streaming way may not always be possible,
+            since you may not know beforehand whether a triple is part of a valid RDF list.
+            Optionally, a streaming RDF serializer MAY provide an alternative method to introduce <code>@list</code> keywords.
+        </p>
+        <p>
+            Since streaming RDF processors process triples one by one,
+            so that they don't need to keep all triples in memory,
+            they loose the ability to deduplicate triples.
+            As such, a streaming JSON-LD serializer MAY produce JSON-LD that contains duplicate triples.
         </p>
       </section>
     </section>
