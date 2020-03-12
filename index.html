@@ -376,10 +376,84 @@
     <section id="streaming-rdf-form">
       <h2>Streaming RDF Form</h2>
       <p>
-          TODO: order in which RDF triples appear
+          This section introduces a <em>streaming RDF dataset form</em>,
+          which enables RDF datasets to be processed in a streaming manner
+          so that they can efficiently serialized into JSON-LD by a streaming JSON-LD processor.
       </p>
       <section>
-        <h3 id="triple-ordering-required">Required Triple Ordering</h3>
+        <h3 id="triple-ordering-importance">Importance of Triple Ordering</h3>
+        <p>
+            The order in which RDF triples occur in an RDF dataset convey no meaning.
+            For instance, the following two RDF datasets (serialized in <a href="https://www.w3.org/TR/turtle/">Turtle</a>) have the same meaning,
+            even though they have a different order of triples.
+        </p>
+        <pre class="example" title="A first order of triples">
+          @prefix schema: &lt;http://schema.org/&gt; .
+          &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
+          &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://www.rubensworks.net/&gt; .
+          &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellog" .
+          &lt;https://greggkellogg.net/foaf#me&gt; schema:url &lt;https://greggkellogg.net/&gt; .
+        </pre>
+        <pre class="example" title="A second order of triples">
+          @prefix schema: &lt;http://schema.org/&gt; .
+          &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
+          &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellog" .
+          &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://www.rubensworks.net/&gt; .
+          &lt;https://greggkellogg.net/foaf#me&gt; schema:url &lt;https://greggkellogg.net/&gt; .
+        </pre>
+        <p>
+            For streaming JSON-LD processors, the order of RDF triples can however become important.
+            Processors that read triples one by one, and convert them to a JSON-LD document in a streaming manner,
+            can benefit from having triples in a certain order.
+        </p>
+        <p>
+            For instance, the order from first snippet above can lead to more compact JSON-LD documents than the order from the second snippet
+            when handled by a streaming JSON-LD processor.
+            This is because the first order groups triples with the same subject,
+            which can be exploited during streaming JSON-LD serialization by using the same <code>"@id"</code> key.
+            The second order mixes subjects, which means that streaming JSON-LD serialization will have to assign separate <code>"@id"</code> keys
+            for each triple, resulting in duplicate <code>"@id"</code> keys.
+        </p>
+        <p>
+            Streaming JSON-LD serializations of both examples can be seen below.
+        </p>
+        <pre class="example" title="More compact JSON-LD serialization of the first order">
+          [
+            {
+              "@id": "https://www.rubensworks.net/#me",
+              "http://schema.org/name": "Ruben Taelman",
+              "http://schema.org/url": { "@id": "https://www.rubensworks.net/" }
+            },
+            {
+              "@id": "https://www.rubensworks.net/#me",
+              "http://schema.org/name": "Gregg Kellog",
+              "http://schema.org/url": { "@id": "https://greggkellogg.net/" }
+            }
+          ]
+        </pre>
+        <pre class="example" title="Less compact JSON-LD serialization of the second order">
+          [
+            {
+              "@id": "https://www.rubensworks.net/#me",
+              "http://schema.org/name": "Ruben Taelman"
+            },
+            {
+              "@id": "https://www.rubensworks.net/#me",
+              "http://schema.org/name": "Gregg Kellog"
+            },
+            {
+              "@id": "https://www.rubensworks.net/#me",
+              "http://schema.org/url": { "@id": "https://www.rubensworks.net/" }
+            },
+            {
+              "@id": "https://www.rubensworks.net/#me",
+              "http://schema.org/url": { "@id": "https://greggkellogg.net/" }
+            }
+          ]
+        </pre>
+      </section>
+      <section>
+        <h3 id="triple-ordering-required">Recommended Triple Ordering</h3>
         <p>
             TODO
         </p>
