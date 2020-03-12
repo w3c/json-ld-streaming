@@ -376,7 +376,7 @@
     <section id="streaming-rdf-form">
       <h2>Streaming RDF Form</h2>
       <p>
-          This section introduces a <em>streaming RDF dataset form</em>,
+          This section introduces a <dfn data-dfn-type="dfn" id="dfn-streaming-RDF-dataset-form">streaming RDF dataset form</dfn>,
           which enables RDF datasets to be processed in a streaming manner
           so that they can efficiently serialized into JSON-LD by a streaming JSON-LD processor.
       </p>
@@ -425,7 +425,7 @@
               "http://schema.org/url": { "@id": "https://www.rubensworks.net/" }
             },
             {
-              "@id": "https://www.rubensworks.net/#me",
+              "@id": "https://greggkellogg.net/foaf#me",
               "http://schema.org/name": "Gregg Kellog",
               "http://schema.org/url": { "@id": "https://greggkellogg.net/" }
             }
@@ -442,11 +442,11 @@
               "http://schema.org/name": "Gregg Kellog"
             },
             {
-              "@id": "https://www.rubensworks.net/#me",
+              "@id": "https://greggkellogg.net/foaf#me",
               "http://schema.org/url": { "@id": "https://www.rubensworks.net/" }
             },
             {
-              "@id": "https://www.rubensworks.net/#me",
+              "@id": "https://greggkellogg.net/foaf#me",
               "http://schema.org/url": { "@id": "https://greggkellogg.net/" }
             }
           ]
@@ -493,6 +493,175 @@
             Existing triple stored may already perform this kind of grouping automatically.
             </p>
         </div>
+      </section>
+      <section>
+          <h3 id="streaming-rdf-examples">Examples</h3>
+          <p>
+              Hereafter, a couple of RDF datasets are listed, together with corresponding streamingly serialized JSON-LD.
+              Each example illustrates the importance of the recommended triple ordering within
+              the <a href="#dfn-streaming-RDF-dataset-form" class="internalDFN" data-link-type="dfn">streaming RDF dataset form</a>.
+          </p>
+          <p>
+              The examples using named graphs are serialized in the <a href="https://www.w3.org/TR/trig/">TriG</a> format.
+          </p>
+          <section>
+              <h3 id="streaming-rdf-example-graph">@graph grouping</h3>
+              <pre class="example" title="Triples with the same named graph are grouped">
+                @prefix schema: &lt;http://schema.org/&gt; .
+                &lt;http://example.org/graph1&gt; {
+                  &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
+                }
+                &lt;http://example.org/graph1&gt; {
+                  &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://www.rubensworks.net/&gt; .
+                }
+                &lt;http://example.org/graph2&gt; {
+                  &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellog" .
+                }
+                &lt;http://example.org/graph2&gt; {
+                  &lt;https://greggkellogg.net/foaf#me&gt; schema:url &lt;https://greggkellogg.net/&gt; .
+                }
+              </pre>
+              <pre class="example" title="Triples with the same named graph can be grouped within the same @graph block">
+                [
+                  {
+                    "@id": "http://example.org/graph1",
+                    "@graph": [
+                      {
+                        "@id": "https://www.rubensworks.net/#me",
+                        "http://schema.org/name": "Ruben Taelman",
+                        "http://schema.org/url": { "@id": "https://www.rubensworks.net/" }
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://example.org/graph2",
+                    "@graph": [
+                      {
+                        "@id": "https://greggkellogg.net/foaf#me",
+                        "http://schema.org/name": "Gregg Kellog",
+                        "http://schema.org/url": { "@id": "https://greggkellogg.net/" }
+                      }
+                    ]
+                  }
+                ]
+              </pre>
+          </section>
+          <section>
+              <h3 id="streaming-rdf-example-id">@id grouping</h3>
+              <pre class="example" title="Triples with the same subject are grouped">
+                @prefix schema: &lt;http://schema.org/&gt; .
+                &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
+                &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://www.rubensworks.net/&gt; .
+                &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellog" .
+                &lt;https://greggkellogg.net/foaf#me&gt; schema:url &lt;https://greggkellogg.net/&gt; .
+              </pre>
+              <pre class="example" title="Triples with the same subject can be grouped within the same @id block">
+                [
+                  {
+                    "@id": "https://www.rubensworks.net/#me",
+                    "http://schema.org/name": "Ruben Taelman",
+                    "http://schema.org/url": { "@id": "https://www.rubensworks.net/" }
+                  },
+                  {
+                    "@id": "https://greggkellogg.net/foaf#me",
+                    "http://schema.org/name": "Gregg Kellog",
+                    "http://schema.org/url": { "@id": "https://greggkellogg.net/" }
+                  }
+                ]
+              </pre>
+          </section>
+          <section>
+              <h3 id="streaming-rdf-example-property">Property grouping</h3>
+              <pre class="example" title="Triples with the same predicate are grouped">
+                @prefix schema: &lt;http://schema.org/&gt; .
+                &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben" .
+                &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
+                &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://www.rubensworks.net/&gt; .
+                &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://github.com/rubensworks/&gt; .
+              </pre>
+              <pre class="example" title="Triples with the same predicate can be grouped within the same property array">
+                [
+                  {
+                    "@id": "https://www.rubensworks.net/#me",
+                    "http://schema.org/name": [
+                      "Ruben"
+                      "Ruben Taelman",
+                    ],
+                    "http://schema.org/url": [
+                      { "@id": "https://www.rubensworks.net/" },
+                      { "@id": "https://github.com/rubensworks/" }
+                    ]
+                  }
+                ]
+              </pre>
+          </section>
+          <section>
+              <h3 id="streaming-rdf-example-graph-id">@graph and @id grouping</h3>
+              <pre class="example" title="Statements about a named graph are group with triples within this named graph">
+                @prefix schema: &lt;http://schema.org/&gt; .
+                &lt;http://example.org/graph1&gt; {
+                  &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
+                }
+                &lt;http://example.org/graph1&gt; {
+                  &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://www.rubensworks.net/&gt; .
+                }
+                &lt;http://example.org/graph1&gt; schema:name "Graph 1" .
+                &lt;http://example.org/graph2&gt; {
+                  &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellog" .
+                }
+                &lt;http://example.org/graph2&gt; {
+                  &lt;https://greggkellogg.net/foaf#me&gt; schema:url &lt;https://greggkellogg.net/&gt; .
+                }
+                &lt;http://example.org/graph2&gt; schema:name "Graph 2" .
+              </pre>
+              <pre class="example" title="Statements about a named graph can be attached within the same @graph block">
+                [
+                  {
+                    "@id": "http://example.org/graph1",
+                    "@graph": [
+                      {
+                        "@id": "https://www.rubensworks.net/#me",
+                        "http://schema.org/name": "Ruben Taelman",
+                        "http://schema.org/url": { "@id": "https://www.rubensworks.net/" }
+                      }
+                    ],
+                    "name": "Graph 1"
+                  },
+                  {
+                    "@id": "http://example.org/graph2",
+                    "@graph": [
+                      {
+                        "@id": "https://greggkellogg.net/foaf#me",
+                        "http://schema.org/name": "Gregg Kellog",
+                        "http://schema.org/url": { "@id": "https://greggkellogg.net/" }
+                      }
+                    ],
+                    "name": "Graph 2"
+                  }
+                ]
+              </pre>
+          </section>
+          <section>
+              <h3 id="streaming-rdf-example-object">Subject and object grouping</h3>
+              <pre class="example" title="Triples about a subject come right after triples having this as object">
+                @prefix schema: &lt;http://schema.org/&gt; .
+                &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
+                &lt;https://www.rubensworks.net/#me&gt; schema:knows &lt;https://greggkellogg.net/foaf#me&gt; .
+                &lt;https://greggkellogg.net/foaf#me&gt; schema:knows "Gregg Kellog" .
+              </pre>
+              <pre class="example" title="Triples can be chained in nested nodes">
+                [
+                  {
+                    "@id": "https://www.rubensworks.net/#me",
+                    "http://schema.org/name": "Ruben Taelman",
+                    "http://schema.org/knows": {
+                      "@id": "https://greggkellogg.net/foaf#me",
+                      "http://schema.org/name": "Gregg Kellog"
+                    }
+                  }
+                ]
+              </pre>
+          </section>
       </section>
     </section>
     
