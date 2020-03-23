@@ -1,0 +1,5 @@
+<https://greggkellogg.net/foaf#me> <http://schema.org/name> "Gregg Kellogg" .
+<https://www.rubensworks.net/#me> <http://schema.org/image> "https://www.rubensworks.net/img/ruben.jpg" .
+<https://www.rubensworks.net/#me> <http://schema.org/knows> <https://greggkellogg.net/foaf#me> .
+<https://www.rubensworks.net/#me> <http://schema.org/name> "Ruben Taelman" .
+<https://www.rubensworks.net/#me> <http://schema.org/url> "https://www.rubensworks.net/" .

@@ -1,0 +1,7 @@
+<http://manu.sporny.org/about#manu> <http://schema.org/knows> <http://me.markus-lanthaler.com/> .
+<http://manu.sporny.org/about#manu> <http://schema.org/name> "Manu Sporny" .
+<http://me.markus-lanthaler.com/> <http://schema.org/name> "Markus Lanthaler" .
+<https://greggkellogg.net/foaf#me> <http://schema.org/knows> <http://manu.sporny.org/about#manu> .
+<https://greggkellogg.net/foaf#me> <http://schema.org/name> "Gregg Kellogg" .
+<https://www.rubensworks.net/#me> <http://schema.org/knows> <https://greggkellogg.net/foaf#me> .
+<https://www.rubensworks.net/#me> <http://schema.org/name> "Ruben Taelman" .

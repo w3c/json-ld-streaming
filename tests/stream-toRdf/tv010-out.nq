@@ -1,0 +1,7 @@
+_:b0 <http://schema.org/knows> _:b1 .
+_:b0 <http://schema.org/name> "Ruben Taelman" .
+_:b1 <http://schema.org/knows> _:b2 .
+_:b1 <http://schema.org/name> "Gregg Kellogg" .
+_:b2 <http://schema.org/knows> _:b3 .
+_:b2 <http://schema.org/name> "Manu Sporny" .
+_:b3 <http://schema.org/name> "Markus Lanthaler" .

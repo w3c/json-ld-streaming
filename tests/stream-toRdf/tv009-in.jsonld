@@ -1,0 +1,22 @@
+{
+  "@context": {
+    "name": "http://schema.org/name",
+    "url": "http://schema.org/url",
+    "image": "http://schema.org/image",
+    "knows": "http://schema.org/knows"
+  },
+  "@id": "https://www.rubensworks.net/#me",
+  "name": "Ruben Taelman",
+  "knows": {
+    "@id": "https://greggkellogg.net/foaf#me",
+    "name": "Gregg Kellogg",
+    "knows": {
+      "@id": "http://manu.sporny.org/about#manu",
+      "name": "Manu Sporny",
+      "knows": {
+        "@id": "http://me.markus-lanthaler.com/",
+        "name": "Markus Lanthaler"
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "@context": {
+    "name": "http://schema.org/name",
+    "url": "http://schema.org/url",
+    "image": "http://schema.org/image",
+    "knows": "http://schema.org/knows"
+  },
+  "name": "Ruben Taelman",
+  "knows": {
+    "name": "Gregg Kellogg",
+    "knows": {
+      "name": "Manu Sporny",
+      "knows": {
+        "name": "Markus Lanthaler"
+      }
+    }
+  }
+}

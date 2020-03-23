@@ -1,10 +1,243 @@
 {
-  "@context": ["https://w3c.github.io/json-ld-api/tests/context.jsonld", {"@base": "frame-manifest"}],
+  "@context": ["https://w3c.github.io/json-ld-api/tests/context.jsonld", {"@base": "stream-toRdf-manifest"}],
   "@id": "",
   "@type": "mf:Manifest",
   "name": "Streaming",
   "description": "JSON-LD Streaming tests.",
   "baseIri": "https://w3c.github.io/json-ld-streaming/tests/",
   "sequence": [
+    {
+      "@id": "#te001",
+      "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
+      "name": "@context must come before @id",
+      "purpose": "Generate an error if @context comes after @id",
+      "input": "stream-toRdf/e001-in.jsonld",
+      "expectErrorCode": "invalid streaming key order",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#te002",
+      "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
+      "name": "@context must come before properties",
+      "purpose": "Generate an error if @context comes after properties",
+      "input": "stream-toRdf/e002-in.jsonld",
+      "expectErrorCode": "invalid streaming key order",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#te003",
+      "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
+      "name": "@context must come before @type with context",
+      "purpose": "Generate an error if @context comes after @type with a type-scoped context",
+      "input": "stream-toRdf/e003-in.jsonld",
+      "expectErrorCode": "invalid streaming key order",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#te004",
+      "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
+      "name": "@type with context must come before @id",
+      "purpose": "Generate an error if @type with context comes after @id",
+      "input": "stream-toRdf/e004-in.jsonld",
+      "expectErrorCode": "invalid streaming key order",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#te005",
+      "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
+      "name": "@type with context must come before properties",
+      "purpose": "Generate an error if @type with context comes after properties",
+      "input": "stream-toRdf/e005-in.jsonld",
+      "expectErrorCode": "invalid streaming key order",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#te006",
+      "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
+      "name": "Embedded @context must come before @id",
+      "purpose": "Generate an error if embedded @context comes after @id",
+      "input": "stream-toRdf/e006-in.jsonld",
+      "expectErrorCode": "invalid streaming key order",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#te007",
+      "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
+      "name": "Embedded @context must come before properties",
+      "purpose": "Generate an error if embedded @context comes after properties",
+      "input": "stream-toRdf/e007-in.jsonld",
+      "expectErrorCode": "invalid streaming key order",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv001",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "@context, @id and properties",
+      "purpose": "@context, @id and properties",
+      "input": "stream-toRdf/tv001-in.jsonld",
+      "expect": "stream-toRdf/tv001-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv002",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "@context, blank @id and properties",
+      "purpose": "@context, blank @id and properties",
+      "input": "stream-toRdf/tv002-in.jsonld",
+      "expect": "stream-toRdf/tv002-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv003",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "@context, implicit @id and properties",
+      "purpose": "@context, implicit @id and properties",
+      "input": "stream-toRdf/tv003-in.jsonld",
+      "expect": "stream-toRdf/tv003-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv004",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "Nested nodes",
+      "purpose": "Nested nodes",
+      "input": "stream-toRdf/tv004-in.jsonld",
+      "expect": "stream-toRdf/tv004-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv005",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "Nested nodes and embedded context",
+      "purpose": "Nested nodes and embedded context",
+      "input": "stream-toRdf/tv005-in.jsonld",
+      "expect": "stream-toRdf/tv005-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv006",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "@context, @type-scoped context, @id, and other properties",
+      "purpose": "@context, @type-scoped context, @id, and other properties",
+      "input": "stream-toRdf/tv006-in.jsonld",
+      "expect": "stream-toRdf/tv006-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv007",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "@context, plain @type, @id, and other properties",
+      "purpose": "@type without an attached context may appear anywhere",
+      "input": "stream-toRdf/tv007-in.jsonld",
+      "expect": "stream-toRdf/tv007-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv008",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "No @context and @id",
+      "purpose": "@context and @id are not required",
+      "input": "stream-toRdf/tv008-in.jsonld",
+      "expect": "stream-toRdf/tv008-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv009",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "Deeply nested nodes",
+      "purpose": "Deeply nested nodes",
+      "input": "stream-toRdf/tv009-in.jsonld",
+      "expect": "stream-toRdf/tv009-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv010",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "Deeply nested nodes without @id",
+      "purpose": "Deeply nested nodes without @id",
+      "input": "stream-toRdf/tv010-in.jsonld",
+      "expect": "stream-toRdf/tv010-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv011",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "@id after properties",
+      "purpose": "Properties should be buffered until @id is encountered",
+      "input": "stream-toRdf/tv011-in.jsonld",
+      "expect": "stream-toRdf/tv011-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv012",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "No @id after properties",
+      "purpose": "Properties should be buffered until node closes",
+      "input": "stream-toRdf/tv012-in.jsonld",
+      "expect": "stream-toRdf/tv012-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv013",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "@id after properties in nested node",
+      "purpose": "Properties in nested node should be buffered until @id is encountered",
+      "input": "stream-toRdf/tv013-in.jsonld",
+      "expect": "stream-toRdf/tv013-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv014",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "No @id after properties in nested node",
+      "purpose": "Properties in nested node should be buffered until node closes",
+      "input": "stream-toRdf/tv014-in.jsonld",
+      "expect": "stream-toRdf/tv014-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv015",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "@id after properties in nested node with outer @id after node",
+      "purpose": "Properties in nested node with @id after node should be buffered until @id is encountered",
+      "input": "stream-toRdf/tv015-in.jsonld",
+      "expect": "stream-toRdf/tv015-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv016",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "No @id after properties in nested node and no outer @id",
+      "purpose": "Properties in nested node and no outer @id should be buffered until node closes",
+      "input": "stream-toRdf/tv016-in.jsonld",
+      "expect": "stream-toRdf/tv016-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv017",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "@id after @graph and properties",
+      "purpose": "Properties with @graph should be buffered until @id is encountered",
+      "input": "stream-toRdf/tv017-in.jsonld",
+      "expect": "stream-toRdf/tv017-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv018",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "No @id after @graph and properties",
+      "purpose": "Properties with @graph should be buffered until node closes",
+      "input": "stream-toRdf/tv018-in.jsonld",
+      "expect": "stream-toRdf/tv018-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv019",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "@id after @graph and properties and late inner @id",
+      "purpose": "Properties with @graph should be buffered until @id is encountered",
+      "input": "stream-toRdf/tv019-in.jsonld",
+      "expect": "stream-toRdf/tv019-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv020",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "No @id after @graph and properties and late inner @id",
+      "purpose": "Properties with @graph should be buffered until node closes and @id is encountered",
+      "input": "stream-toRdf/tv020-in.jsonld",
+      "expect": "stream-toRdf/tv020-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv021",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "@id after @graph and properties and no @id",
+      "purpose": "Properties with @graph should be buffered until node closes and @id is encountered",
+      "input": "stream-toRdf/tv021-in.jsonld",
+      "expect": "stream-toRdf/tv021-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }, {
+      "@id": "#tv022",
+      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+      "name": "No @id after @graph and properties and no @id",
+      "purpose": "Properties with @graph should be buffered until nodes close",
+      "input": "stream-toRdf/tv022-in.jsonld",
+      "expect": "stream-toRdf/tv022-out.nq",
+      "option": {"specVersion": "json-ld-1.1"}
+    }
   ]
 }
