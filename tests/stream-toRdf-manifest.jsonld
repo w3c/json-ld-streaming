@@ -1,0 +1,10 @@
+{
+  "@context": ["https://w3c.github.io/json-ld-api/tests/context.jsonld", {"@base": "frame-manifest"}],
+  "@id": "",
+  "@type": "mf:Manifest",
+  "name": "Streaming",
+  "description": "JSON-LD Streaming tests.",
+  "baseIri": "https://w3c.github.io/json-ld-streaming/tests/",
+  "sequence": [
+  ]
+}
