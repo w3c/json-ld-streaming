@@ -1,0 +1,7 @@
+{
+  "@graph": {
+    "ex:bar": "baz",
+    "@id": "ex:foo"
+  },
+  "@id": "ex:graph"
+}

@@ -1,0 +1,18 @@
+{
+  "@context": {
+    "name": "http://schema.org/name",
+    "url": "http://schema.org/url",
+    "image": "http://schema.org/image",
+    "knows": "http://schema.org/knows"
+  },
+  "@id": "https://www.rubensworks.net/#me",
+  "name": "Ruben Taelman",
+  "url": "https://www.rubensworks.net/",
+  "image": "https://www.rubensworks.net/img/ruben.jpg",
+  "knows": {
+    "name": "Gregg Kellogg",
+    "@context": {
+      "name": "http://xmlns.com/foaf/0.1/name"
+    }
+  }
+}

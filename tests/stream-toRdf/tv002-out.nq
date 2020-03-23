@@ -1,0 +1,3 @@
+_:b0 <http://schema.org/image> "https://www.rubensworks.net/img/ruben.jpg" .
+_:b0 <http://schema.org/name> "Ruben Taelman" .
+_:b0 <http://schema.org/url> "https://www.rubensworks.net/" .

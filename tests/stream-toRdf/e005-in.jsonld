@@ -1,0 +1,16 @@
+{
+  "name": "Ruben Taelman",
+  "@context": {
+    "Person": {
+      "@id": "http://schema.org/Person",
+      "@context": {
+        "name": "http://schema.org/name",
+        "url": "http://schema.org/url",
+        "image": "http://schema.org/image"
+      }
+    }
+  },
+  "@type": "Person",
+  "url": "https://www.rubensworks.net/",
+  "image": "https://www.rubensworks.net/img/ruben.jpg"
+}

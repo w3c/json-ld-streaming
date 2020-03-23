@@ -1,0 +1,2 @@
+<ex:foo2> <ex:bar2> "baz" .
+<ex:foo> <ex:bar> <ex:foo2> .

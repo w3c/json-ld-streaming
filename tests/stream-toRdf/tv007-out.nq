@@ -1,0 +1,4 @@
+<https://www.rubensworks.net/#me> <http://schema.org/image> "https://www.rubensworks.net/img/ruben.jpg" .
+<https://www.rubensworks.net/#me> <http://schema.org/name> "Ruben Taelman" .
+<https://www.rubensworks.net/#me> <http://schema.org/url> "https://www.rubensworks.net/" .
+<https://www.rubensworks.net/#me> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
