@@ -87,6 +87,47 @@
       </p>
     </section>
     
+    <section id="conformance">
+      <p>
+          <a>Streaming RDF Deserializers</a> and <a>Streaming RDF Serializers</a> can claim conformance to this specification.
+      </p>
+
+      <p>
+        A conforming <dfn data-lt="Streaming RDF Deserializers">Streaming RDF Deserializer</dfn> is a system that can
+        <a href="#streaming-deserialization">deserialize JSON-LD to RDF</a>
+        for JSON-LD documents adhering to the <a href="streaming-document-form">Streaming Document Form</a>
+        as defined in this specification,
+        and is a conforming <a href="https://www.w3.org/TR/json-ld-api/#dfn-rdf-serializers-deserializers">RDF Deserializer</a>
+        according to the JSON-LD [[JSON-LD]] specification.
+      </p>
+      
+      <p>
+        A conforming <dfn data-lt="Streaming RDF Serializers">Streaming RDF Serializer</dfn> is a system that can
+        <a href="#streaming-serialization">serialize RDF to JSON-LD</a>
+        for RDF datasets adhering to the <a href="streaming-rdf-form">Streaming RDF Form</a>
+        as defined in this specification,
+        and is a conforming <a href="https://www.w3.org/TR/json-ld-api/#dfn-rdf-serializers-deserializers">RDF Serializer</a>
+        according to the JSON-LD [[JSON-LD]] specification.
+      </p>
+
+      <p>
+        The <a href="streaming-processing">processing discussion</a> in this specification merely contains implementation guidelines.
+        Thus, <a>Streaming RDF Deserializers</a> and <a>Streaming RDF Serializers</a> may
+        implement the algorithms given in this specification in any way desired,
+        so long as the end result is indistinguishable from the result that would
+        be obtained by the specification's algorithms.
+      </p>
+
+      <p class="note">
+        Implementers can partially check their level of conformance to
+        this specification by successfully passing the test cases of the
+        <a href="https://w3c.github.io/json-ld-streaming/tests/">Streaming JSON-LD test suite</a>.
+        Note, however, that passing all the tests in the test
+        suite does not imply complete conformance to this specification. It only implies
+        that the implementation conforms to aspects tested by the test suite.
+      </p>
+    </section> <!-- end of Conformance section -->
+    
     <section id="streaming-document-form">
       <h2>Streaming Document Form</h2>
       <p>
