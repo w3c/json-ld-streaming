@@ -37,24 +37,7 @@ comprehensive JSON-LD testing solution for developers creating JSON-LD Processor
 
 <p>For <em>NegativeEvaluationTests</em>, the result is a string associated with the expected error code.</p>
 
-<p>Unless <code>processingMode</code> is set explicitly in a test entry, <code>processingMode</code> is compatible with both <code>json-ld-1.0</code> and <code>json-ld-1.1</code>.</p>
-
 <p>Test results that include a context input presume that the context is provided locally, and not from the referenced location, thus the results will include the content of the context file, rather than a reference.</p>
-
-<h2 id="json-ld-object-comparison">JSON-LD Object comparison</h2>
-
-<p>If algorithms are invoked with the <code>ordered</code> flag set to <code>true</code>, simple JSON Object comparison may be used, as the order of all arrays will be preserved (except for <em>fromRdf</em>, unless the input quads are also ordered). If <code>ordered</code> is <code>false</code>, then the following algorithm will ensure arrays other than values of <code>@list</code> are compared without regard to order.</p>
-
-<p>JSON-LD Object comparison compares JSON objects, arrays, and values recursively for equality.</p>
-
-<ul>
-<li>JSON objects are compared entry by entry without regard to the ordering of entries within the object. Each entry must have a corresponding entry in the object being compared to. Values are compared recursively.</li>
-<li>JSON arrays are generally compared without regard to order (the lone exception being if the referencing key is <code>@list</code>). Each item within the array must be equivalent to an item in the array being compared to by using the comparison algorithm recursively. For values of <code>@list</code>, the order of these items is significant.</li>
-<li>JSON values are compared using strict equality.</li>
-<li>Values of <code>@language</code>, and other places where language tags may be used are specified in lowercase in the test results. Implementations should either normalize language tags for testing purposes, or compare language tags in a case-independent way.</li>
-</ul>
-
-<p>Note that some tests require re-expansion and comparison, as list values may exist as values of properties that have <code>@container: @list</code> and the comparison algorithm will not consider ordering significant.</p>
 
 <h1>Running tests</h1>
 
@@ -144,13 +127,6 @@ Test te001 @context must come before @id
 <dd>
 invalid streaming key order
 </dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
-</dd>
 </dl>
 </dd>
 <dt id='te002'>
@@ -171,13 +147,6 @@ Test te002 @context must come before properties
 <dt>expect</dt>
 <dd>
 invalid streaming key order
-</dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
 </dd>
 </dl>
 </dd>
@@ -200,13 +169,6 @@ Test te003 @context must come before @type with context
 <dd>
 invalid streaming key order
 </dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
-</dd>
 </dl>
 </dd>
 <dt id='te004'>
@@ -227,13 +189,6 @@ Test te004 @type with context must come before @id
 <dt>expect</dt>
 <dd>
 invalid streaming key order
-</dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
 </dd>
 </dl>
 </dd>
@@ -256,13 +211,6 @@ Test te005 @type with context must come before properties
 <dd>
 invalid streaming key order
 </dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
-</dd>
 </dl>
 </dd>
 <dt id='te006'>
@@ -283,13 +231,6 @@ Test te006 Embedded @context must come before @id
 <dt>expect</dt>
 <dd>
 invalid streaming key order
-</dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
 </dd>
 </dl>
 </dd>
@@ -312,13 +253,6 @@ Test te007 Embedded @context must come before properties
 <dd>
 invalid streaming key order
 </dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
-</dd>
 </dl>
 </dd>
 <dt id='tv001'>
@@ -339,13 +273,6 @@ Test tv001 @context, @id and properties
 <dt>expect</dt>
 <dd>
 <a href='stream-toRdf/tv001-out.nq'>stream-toRdf/tv001-out.nq</a>
-</dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
 </dd>
 </dl>
 </dd>
@@ -368,13 +295,6 @@ Test tv002 @context, blank @id and properties
 <dd>
 <a href='stream-toRdf/tv002-out.nq'>stream-toRdf/tv002-out.nq</a>
 </dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
-</dd>
 </dl>
 </dd>
 <dt id='tv003'>
@@ -395,13 +315,6 @@ Test tv003 @context, implicit @id and properties
 <dt>expect</dt>
 <dd>
 <a href='stream-toRdf/tv003-out.nq'>stream-toRdf/tv003-out.nq</a>
-</dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
 </dd>
 </dl>
 </dd>
@@ -424,13 +337,6 @@ Test tv004 Nested nodes
 <dd>
 <a href='stream-toRdf/tv004-out.nq'>stream-toRdf/tv004-out.nq</a>
 </dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
-</dd>
 </dl>
 </dd>
 <dt id='tv005'>
@@ -451,13 +357,6 @@ Test tv005 Nested nodes and embedded context
 <dt>expect</dt>
 <dd>
 <a href='stream-toRdf/tv005-out.nq'>stream-toRdf/tv005-out.nq</a>
-</dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
 </dd>
 </dl>
 </dd>
@@ -480,13 +379,6 @@ Test tv006 @context, @type-scoped context, @id, and other properties
 <dd>
 <a href='stream-toRdf/tv006-out.nq'>stream-toRdf/tv006-out.nq</a>
 </dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
-</dd>
 </dl>
 </dd>
 <dt id='tv007'>
@@ -507,13 +399,6 @@ Test tv007 @context, plain @type, @id, and other properties
 <dt>expect</dt>
 <dd>
 <a href='stream-toRdf/tv007-out.nq'>stream-toRdf/tv007-out.nq</a>
-</dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
 </dd>
 </dl>
 </dd>
@@ -536,13 +421,6 @@ Test tv008 No @context and @id
 <dd>
 <a href='stream-toRdf/tv008-out.nq'>stream-toRdf/tv008-out.nq</a>
 </dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
-</dd>
 </dl>
 </dd>
 <dt id='tv009'>
@@ -563,13 +441,6 @@ Test tv009 Deeply nested nodes
 <dt>expect</dt>
 <dd>
 <a href='stream-toRdf/tv009-out.nq'>stream-toRdf/tv009-out.nq</a>
-</dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
 </dd>
 </dl>
 </dd>
@@ -592,13 +463,6 @@ Test tv010 Deeply nested nodes without @id
 <dd>
 <a href='stream-toRdf/tv010-out.nq'>stream-toRdf/tv010-out.nq</a>
 </dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
-</dd>
 </dl>
 </dd>
 <dt id='tv011'>
@@ -619,13 +483,6 @@ Test tv011 @id after properties
 <dt>expect</dt>
 <dd>
 <a href='stream-toRdf/tv011-out.nq'>stream-toRdf/tv011-out.nq</a>
-</dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
 </dd>
 </dl>
 </dd>
@@ -648,13 +505,6 @@ Test tv012 No @id after properties
 <dd>
 <a href='stream-toRdf/tv012-out.nq'>stream-toRdf/tv012-out.nq</a>
 </dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
-</dd>
 </dl>
 </dd>
 <dt id='tv013'>
@@ -675,13 +525,6 @@ Test tv013 @id after properties in nested node
 <dt>expect</dt>
 <dd>
 <a href='stream-toRdf/tv013-out.nq'>stream-toRdf/tv013-out.nq</a>
-</dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
 </dd>
 </dl>
 </dd>
@@ -704,13 +547,6 @@ Test tv014 No @id after properties in nested node
 <dd>
 <a href='stream-toRdf/tv014-out.nq'>stream-toRdf/tv014-out.nq</a>
 </dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
-</dd>
 </dl>
 </dd>
 <dt id='tv015'>
@@ -731,13 +567,6 @@ Test tv015 @id after properties in nested node with outer @id after node
 <dt>expect</dt>
 <dd>
 <a href='stream-toRdf/tv015-out.nq'>stream-toRdf/tv015-out.nq</a>
-</dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
 </dd>
 </dl>
 </dd>
@@ -760,13 +589,6 @@ Test tv016 No @id after properties in nested node and no outer @id
 <dd>
 <a href='stream-toRdf/tv016-out.nq'>stream-toRdf/tv016-out.nq</a>
 </dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
-</dd>
 </dl>
 </dd>
 <dt id='tv017'>
@@ -787,13 +609,6 @@ Test tv017 @id after @graph and properties
 <dt>expect</dt>
 <dd>
 <a href='stream-toRdf/tv017-out.nq'>stream-toRdf/tv017-out.nq</a>
-</dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
 </dd>
 </dl>
 </dd>
@@ -816,13 +631,6 @@ Test tv018 No @id after @graph and properties
 <dd>
 <a href='stream-toRdf/tv018-out.nq'>stream-toRdf/tv018-out.nq</a>
 </dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
-</dd>
 </dl>
 </dd>
 <dt id='tv019'>
@@ -843,13 +651,6 @@ Test tv019 @id after @graph and properties and late inner @id
 <dt>expect</dt>
 <dd>
 <a href='stream-toRdf/tv019-out.nq'>stream-toRdf/tv019-out.nq</a>
-</dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
 </dd>
 </dl>
 </dd>
@@ -872,13 +673,6 @@ Test tv020 No @id after @graph and properties and late inner @id
 <dd>
 <a href='stream-toRdf/tv020-out.nq'>stream-toRdf/tv020-out.nq</a>
 </dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
-</dd>
 </dl>
 </dd>
 <dt id='tv021'>
@@ -900,13 +694,6 @@ Test tv021 @id after @graph and properties and no @id
 <dd>
 <a href='stream-toRdf/tv021-out.nq'>stream-toRdf/tv021-out.nq</a>
 </dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
-</dd>
 </dl>
 </dd>
 <dt id='tv022'>
@@ -927,13 +714,6 @@ Test tv022 No @id after @graph and properties and no @id
 <dt>expect</dt>
 <dd>
 <a href='stream-toRdf/tv022-out.nq'>stream-toRdf/tv022-out.nq</a>
-</dd>
-<dt>Options</dt>
-<dd>
-<dl class='options'>
-<dt>specVersion</dt>
-<dd>json-ld-1.1</dd>
-</dl>
 </dd>
 </dl>
 </dd>
