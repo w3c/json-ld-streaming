@@ -1,0 +1,17 @@
+task default: [ "manifests.nt", "earl.ttl", "earl.html" ]
+
+desc "Create concatenated test manifests"
+file "manifests.nt" do
+  require 'rdf'
+  require 'json/ld'
+  require 'rdf/ntriples'
+  graph = RDF::Graph.new do |g|
+    %w( https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest.jsonld
+    ).each do |man|
+      puts "load #{man}"
+      g.load(man, unique_bnodes: true)
+    end
+  end
+  puts "write"
+  RDF::NTriples::Writer.open("manifests.nt", unique_bnodes: true, validate: false) {|w| w << graph}
+end

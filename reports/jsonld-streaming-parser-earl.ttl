@@ -1,0 +1,468 @@
+@prefix dc: <http://purl.org/dc/terms/>.
+@prefix doap: <http://usefulinc.com/ns/doap#>.
+@prefix earl: <http://www.w3.org/ns/earl#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix rdft: <http://www.w3.org/ns/rdftest#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+
+<> foaf:primaryTopic <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    dc:issued "2020-03-24T18:33:20.672Z"^^xsd:dateTime;
+    foaf:maker <https://www.rubensworks.net/#me>.
+<https://www.npmjs.com/package/jsonld-streaming-parser/> a earl:Software, earl:TestSubject, doap:Project;
+    doap:name "jsonld-streaming-parser";
+    dc:title "jsonld-streaming-parser";
+    doap:homepage <https://github.com/rubensworks/jsonld-streaming-parser.js#readme>;
+    doap:license <http://opensource.org/licenses/MIT>;
+    doap:programming-language "JavaScript";
+    doap:implements <https://www.w3.org/TR/json-ld/>;
+    doap:category <http://dbpedia.org/resource/Resource_Description_Framework>;
+    doap:download-page <https://npmjs.org/package/jsonld-streaming-parser>;
+    doap:bug-database <https://github.com/rubensworks/jsonld-streaming-parser.js/issues>;
+    doap:developer <https://www.rubensworks.net/#me>;
+    doap:maintainer <https://www.rubensworks.net/#me>;
+    doap:documenter <https://www.rubensworks.net/#me>;
+    doap:maker <https://www.rubensworks.net/#me>;
+    dc:creator <https://www.rubensworks.net/#me>;
+    dc:description "Streaming JSON-LD parser"@en;
+    doap:description "Streaming JSON-LD parser"@en.
+<https://www.rubensworks.net/#me> a foaf:Person, earl:Assertor;
+    foaf:name "Ruben Taelman <rubensworks@gmail.com>";
+    foaf:homepage <https://www.rubensworks.net/>.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te001> a earl:TestCriterion, earl:TestCase;
+    dc:title "@context must come before @id";
+    dc:description "Generate an error if @context comes after @id";
+    earl:assertions _:assertions0.
+_:assertions0 rdf:first _:assertion0;
+    rdf:rest rdf:nil.
+_:assertion0 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te001>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result0.
+_:result0 a earl:TestResult;
+    earl:outcome earl:failed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te002> a earl:TestCriterion, earl:TestCase;
+    dc:title "@context must come before properties";
+    dc:description "Generate an error if @context comes after properties";
+    earl:assertions _:assertions1.
+_:assertions1 rdf:first _:assertion1;
+    rdf:rest rdf:nil.
+_:assertion1 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te002>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result1.
+_:result1 a earl:TestResult;
+    earl:outcome earl:failed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te003> a earl:TestCriterion, earl:TestCase;
+    dc:title "@context must come before @type with context";
+    dc:description "Generate an error if @context comes after @type with a type-scoped context";
+    earl:assertions _:assertions2.
+_:assertions2 rdf:first _:assertion2;
+    rdf:rest rdf:nil.
+_:assertion2 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te003>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result2.
+_:result2 a earl:TestResult;
+    earl:outcome earl:failed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te004> a earl:TestCriterion, earl:TestCase;
+    dc:title "@type with context must come before @id";
+    dc:description "Generate an error if @type with context comes after @id";
+    earl:assertions _:assertions3.
+_:assertions3 rdf:first _:assertion3;
+    rdf:rest rdf:nil.
+_:assertion3 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te004>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result3.
+_:result3 a earl:TestResult;
+    earl:outcome earl:failed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te005> a earl:TestCriterion, earl:TestCase;
+    dc:title "@type with context must come before properties";
+    dc:description "Generate an error if @type with context comes after properties";
+    earl:assertions _:assertions4.
+_:assertions4 rdf:first _:assertion4;
+    rdf:rest rdf:nil.
+_:assertion4 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te005>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result4.
+_:result4 a earl:TestResult;
+    earl:outcome earl:failed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te006> a earl:TestCriterion, earl:TestCase;
+    dc:title "Embedded @context must come before @id";
+    dc:description "Generate an error if embedded @context comes after @id";
+    earl:assertions _:assertions5.
+_:assertions5 rdf:first _:assertion5;
+    rdf:rest rdf:nil.
+_:assertion5 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te006>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result5.
+_:result5 a earl:TestResult;
+    earl:outcome earl:failed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te007> a earl:TestCriterion, earl:TestCase;
+    dc:title "Embedded @context must come before properties";
+    dc:description "Generate an error if embedded @context comes after properties";
+    earl:assertions _:assertions6.
+_:assertions6 rdf:first _:assertion6;
+    rdf:rest rdf:nil.
+_:assertion6 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te007>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result6.
+_:result6 a earl:TestResult;
+    earl:outcome earl:failed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv001> a earl:TestCriterion, earl:TestCase;
+    dc:title "@context, @id and properties";
+    dc:description "@context, @id and properties";
+    earl:assertions _:assertions7.
+_:assertions7 rdf:first _:assertion7;
+    rdf:rest rdf:nil.
+_:assertion7 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv001>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result7.
+_:result7 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv002> a earl:TestCriterion, earl:TestCase;
+    dc:title "@context, blank @id and properties";
+    dc:description "@context, blank @id and properties";
+    earl:assertions _:assertions8.
+_:assertions8 rdf:first _:assertion8;
+    rdf:rest rdf:nil.
+_:assertion8 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv002>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result8.
+_:result8 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv003> a earl:TestCriterion, earl:TestCase;
+    dc:title "@context, implicit @id and properties";
+    dc:description "@context, implicit @id and properties";
+    earl:assertions _:assertions9.
+_:assertions9 rdf:first _:assertion9;
+    rdf:rest rdf:nil.
+_:assertion9 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv003>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result9.
+_:result9 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv004> a earl:TestCriterion, earl:TestCase;
+    dc:title "Nested nodes";
+    dc:description "Nested nodes";
+    earl:assertions _:assertions10.
+_:assertions10 rdf:first _:assertion10;
+    rdf:rest rdf:nil.
+_:assertion10 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv004>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result10.
+_:result10 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv005> a earl:TestCriterion, earl:TestCase;
+    dc:title "Nested nodes and embedded context";
+    dc:description "Nested nodes and embedded context";
+    earl:assertions _:assertions11.
+_:assertions11 rdf:first _:assertion11;
+    rdf:rest rdf:nil.
+_:assertion11 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv005>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result11.
+_:result11 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv006> a earl:TestCriterion, earl:TestCase;
+    dc:title "@context, @type-scoped context, @id, and other properties";
+    dc:description "@context, @type-scoped context, @id, and other properties";
+    earl:assertions _:assertions12.
+_:assertions12 rdf:first _:assertion12;
+    rdf:rest rdf:nil.
+_:assertion12 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv006>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result12.
+_:result12 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv007> a earl:TestCriterion, earl:TestCase;
+    dc:title "@context, plain @type, @id, and other properties";
+    dc:description "@type without an attached context may appear anywhere";
+    earl:assertions _:assertions13.
+_:assertions13 rdf:first _:assertion13;
+    rdf:rest rdf:nil.
+_:assertion13 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv007>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result13.
+_:result13 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv008> a earl:TestCriterion, earl:TestCase;
+    dc:title "No @context and @id";
+    dc:description "@context and @id are not required";
+    earl:assertions _:assertions14.
+_:assertions14 rdf:first _:assertion14;
+    rdf:rest rdf:nil.
+_:assertion14 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv008>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result14.
+_:result14 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv009> a earl:TestCriterion, earl:TestCase;
+    dc:title "Deeply nested nodes";
+    dc:description "Deeply nested nodes";
+    earl:assertions _:assertions15.
+_:assertions15 rdf:first _:assertion15;
+    rdf:rest rdf:nil.
+_:assertion15 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv009>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result15.
+_:result15 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv010> a earl:TestCriterion, earl:TestCase;
+    dc:title "Deeply nested nodes without @id";
+    dc:description "Deeply nested nodes without @id";
+    earl:assertions _:assertions16.
+_:assertions16 rdf:first _:assertion16;
+    rdf:rest rdf:nil.
+_:assertion16 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv010>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result16.
+_:result16 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv011> a earl:TestCriterion, earl:TestCase;
+    dc:title "@id after properties";
+    dc:description "Properties should be buffered until @id is encountered";
+    earl:assertions _:assertions17.
+_:assertions17 rdf:first _:assertion17;
+    rdf:rest rdf:nil.
+_:assertion17 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv011>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result17.
+_:result17 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv012> a earl:TestCriterion, earl:TestCase;
+    dc:title "No @id after properties";
+    dc:description "Properties should be buffered until node closes";
+    earl:assertions _:assertions18.
+_:assertions18 rdf:first _:assertion18;
+    rdf:rest rdf:nil.
+_:assertion18 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv012>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result18.
+_:result18 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv013> a earl:TestCriterion, earl:TestCase;
+    dc:title "@id after properties in nested node";
+    dc:description "Properties in nested node should be buffered until @id is encountered";
+    earl:assertions _:assertions19.
+_:assertions19 rdf:first _:assertion19;
+    rdf:rest rdf:nil.
+_:assertion19 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv013>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result19.
+_:result19 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv014> a earl:TestCriterion, earl:TestCase;
+    dc:title "No @id after properties in nested node";
+    dc:description "Properties in nested node should be buffered until node closes";
+    earl:assertions _:assertions20.
+_:assertions20 rdf:first _:assertion20;
+    rdf:rest rdf:nil.
+_:assertion20 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv014>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result20.
+_:result20 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv015> a earl:TestCriterion, earl:TestCase;
+    dc:title "@id after properties in nested node with outer @id after node";
+    dc:description "Properties in nested node with @id after node should be buffered until @id is encountered";
+    earl:assertions _:assertions21.
+_:assertions21 rdf:first _:assertion21;
+    rdf:rest rdf:nil.
+_:assertion21 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv015>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result21.
+_:result21 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv016> a earl:TestCriterion, earl:TestCase;
+    dc:title "No @id after properties in nested node and no outer @id";
+    dc:description "Properties in nested node and no outer @id should be buffered until node closes";
+    earl:assertions _:assertions22.
+_:assertions22 rdf:first _:assertion22;
+    rdf:rest rdf:nil.
+_:assertion22 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv016>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result22.
+_:result22 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv017> a earl:TestCriterion, earl:TestCase;
+    dc:title "@id after @graph and properties";
+    dc:description "Properties with @graph should be buffered until @id is encountered";
+    earl:assertions _:assertions23.
+_:assertions23 rdf:first _:assertion23;
+    rdf:rest rdf:nil.
+_:assertion23 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv017>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result23.
+_:result23 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv018> a earl:TestCriterion, earl:TestCase;
+    dc:title "No @id after @graph and properties";
+    dc:description "Properties with @graph should be buffered until node closes";
+    earl:assertions _:assertions24.
+_:assertions24 rdf:first _:assertion24;
+    rdf:rest rdf:nil.
+_:assertion24 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv018>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result24.
+_:result24 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv019> a earl:TestCriterion, earl:TestCase;
+    dc:title "@id after @graph and properties and late inner @id";
+    dc:description "Properties with @graph should be buffered until @id is encountered";
+    earl:assertions _:assertions25.
+_:assertions25 rdf:first _:assertion25;
+    rdf:rest rdf:nil.
+_:assertion25 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv019>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result25.
+_:result25 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv020> a earl:TestCriterion, earl:TestCase;
+    dc:title "No @id after @graph and properties and late inner @id";
+    dc:description "Properties with @graph should be buffered until node closes and @id is encountered";
+    earl:assertions _:assertions26.
+_:assertions26 rdf:first _:assertion26;
+    rdf:rest rdf:nil.
+_:assertion26 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv020>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result26.
+_:result26 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv021> a earl:TestCriterion, earl:TestCase;
+    dc:title "@id after @graph and properties and no @id";
+    dc:description "Properties with @graph should be buffered until node closes and @id is encountered";
+    earl:assertions _:assertions27.
+_:assertions27 rdf:first _:assertion27;
+    rdf:rest rdf:nil.
+_:assertion27 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv021>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result27.
+_:result27 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+<https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv022> a earl:TestCriterion, earl:TestCase;
+    dc:title "No @id after @graph and properties and no @id";
+    dc:description "Properties with @graph should be buffered until nodes close";
+    earl:assertions _:assertions28.
+_:assertions28 rdf:first _:assertion28;
+    rdf:rest rdf:nil.
+_:assertion28 a earl:Assertion;
+    earl:assertedBy <https://www.rubensworks.net/#me>;
+    earl:test <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv022>;
+    earl:subject <https://www.npmjs.com/package/jsonld-streaming-parser/>;
+    earl:mode earl:automatic;
+    earl:result _:result28.
+_:result28 a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
