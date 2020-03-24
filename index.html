@@ -292,8 +292,8 @@
                       }
                     }
                   },
-                  "@id": "https://www.rubensworks.net/#me",
                   "@type": "Person",
+                  "@id": "https://www.rubensworks.net/#me",
                   "name": "Ruben Taelman",
                   "url": "https://www.rubensworks.net/",
                   "image": "https://www.rubensworks.net/img/ruben.jpg"
@@ -354,10 +354,10 @@
                   "image": "https://www.rubensworks.net/img/ruben.jpg"
                 }
               </pre>
-              <pre class="example" title="Invalid streaming document where @id comes too late">
+              <pre class="example" title="Invalid streaming document where @type comes too late">
                 {
                   "http://schema.org/name": "Ruben Taelman",
-                  "@id": "https://www.rubensworks.net/#me", <span class="comment">// @id must come before name</span>
+                  "@type": "http://schema.org/Person", <span class="comment">// @type must come before properties</span>
                   "http://schema.org/url": "https://www.rubensworks.net/",
                   "http://schema.org/image": "https://www.rubensworks.net/img/ruben.jpg"
                 }
@@ -404,13 +404,13 @@
           @prefix schema: &lt;http://schema.org/&gt; .
           &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
           &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://www.rubensworks.net/&gt; .
-          &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellog" .
+          &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellogg" .
           &lt;https://greggkellogg.net/foaf#me&gt; schema:url &lt;https://greggkellogg.net/&gt; .
         </pre>
         <pre class="example" title="A second order of triples">
           @prefix schema: &lt;http://schema.org/&gt; .
           &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
-          &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellog" .
+          &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellogg" .
           &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://www.rubensworks.net/&gt; .
           &lt;https://greggkellogg.net/foaf#me&gt; schema:url &lt;https://greggkellogg.net/&gt; .
         </pre>
@@ -439,7 +439,7 @@
             },
             {
               "@id": "https://greggkellogg.net/foaf#me",
-              "http://schema.org/name": "Gregg Kellog",
+              "http://schema.org/name": "Gregg Kellogg",
               "http://schema.org/url": { "@id": "https://greggkellogg.net/" }
             }
           ]
@@ -452,7 +452,7 @@
             },
             {
               "@id": "https://www.rubensworks.net/#me",
-              "http://schema.org/name": "Gregg Kellog"
+              "http://schema.org/name": "Gregg Kellogg"
             },
             {
               "@id": "https://greggkellogg.net/foaf#me",
@@ -508,7 +508,7 @@
         </div>
         <p>
             An RDF dataset that adheres to at least one of these recommendations is considered to have
-            a <dfn data-dfn-type="dfn" id="dfn-streaming-RDF-dataset-form">streaming RDF dataset form</dfn>.
+            a <a href="#dfn-streaming-RDF-dataset-form" class="internalDFN" data-link-type="dfn">streaming RDF dataset form</a>.
         </p>
       </section>
       <section>
@@ -532,7 +532,7 @@
                   &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://www.rubensworks.net/&gt; .
                 }
                 &lt;http://example.org/graph2&gt; {
-                  &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellog" .
+                  &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellogg" .
                 }
                 &lt;http://example.org/graph2&gt; {
                   &lt;https://greggkellogg.net/foaf#me&gt; schema:url &lt;https://greggkellogg.net/&gt; .
@@ -555,7 +555,7 @@
                     "@graph": [
                       {
                         "@id": "https://greggkellogg.net/foaf#me",
-                        "http://schema.org/name": "Gregg Kellog",
+                        "http://schema.org/name": "Gregg Kellogg",
                         "http://schema.org/url": { "@id": "https://greggkellogg.net/" }
                       }
                     ]
@@ -569,7 +569,7 @@
                 @prefix schema: &lt;http://schema.org/&gt; .
                 &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
                 &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://www.rubensworks.net/&gt; .
-                &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellog" .
+                &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellogg" .
                 &lt;https://greggkellogg.net/foaf#me&gt; schema:url &lt;https://greggkellogg.net/&gt; .
               </pre>
               <pre class="example" title="Triples with the same subject can be grouped within the same @id block">
@@ -581,7 +581,7 @@
                   },
                   {
                     "@id": "https://greggkellogg.net/foaf#me",
-                    "http://schema.org/name": "Gregg Kellog",
+                    "http://schema.org/name": "Gregg Kellogg",
                     "http://schema.org/url": { "@id": "https://greggkellogg.net/" }
                   }
                 ]
@@ -624,7 +624,7 @@
                 }
                 &lt;http://example.org/graph1&gt; schema:name "Graph 1" .
                 &lt;http://example.org/graph2&gt; {
-                  &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellog" .
+                  &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellogg" .
                 }
                 &lt;http://example.org/graph2&gt; {
                   &lt;https://greggkellogg.net/foaf#me&gt; schema:url &lt;https://greggkellogg.net/&gt; .
@@ -649,7 +649,7 @@
                     "@graph": [
                       {
                         "@id": "https://greggkellogg.net/foaf#me",
-                        "http://schema.org/name": "Gregg Kellog",
+                        "http://schema.org/name": "Gregg Kellogg",
                         "http://schema.org/url": { "@id": "https://greggkellogg.net/" }
                       }
                     ],
@@ -664,7 +664,7 @@
                 @prefix schema: &lt;http://schema.org/&gt; .
                 &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
                 &lt;https://www.rubensworks.net/#me&gt; schema:knows &lt;https://greggkellogg.net/foaf#me&gt; .
-                &lt;https://greggkellogg.net/foaf#me&gt; schema:knows "Gregg Kellog" .
+                &lt;https://greggkellogg.net/foaf#me&gt; schema:knows "Gregg Kellogg" .
               </pre>
               <pre class="example" title="Triples can be chained in nested nodes">
                 [
@@ -673,7 +673,7 @@
                     "http://schema.org/name": "Ruben Taelman",
                     "http://schema.org/knows": {
                       "@id": "https://greggkellogg.net/foaf#me",
-                      "http://schema.org/name": "Gregg Kellog"
+                      "http://schema.org/name": "Gregg Kellogg"
                     }
                   }
                 ]
@@ -701,7 +701,7 @@
             By reading character-by-character, a deserializer can detect the contained JSON nodes and its key-value pairs.
         </p>
         <p>
-            A streaming deserializer SHOULD assume that the <a href="#key-ordering-required">required key ordering</a> of a <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document</a> is present. If a different order is detected, an error MAY be thrown with error code <code>"invalid streaming key order"</code>.
+            A streaming deserializer MUST assume that the <a href="#key-ordering-required">required key ordering</a> of a <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document</a> is present. If a different order is detected, an error MUST be thrown with error code <code>"invalid streaming key order"</code>.
         </p>
         <p>
             The first expected entry in a node is <code>@context</code>.
