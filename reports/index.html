@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content='text/html;charset=utf-8' http-equiv='Content-Type' />
+<link href='earl.jsonld' rel='alternate' />
+<link href='https://www.w3.org/StyleSheets/TR/base' rel='stylesheet' />
+<link href='jsonld-streaming-parser-earl.ttl' rel='related' />
+<title>
+Streaming JSON-LD 1.1 Processor Conformance
+</title>
+<style type='text/css'>
+  /*<![CDATA[*/
+    span[property='dc:description rdfs:comment'] { display: none; }
+    td.PASS { color: green; }
+    td.FAIL { color: red; }
+    table.report {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: outset;
+      border-color: gray;
+      border-collapse: separate;
+      background-color: white;
+    }
+    table.report th {
+      border-width: 1px;
+      padding: 1px;
+      border-style: inset;
+      border-color: gray;
+      background-color: white;
+      -moz-border-radius: ;
+    }
+    table.report td {
+      border-width: 1px;
+      padding: 1px;
+      border-style: inset;
+      border-color: gray;
+      background-color: white;
+      -moz-border-radius: ;
+    }
+    tr.summary {font-weight: bold;}
+    td.passed-all {color: green;}
+    td.passed-most {color: darkorange;}
+    td.passed-some {color: red;}
+    em.rfc2119 {
+      text-transform: lowercase;
+      font-variant:   small-caps;
+      font-style:     normal;
+      color:          #900;
+    }
+    a.testlink {
+      color: inherit;
+      text-decoration: none;
+    }
+    a.testlink:hover {
+      text-decoration: underline;
+    }
+    pre > code {
+      color: #C83500;
+    }
+  /*]]>*/
+</style>
+</head>
+<body prefix='bibo: http://purl.org/ontology/bibo/ earl: http://www.w3.org/ns/earl# doap: http://usefulinc.com/ns/doap# mf: http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#' vocab='http://www.w3.org/ns/earl#'>
+<div class='head' role='contentinfo'>
+<p>
+<a href='http://www.w3.org/'>
+<img alt='W3C' height='48' src='https://www.w3.org/Icons/w3c_home' width='72' />
+</a>
+</p>
+<h1 class='title p-name' id='title' property='dc:title'>
+JSON-LD 1.1 Processor Conformance
+</h1>
+<h2 class='subtitle'>
+EARL results from the JSON-LD 1.1 Test Suite
+</h2>
+<h2 id='w3c-document-28-october-2015'>
+<time class='dt-published' datetime='2020-03-25' property='dc:issued'>
+25 March 2020
+</time>
+</h2>
+<dl>
+<dt>Editor:</dt><dd inlist='inlist' property='bibo:editor'><span typeof='foaf:Person'><meta content='Ruben Taelman' property='foaf:name' /><a href='https://www.rubensworks.net/' property='foaf:homepage'>Ruben Taelman</a></span></dd></dl>
+<p>
+This document is also available in these non-normative formats:
+<a href='earl.jsonld' re='alternate'>JSON-LD</a>
+.
+</p>
+<p class='copyright'>
+<a href='http://www.w3.org/Consortium/Legal/ipr-notice#Copyright'>
+Copyright
+</a>
+© 2010-2019
+<a href='http://www.w3.org/'>
+<sup>®</sup>
+</a>
+(<a href='http://www.csail.mit.edu/'><abbr title='Massachusetts Institute of Technology'>MIT</abbr></a>, <a href='http://www.ercim.eu/'><abbr title='European Research Consortium for Informatics and Mathematics'>ERCIM</abbr></a>, <a href='http://www.keio.ac.jp/'>Keio</a>, <a href='http://ev.buaa.edu.cn/'>Beihang</a>).
+<abbr title='World Wide Web Consortium'>W3C</abbr>
+<a href='http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer'>liability</a>
+,
+<a href='http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks'>trademark</a>
+and
+<a href='http://www.w3.org/Consortium/Legal/copyright-documents' rel='license'>document use</a>
+rules apply.
+</p>
+<hr />
+</div>
+<section id='abstract'>
+<h2>Abstract</h2>
+<p>
+This document report test subject conformance for and related specifications for
+<span property='doap:name'>Streaming JSON-LD 1.1 Test Suite</span>
+according to the requirements of the Evaluation and Report Language (EARL) 1.0 Schema
+[<a href='https://www.w3.org/TR/EARL10-Schema/'>EARL10-SCHEMA</a>].
+</p>
+<p>
+This report is also available in alternate formats:
+<a href='earl.jsonld'>
+JSON-LD
+</a>
+</p>
+</section>
+<section id='sodt'>
+<h2 id='h-sotd' resource='#h-sotd'>
+<span property='xhv:role' resource='xhv:heading'>
+Status of This Document
+</span>
+</h2>
+<p>
+This document is merely a <abbr title='World Wide Web Consortium'>W3C</abbr>-internal  document.
+It has no official standing of any kind and does not represent consensus of the
+<abbr title='World Wide Web Consortium'>W3C</abbr>
+Membership.
+</p>
+<p>
+This report describes the state of implementation conformance at the time of publication.
+</p>
+</section>
+<section id='toc'>
+<h2 class='introductory' id='h-toc' resource='#h-toc'>
+<span property='xhv:role' resource='xhv:heading'>
+Table of Contents
+</span>
+</h2>
+<ul class='toc' id='respecContents' role='directory'>
+<li class='tocline'>
+<a class='tocxref' href='#instructions-for-submitting-implementation-reports'>
+<span class='secno'>1.</span>
+Instructions for submitting implementation reports
+</a>
+</li>
+<li class='tocline'>
+<a class='tocxref' href='#test-manifests'>
+<span class='secno'>2.</span>
+Test Manifests
+</a>
+<ul class='toc'>
+<li class='tocline'>
+<span class='secno'>2.1</span>
+<a class='tocxref' href='#JSON-LD-Streaming-tests.'>
+JSON-LD Streaming tests.
+</a>
+</li>
+</ul>
+</li>
+<li class='tocline'>
+<a class='tocxref' href='#test-subjects'>
+<span class='secno'>A.</span>
+Test Subjects
+</a>
+<ul class='toc'>
+<li class='tocline'>
+<span class='secno'>A.1</span>
+<a class='tocxref' href='#subj_0'>jsonld-streaming-parser</a>
+</li>
+</ul>
+</li>
+<li class='tocline'>
+<a class='tocxref' href='#individual-test-results'>
+<span class='secno'>B.</span>
+Individual Test Results
+</a>
+</li>
+<li class='tocline'>
+<a class='tocxref' href='#test-definitions'>
+<span class='secno'>C.</span>
+Test Definitions
+</a>
+</li>
+<li class='tocline'>
+<a class='tocxref' href='#report-generation-software'>
+<span class='secno'>D.</span>
+Report Generation Software
+</a>
+</li>
+</ul>
+</section>
+<section id='instructions-for-submitting-implementation-reports'>
+<h2>Instructions for submitting implementation reports</h2>
+
+<p>Tests should be run using the test manifests defined in the
+  <a href="#test-manifests">Test Manifests</a> Section.</p>
+
+<p>The assumed base URI for the tests is <code>&lt;http://example/base/&gt;</code> if needed.</p>
+
+<p>Reports should be submitted in Turtle format to
+  <a href="mailto:public-json-ld-wg@w3.org">Public JSON-LD WG</a>
+  and include an <code>earl:Assertion</code>
+  for each test, referencing the test resource from the associated manifest
+  and the test subject being reported upon. An example test entry is be the following:</p>
+
+<pre><code>  [ a earl:Assertion;&#x000A;    earl:assertedBy &lt;--your-developer-identifier--&gt;;&#x000A;    earl:subject &lt;--your-software-identifier--&gt;;&#x000A;    earl:test &lt;--uri-of-test-from-manifest&gt;;&#x000A;    earl:result [&#x000A;      a earl:TestResult;&#x000A;      earl:outcome earl:passed;&#x000A;      dc:date &quot;2016-12-26T10:18:04-08:00&quot;^^xsd:dateTime];&#x000A;    earl:mode earl:automatic ] .&#x000A;</code></pre>
+
+<p>The Test Subject should be defined as a <code>doap:Project</code>, including the name,
+  homepage and developer(s) of the software (see <a href="https://github.com/edumbill/doap/wiki">DOAP</a>). Optionally, including the
+  project description and programming language. An example test subject description is the following:</p>
+
+<pre><code>  &lt;&gt; foaf:primaryTopic &lt;--your-software-identifier--&gt; ;&#x000A;    dc:issued &quot;2016-12-26T10:18:04-08:00&quot;^^xsd:dateTime ;&#x000A;    foaf:maker &lt;--your-developer-identifier--&gt; .&#x000A;&#x000A;  &lt;--your-software-identifier--&gt; a doap:Project, earl:TestSubject, earl:Software ;&#x000A;    doap:name          &quot;My Cool JSON-LD Parser&quot; ;&#x000A;    doap:revision      &quot;Software version number&quot; ;&#x000A;    doap:developer     &lt;--your-developer-identifier--&gt; ;&#x000A;    doap:homepage      &lt;--your-software-homepace--&gt; ;&#x000A;    doap:description   &quot;--your-project-description--&quot;@en ;&#x000A;    doap:programming-language &quot;--your-implementation-language--&quot; .&#x000A;</code></pre>
+
+<p>The software developer, either an organization or one or more individuals SHOULD be
+  referenced from <code>doap:developer</code> using <a href="http://xmlns.com/foaf/spec">FOAF</a>. For example:</p>
+
+<pre><code>  &lt;--your-developer-identifier--&gt; a foaf:Person, earl:Assertor;&#x000A;    foaf:name &quot;--My Name--&quot;;&#x000A;    foaf:homepage &lt;--my homepage--&gt; .&#x000A;</code></pre>
+</section>
+<section id='test-manifests'>
+<h2>
+<span class='secno'>2.</span>
+Test Manifests
+</h2>
+<section id='JSON-LD-Streaming-tests.'>
+<h2>
+<span class='secno'>2.1</span>
+<span>Streaming</span>
+</h2>
+<table class='report'>
+<tr>
+<th>
+Test
+</th>
+<th>
+<a href='#subj_0'>jsonld-streaming-parser</a>
+</th>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te001'>Test te001: @context must come before @id</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te002'>Test te002: @context must come before properties</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te003'>Test te003: @context must come before @type with context</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te004'>Test te004: @type with context must come before @id</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te005'>Test te005: @type with context must come before properties</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te006'>Test te006: Embedded @context must come before @id</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te007'>Test te007: Embedded @context must come before properties</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv001'>Test tv001: @context, @id and properties</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv002'>Test tv002: @context, blank @id and properties</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv003'>Test tv003: @context, implicit @id and properties</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv004'>Test tv004: Nested nodes</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv005'>Test tv005: Nested nodes and embedded context</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv006'>Test tv006: @context, @type-scoped context, @id, and other properties</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv007'>Test tv007: @context, plain @type, @id, and other properties</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv008'>Test tv008: No @context and @id</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv009'>Test tv009: Deeply nested nodes</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv010'>Test tv010: Deeply nested nodes without @id</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv011'>Test tv011: @id after properties</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv012'>Test tv012: No @id after properties</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv013'>Test tv013: @id after properties in nested node</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv014'>Test tv014: No @id after properties in nested node</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv015'>Test tv015: @id after properties in nested node with outer @id after node</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv016'>Test tv016: No @id after properties in nested node and no outer @id</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv017'>Test tv017: @id after @graph and properties</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv018'>Test tv018: No @id after @graph and properties</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv019'>Test tv019: @id after @graph and properties and late inner @id</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv020'>Test tv020: No @id after @graph and properties and late inner @id</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv021'>Test tv021: @id after @graph and properties and no @id</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv022'>Test tv022: No @id after @graph and properties and no @id</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr class='summary'>
+<td>
+Percentage passed out of 29 Tests
+</td>
+<td class='passed-all'>
+100.0%
+</td>
+</tr>
+</table>
+</section>
+</section>
+<section class='appendix' id='test-subjects'>
+<h2>
+<span class='secno'>A.</span>
+Test Subjects
+</h2>
+<p>
+This report was tested using the following test subjects:
+</p>
+<dl>
+<dt id='subj_0'>
+<span class='secno'>A.1</span>
+<a href='https://www.npmjs.com/package/jsonld-streaming-parser/'>
+<span about='https://www.npmjs.com/package/jsonld-streaming-parser/' property='doap:name'>jsonld-streaming-parser</span>
+</a>
+</dt>
+<dd>
+<dl>
+<dt>Description</dt>
+<dd lang='en' property='doap:description'>Streaming JSON-LD parser</dd>
+<dt>Release</dt>
+<dd property='doap:release'><span property='doap:revision'>unknown</span></dd>
+<dt>Programming Language</dt>
+<dd property='doap:programming-language'>JavaScript</dd>
+<dt>Home Page</dt>
+<dd>
+<a href='https://github.com/rubensworks/jsonld-streaming-parser.js#readme' property='doap:homepage'>
+https://github.com/rubensworks/jsonld-streaming-parser.js#readme
+</a>
+</dd>
+<dt>Developer</dt>
+<dd rel='doap:developer'>
+<div>
+<a href='https://www.rubensworks.net/#me'>
+<span property='foaf:name'>Ruben Taelman &lt;rubensworks@gmail.com&gt;</span>
+</a>
+<a href='https://www.rubensworks.net/' property='foaf:homepage'>
+https://www.rubensworks.net/
+</a>
+</div>
+</dd>
+<dt>
+Test Suite Compliance
+</dt>
+<dd>
+<table class='report'>
+<tbody>
+<tr>
+<td>
+Streaming
+</td>
+<td class='passed-all'>
+29/29 (100.0%)
+</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section class='appendix' id='individual-test-results' rel='xhv:related earl:assertions'>
+<h2>
+<span class='secno'>B.</span>
+Individual Test Results
+</h2>
+<p>
+Individual test results used to construct this report are available here:
+</p>
+<ul>
+<li>
+<a class='source' href='jsonld-streaming-parser-earl.ttl'>jsonld-streaming-parser-earl.ttl</a>
+</li>
+</ul>
+</section>
+<section class='appendix' id='report-generation-software' property='earl:generatedBy' resource='http://rubygems.org/gems/earl-report' typeof='Software doap:Project'>
+<h2>
+<span class='secno'>D.</span>
+Report Generation Software
+</h2>
+<p>
+This report generated by
+<span property='doap:name'><a href='http://rubygems.org/gems/earl-report'>earl-report</a></span>
+<meta content='Earl Report summary generator' property='doap:shortdesc' />
+<meta content='EarlReport generates HTML+RDFa rollups of multiple EARL reports' property='doap:description' />
+version
+<span property='doap:release' resource='https://github.com/gkellogg/earl-report/tree/0.4.9' typeof='doap:Version'>
+<span property='doap:revision'>0.4.9</span>
+<meta content='earl-report-0.4.9' property='doap:name' />
+<meta datatype='xsd:date' property='doap:created' />
+</span>
+an
+<a href='http://unlicense.org' property='doap:license'>Unlicensed</a>
+<span property='doap:programming-language'>Ruby</span>
+application. More information is available at
+<a href='https://github.com/gkellogg/earl-report' property='doap:homepage'>https://github.com/gkellogg/earl-report</a>
+.
+</p>
+<p property='doap:developer' resource='http://greggkellogg.net/foaf#me' typeof='foaf:Person'>
+This software is provided by
+<a href='http://greggkellogg.net/' property='foaf:homepage'><span about='http://greggkellogg.net/foaf#me' property='foaf:name'>Gregg Kellogg</span></a>
+in hopes that it might make the lives of conformance testers easier.
+</p>
+</section>
+</body>
+</html>
