@@ -9,7 +9,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 
 <> foaf:primaryTopic <https://www.npmjs.com/package/jsonld-streaming-parser/>;
-    dc:issued "2020-03-24T18:33:20.672Z"^^xsd:dateTime;
+    dc:issued "2020-03-25T14:19:46.507Z"^^xsd:dateTime;
     foaf:maker <https://www.rubensworks.net/#me>.
 <https://www.npmjs.com/package/jsonld-streaming-parser/> a earl:Software, earl:TestSubject, doap:Project;
     doap:name "jsonld-streaming-parser";
@@ -44,8 +44,8 @@ _:assertion0 a earl:Assertion;
     earl:mode earl:automatic;
     earl:result _:result0.
 _:result0 a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    earl:outcome earl:passed;
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te002> a earl:TestCriterion, earl:TestCase;
     dc:title "@context must come before properties";
     dc:description "Generate an error if @context comes after properties";
@@ -59,8 +59,8 @@ _:assertion1 a earl:Assertion;
     earl:mode earl:automatic;
     earl:result _:result1.
 _:result1 a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    earl:outcome earl:passed;
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te003> a earl:TestCriterion, earl:TestCase;
     dc:title "@context must come before @type with context";
     dc:description "Generate an error if @context comes after @type with a type-scoped context";
@@ -74,8 +74,8 @@ _:assertion2 a earl:Assertion;
     earl:mode earl:automatic;
     earl:result _:result2.
 _:result2 a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    earl:outcome earl:passed;
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te004> a earl:TestCriterion, earl:TestCase;
     dc:title "@type with context must come before @id";
     dc:description "Generate an error if @type with context comes after @id";
@@ -89,8 +89,8 @@ _:assertion3 a earl:Assertion;
     earl:mode earl:automatic;
     earl:result _:result3.
 _:result3 a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    earl:outcome earl:passed;
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te005> a earl:TestCriterion, earl:TestCase;
     dc:title "@type with context must come before properties";
     dc:description "Generate an error if @type with context comes after properties";
@@ -104,8 +104,8 @@ _:assertion4 a earl:Assertion;
     earl:mode earl:automatic;
     earl:result _:result4.
 _:result4 a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    earl:outcome earl:passed;
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te006> a earl:TestCriterion, earl:TestCase;
     dc:title "Embedded @context must come before @id";
     dc:description "Generate an error if embedded @context comes after @id";
@@ -119,8 +119,8 @@ _:assertion5 a earl:Assertion;
     earl:mode earl:automatic;
     earl:result _:result5.
 _:result5 a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    earl:outcome earl:passed;
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te007> a earl:TestCriterion, earl:TestCase;
     dc:title "Embedded @context must come before properties";
     dc:description "Generate an error if embedded @context comes after properties";
@@ -134,8 +134,8 @@ _:assertion6 a earl:Assertion;
     earl:mode earl:automatic;
     earl:result _:result6.
 _:result6 a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    earl:outcome earl:passed;
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv001> a earl:TestCriterion, earl:TestCase;
     dc:title "@context, @id and properties";
     dc:description "@context, @id and properties";
@@ -150,7 +150,7 @@ _:assertion7 a earl:Assertion;
     earl:result _:result7.
 _:result7 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv002> a earl:TestCriterion, earl:TestCase;
     dc:title "@context, blank @id and properties";
     dc:description "@context, blank @id and properties";
@@ -165,7 +165,7 @@ _:assertion8 a earl:Assertion;
     earl:result _:result8.
 _:result8 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv003> a earl:TestCriterion, earl:TestCase;
     dc:title "@context, implicit @id and properties";
     dc:description "@context, implicit @id and properties";
@@ -180,7 +180,7 @@ _:assertion9 a earl:Assertion;
     earl:result _:result9.
 _:result9 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv004> a earl:TestCriterion, earl:TestCase;
     dc:title "Nested nodes";
     dc:description "Nested nodes";
@@ -195,7 +195,7 @@ _:assertion10 a earl:Assertion;
     earl:result _:result10.
 _:result10 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv005> a earl:TestCriterion, earl:TestCase;
     dc:title "Nested nodes and embedded context";
     dc:description "Nested nodes and embedded context";
@@ -210,7 +210,7 @@ _:assertion11 a earl:Assertion;
     earl:result _:result11.
 _:result11 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv006> a earl:TestCriterion, earl:TestCase;
     dc:title "@context, @type-scoped context, @id, and other properties";
     dc:description "@context, @type-scoped context, @id, and other properties";
@@ -225,7 +225,7 @@ _:assertion12 a earl:Assertion;
     earl:result _:result12.
 _:result12 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv007> a earl:TestCriterion, earl:TestCase;
     dc:title "@context, plain @type, @id, and other properties";
     dc:description "@type without an attached context may appear anywhere";
@@ -240,7 +240,7 @@ _:assertion13 a earl:Assertion;
     earl:result _:result13.
 _:result13 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv008> a earl:TestCriterion, earl:TestCase;
     dc:title "No @context and @id";
     dc:description "@context and @id are not required";
@@ -255,7 +255,7 @@ _:assertion14 a earl:Assertion;
     earl:result _:result14.
 _:result14 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv009> a earl:TestCriterion, earl:TestCase;
     dc:title "Deeply nested nodes";
     dc:description "Deeply nested nodes";
@@ -270,7 +270,7 @@ _:assertion15 a earl:Assertion;
     earl:result _:result15.
 _:result15 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv010> a earl:TestCriterion, earl:TestCase;
     dc:title "Deeply nested nodes without @id";
     dc:description "Deeply nested nodes without @id";
@@ -285,7 +285,7 @@ _:assertion16 a earl:Assertion;
     earl:result _:result16.
 _:result16 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv011> a earl:TestCriterion, earl:TestCase;
     dc:title "@id after properties";
     dc:description "Properties should be buffered until @id is encountered";
@@ -300,7 +300,7 @@ _:assertion17 a earl:Assertion;
     earl:result _:result17.
 _:result17 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv012> a earl:TestCriterion, earl:TestCase;
     dc:title "No @id after properties";
     dc:description "Properties should be buffered until node closes";
@@ -315,7 +315,7 @@ _:assertion18 a earl:Assertion;
     earl:result _:result18.
 _:result18 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv013> a earl:TestCriterion, earl:TestCase;
     dc:title "@id after properties in nested node";
     dc:description "Properties in nested node should be buffered until @id is encountered";
@@ -330,7 +330,7 @@ _:assertion19 a earl:Assertion;
     earl:result _:result19.
 _:result19 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv014> a earl:TestCriterion, earl:TestCase;
     dc:title "No @id after properties in nested node";
     dc:description "Properties in nested node should be buffered until node closes";
@@ -345,7 +345,7 @@ _:assertion20 a earl:Assertion;
     earl:result _:result20.
 _:result20 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv015> a earl:TestCriterion, earl:TestCase;
     dc:title "@id after properties in nested node with outer @id after node";
     dc:description "Properties in nested node with @id after node should be buffered until @id is encountered";
@@ -360,7 +360,7 @@ _:assertion21 a earl:Assertion;
     earl:result _:result21.
 _:result21 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv016> a earl:TestCriterion, earl:TestCase;
     dc:title "No @id after properties in nested node and no outer @id";
     dc:description "Properties in nested node and no outer @id should be buffered until node closes";
@@ -375,7 +375,7 @@ _:assertion22 a earl:Assertion;
     earl:result _:result22.
 _:result22 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv017> a earl:TestCriterion, earl:TestCase;
     dc:title "@id after @graph and properties";
     dc:description "Properties with @graph should be buffered until @id is encountered";
@@ -390,7 +390,7 @@ _:assertion23 a earl:Assertion;
     earl:result _:result23.
 _:result23 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv018> a earl:TestCriterion, earl:TestCase;
     dc:title "No @id after @graph and properties";
     dc:description "Properties with @graph should be buffered until node closes";
@@ -405,7 +405,7 @@ _:assertion24 a earl:Assertion;
     earl:result _:result24.
 _:result24 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv019> a earl:TestCriterion, earl:TestCase;
     dc:title "@id after @graph and properties and late inner @id";
     dc:description "Properties with @graph should be buffered until @id is encountered";
@@ -420,7 +420,7 @@ _:assertion25 a earl:Assertion;
     earl:result _:result25.
 _:result25 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv020> a earl:TestCriterion, earl:TestCase;
     dc:title "No @id after @graph and properties and late inner @id";
     dc:description "Properties with @graph should be buffered until node closes and @id is encountered";
@@ -435,7 +435,7 @@ _:assertion26 a earl:Assertion;
     earl:result _:result26.
 _:result26 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv021> a earl:TestCriterion, earl:TestCase;
     dc:title "@id after @graph and properties and no @id";
     dc:description "Properties with @graph should be buffered until node closes and @id is encountered";
@@ -450,7 +450,7 @@ _:assertion27 a earl:Assertion;
     earl:result _:result27.
 _:result27 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.
 <https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv022> a earl:TestCriterion, earl:TestCase;
     dc:title "No @id after @graph and properties and no @id";
     dc:description "Properties with @graph should be buffered until nodes close";
@@ -465,4 +465,4 @@ _:assertion28 a earl:Assertion;
     earl:result _:result28.
 _:result28 a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-03-24T18:33:20.672Z"^^xsd:dateTime.
+    dc:date "2020-03-25T14:19:46.507Z"^^xsd:dateTime.

@@ -2,8 +2,8 @@
   "@context": ["https://w3c.github.io/json-ld-api/tests/context.jsonld", {"@base": "stream-toRdf-manifest"}],
   "@id": "",
   "@type": "mf:Manifest",
-  "name": "Streaming",
-  "description": "JSON-LD Streaming tests.",
+  "name": "Streaming Transform JSON-LD to RDF",
+  "description": "JSON-LD Streaming To RDF tests.",
   "baseIri": "https://w3c.github.io/json-ld-streaming/tests/",
   "sequence": [
     {
