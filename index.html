@@ -728,6 +728,11 @@
             Additionally, the <code>@type</code> must emit <code>rdf:type</code> triples based on the current node's subject and values.
             This subject will possibly only be determined later on, which will require buffering of these incomplete triples.
         </p>
+        <p class="note">
+            In case multiple type-scoped contexts apply,
+            they must <em>not</em> be processed by order of appearance,
+            but using the lexicographical order.
+        </p>
         <p>
             If an <code>@id</code> entry is detected, the RDF subject for the current node is defined for later usage.
             Any other entries that are detected before <code>@id</code> must be buffered until <code>@id</code> is found, or the node closes (which sets the subject to a blank node).
