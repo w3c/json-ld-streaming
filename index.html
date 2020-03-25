@@ -218,11 +218,7 @@
               <h3 id="streaming-document-examples-valid">Valid Examples</h3>
               <pre class="example" title="Valid streaming document with @context, @id, and other properties">
                 {
-                  "@context": {
-                    "name": "http://schema.org/name",
-                    "url": "http://schema.org/url",
-                    "image": "http://schema.org/image"
-                  },
+                  "@context": "http://schema.org/",
                   "@id": "https://www.rubensworks.net/#me",
                   "name": "Ruben Taelman",
                   "url": "https://www.rubensworks.net/",
@@ -231,11 +227,7 @@
               </pre>
               <pre class="example" title="Valid streaming document with @context, blank @id, and other properties">
                 {
-                  "@context": {
-                    "name": "http://schema.org/name",
-                    "url": "http://schema.org/url",
-                    "image": "http://schema.org/image"
-                  },
+                  "@context": "http://schema.org/",
                   "@id": "_:blank_node",
                   "name": "Ruben Taelman",
                   "url": "https://www.rubensworks.net/",
@@ -244,12 +236,7 @@
               </pre>
               <pre class="example" title="Valid streaming document with nested nodes">
                 {
-                  "@context": {
-                    "name": "http://schema.org/name",
-                    "url": "http://schema.org/url",
-                    "image": "http://schema.org/image",
-                    "knows": "http://schema.org/knows"
-                  },
+                  "@context": "http://schema.org/",
                   "@id": "https://www.rubensworks.net/#me",
                   "name": "Ruben Taelman",
                   "url": "https://www.rubensworks.net/",
@@ -262,12 +249,7 @@
               </pre>
               <pre class="example" title="Valid streaming document with nested nodes and embedded context">
                 {
-                  "@context": {
-                    "name": "http://schema.org/name",
-                    "url": "http://schema.org/url",
-                    "image": "http://schema.org/image",
-                    "knows": "http://schema.org/knows"
-                  },
+                  "@context": "http://schema.org/",
                   "@id": "https://www.rubensworks.net/#me",
                   "name": "Ruben Taelman",
                   "url": "https://www.rubensworks.net/",
@@ -286,11 +268,7 @@
                   "@context": {
                     "Person": {
                       "@id": "http://schema.org/Person",
-                      "@context": {
-                        "name": "http://schema.org/name",
-                        "url": "http://schema.org/url",
-                        "image": "http://schema.org/image"
-                      }
+                      "@context": "http://schema.org/"
                     }
                   },
                   "@type": "Person",
@@ -302,13 +280,7 @@
               </pre>
               <pre class="example" title="Valid streaming document with @context, plain @type, @id, and other properties">
                 {
-                  "@context": {
-                    "Person": "http://schema.org/Person",
-                    "name": "http://schema.org/name",
-                    "url": "http://schema.org/url",
-                    "image": "http://schema.org/image"
-                  },
-                  "@id": "https://www.rubensworks.net/#me",
+                  "@context": "http://schema.org/",
                   "name": "Ruben Taelman",
                   "url": "https://www.rubensworks.net/",
                   "image": "https://www.rubensworks.net/img/ruben.jpg",
@@ -320,11 +292,7 @@
               <h3 id="streaming-document-examples-nonrec">Valid, Non-recommended Examples</h3>
               <pre class="example" title="Non-recommended streaming document with @context and without @id">
                 {
-                  "@context": {
-                    "name": "http://schema.org/name",
-                    "url": "http://schema.org/url",
-                    "image": "http://schema.org/image"
-                  },
+                  "@context": "http://schema.org/",
                   <span class="comment">// @id is missing, considered a blank node</span>
                   "name": "Ruben Taelman",
                   "url": "https://www.rubensworks.net/",
@@ -335,8 +303,8 @@
                 {
                   <span class="comment">// @context is not required, but @id is recommended here</span>
                   "http://schema.org/name": "Ruben Taelman",
-                  "http://schema.org/url": "https://www.rubensworks.net/",
-                  "http://schema.org/image": "https://www.rubensworks.net/img/ruben.jpg"
+                  "http://schema.org/url": {"@id": "https://www.rubensworks.net/"},
+                  "http://schema.org/image": {"@id": "https://www.rubensworks.net/img/ruben.jpg"}
                 }
               </pre>
           </section>
@@ -345,11 +313,8 @@
               <pre class="example" title="Invalid streaming document where @context comes too late">
                 {
                   "@id": "https://www.rubensworks.net/#me",
-                  "@context": { <span class="comment">// @context must come before @id</span>
-                    "name": "http://schema.org/name",
-                    "url": "http://schema.org/url",
-                    "image": "http://schema.org/image"
-                  },
+                  <span class="comment">// @context must come before @id</span>
+                  "@context": "http://schema.org/",
                   "name": "Ruben Taelman",
                   "url": "https://www.rubensworks.net/",
                   "image": "https://www.rubensworks.net/img/ruben.jpg"
@@ -359,8 +324,8 @@
                 {
                   "http://schema.org/name": "Ruben Taelman",
                   "@type": "http://schema.org/Person", <span class="comment">// @type must come before properties</span>
-                  "http://schema.org/url": "https://www.rubensworks.net/",
-                  "http://schema.org/image": "https://www.rubensworks.net/img/ruben.jpg"
+                  "http://schema.org/url": {"@id": https://www.rubensworks.net/"},
+                  "http://schema.org/image": {"@id": "https://www.rubensworks.net/img/ruben.jpg"}
                 }
               </pre>
           </section>
