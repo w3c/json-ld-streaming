@@ -51,7 +51,7 @@
         This note discusses the processing of JSON-LD in a streaming manner.
         Concretely, a set of guidelines is introduced for efficiently serializing and deserializing JSON-LD in a streaming way.
         These guidelines are encapsulated in a JSON-LD streaming document form, and a streaming RDF form.
-        These forms allow implementations to apply streaming optimizations when such forms are detected.
+        These forms, when they are detected, allow implementations to apply streaming optimizations.
       </p>
     </section>
     <section id="sotd">
@@ -172,7 +172,7 @@
             This is because the <code>"@id"</code> defines the RDF subject,
             the property key defines the RDF predicate,
             and the property value defines RDF object.
-            This ensures that all required information is needed for constructing and emitting and RDF triple each time a property is encountered.
+            This ensures that all required information is needed for constructing and emitting an RDF triple each time a property is encountered.
         </p>
         <p>
             For the second example, where the <code>"@id"</code> is only defined at the end,
@@ -253,7 +253,7 @@
       <section>
           <h3 id="streaming-document-examples">Examples</h3>
           <p>
-              Hereafter, a couple of JSON-LD document examples are listed that either adhere, adhere with non-recommended order, or not adhere
+              Hereafter, a couple of JSON-LD document examples are listed that either adhere, adhere with non-recommended order, or do not adhere
               to the <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>.
           </p>
           <section>
@@ -722,7 +722,7 @@
             If such an entry is not present, only contexts from parent nodes are considered for this node.
         </p>
         <p>
-            If an <code>@type</code> entry is detected,
+            If an <code>@type</code> entry (or any alias of <code>@type</code>) is detected,
             it is checked whether or not it defines a type-scoped context according to the current node's context.
             If this defines a type-scoped context, the context for the current node is overridden.
             <br />
@@ -736,7 +736,7 @@
         </p>
         <p>
             If an <code>@id</code> entry is detected, the RDF subject for the current node is defined for later usage.
-            Any other entries that are detected before <code>@id</code> must be buffered until <code>@id</code> is found, or the node closes (which sets the subject to a blank node).
+            Any other entries that are detected before <code>@id</code> must be buffered until <code>@id</code> is found, or the node closes (which sets the subject to a fresh blank node).
         </p>
         <p>
             For every other property, the default JSON-LD algorithms are followed based on the current node's subject.
@@ -759,8 +759,10 @@
             but it SHOULD NOT assume that RDF datasets follow this form in full.
         </p>
         <p>
-            As a basis, a streaming serializer can produce an array of nodes,
-            where each node represent a single RDF triple/quad.
+            As a basis, a streaming serializer can produce an array of
+            <a data-cite="JSON-LD11#dfn-node-object">node objects</a> or
+            <a data-cite="JSON-LD11#dfn-graph-object">graph objects</a>,
+            each one representing a single RDF triple/quad.
         </p>
         <p>
             On top of this base case, several optimizations can be applied to achieve a more compact representation in JSON-LD.
