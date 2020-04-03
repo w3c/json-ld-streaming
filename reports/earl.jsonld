@@ -104,69 +104,37 @@
   },
   "@id": "",
   "@type": [
-    "Software",
-    "doap:Project"
-  ],
-  "testSubjects": [
-    {
-      "@id": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-      "@type": [
-        "Software",
-        "TestSubject",
-        "doap:Project"
-      ],
-      "doapDesc": "Streaming JSON-LD parser",
-      "homepage": "https://github.com/rubensworks/jsonld-streaming-parser.js#readme",
-      "language": "JavaScript",
-      "developer": [
-        {
-          "@id": "https://www.rubensworks.net/#me",
-          "@type": [
-            "Assertor",
-            "foaf:Person"
-          ],
-          "foaf:name": "Ruben Taelman <rubensworks@gmail.com>",
-          "foaf:homepage": "https://www.rubensworks.net/"
-        }
-      ],
-      "name": "jsonld-streaming-parser",
-      "release": [
-        {
-          "revision": "unknown"
-        },
-        {
-          "revision": "unknown"
-        }
-      ]
-    }
+    "doap:Project",
+    "Software"
   ],
   "bibRef": "[[json-ld11-streaming]]",
   "generatedBy": {
     "@id": "http://rubygems.org/gems/earl-report",
     "@type": [
-      "Software",
-      "doap:Project"
+      "doap:Project",
+      "Software"
     ],
-    "doapDesc": "EarlReport generates HTML+RDFa rollups of multiple EARL reports",
-    "homepage": "https://github.com/gkellogg/earl-report",
+    "language": "Ruby",
     "shortdesc": "Earl Report summary generator",
-    "developer": [
-      "http://greggkellogg.net/foaf#me"
-    ],
-    "name": "earl-report",
-    "license": "http://unlicense.org",
+    "doapDesc": "EarlReport generates HTML+RDFa rollups of multiple EARL reports",
     "release": {
       "@id": "https://github.com/gkellogg/earl-report/tree/0.4.9",
       "@type": "doap:Version",
-      "revision": "0.4.9",
+      "name": "earl-report-0.4.9",
       "doap:created": {
         "@value": "2020-03-15",
         "@type": "http://www.w3.org/2001/XMLSchema#date"
       },
-      "name": "earl-report-0.4.9"
+      "revision": "0.4.9"
     },
-    "language": "Ruby"
+    "name": "earl-report",
+    "developer": [
+      "http://greggkellogg.net/foaf#me"
+    ],
+    "license": "http://unlicense.org",
+    "homepage": "https://github.com/gkellogg/earl-report"
   },
+  "name": "Streaming JSON-LD 1.1",
   "assertions": [
     "jsonld-streaming-parser-earl.ttl"
   ],
@@ -177,766 +145,824 @@
         "mf:Manifest",
         "Report"
       ],
-      "title": "Streaming",
+      "rdfs:comment": "JSON-LD Streaming To RDF tests.",
+      "https://w3c.github.io/json-ld-api/tests/vocab#baseIri": "https://w3c.github.io/json-ld-streaming/tests/",
+      "title": "Streaming Transform JSON-LD to RDF",
       "entries": [
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te001",
           "@type": [
-            "TestCriterion",
+            "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
             "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#NegativeEvaluationTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest"
+            "TestCriterion"
           ],
-          "title": "@context must come before @id",
+          "rdfs:comment": "Generate an error if @context comes after @id",
           "mf:result": "invalid streaming key order",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te001",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te001",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/e001-in.jsonld",
-          "rdfs:comment": "Generate an error if @context comes after @id"
+          "title": "@context must come before @id"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te002",
           "@type": [
-            "TestCriterion",
+            "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
             "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#NegativeEvaluationTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest"
+            "TestCriterion"
           ],
-          "title": "@context must come before properties",
+          "rdfs:comment": "Generate an error if @context comes after properties",
           "mf:result": "invalid streaming key order",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te002",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te002",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/e002-in.jsonld",
-          "rdfs:comment": "Generate an error if @context comes after properties"
+          "title": "@context must come before properties"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te003",
           "@type": [
-            "TestCriterion",
+            "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
             "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#NegativeEvaluationTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest"
+            "TestCriterion"
           ],
-          "title": "@context must come before @type with context",
+          "rdfs:comment": "Generate an error if @context comes after @type with a type-scoped context",
           "mf:result": "invalid streaming key order",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te003",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te003",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/e003-in.jsonld",
-          "rdfs:comment": "Generate an error if @context comes after @type with a type-scoped context"
+          "title": "@context must come before @type with context"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te004",
           "@type": [
-            "TestCriterion",
+            "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
             "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#NegativeEvaluationTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest"
+            "TestCriterion"
           ],
-          "title": "@type with context must come before @id",
+          "rdfs:comment": "Generate an error if @type with context comes after @id",
           "mf:result": "invalid streaming key order",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te004",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te004",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/e004-in.jsonld",
-          "rdfs:comment": "Generate an error if @type with context comes after @id"
+          "title": "@type with context must come before @id"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te005",
           "@type": [
-            "TestCriterion",
+            "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
             "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#NegativeEvaluationTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest"
+            "TestCriterion"
           ],
-          "title": "@type with context must come before properties",
+          "rdfs:comment": "Generate an error if @type with context comes after properties",
           "mf:result": "invalid streaming key order",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te005",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te005",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/e005-in.jsonld",
-          "rdfs:comment": "Generate an error if @type with context comes after properties"
+          "title": "@type with context must come before properties"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te006",
           "@type": [
-            "TestCriterion",
+            "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
             "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#NegativeEvaluationTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest"
+            "TestCriterion"
           ],
-          "title": "Embedded @context must come before @id",
+          "rdfs:comment": "Generate an error if embedded @context comes after @id",
           "mf:result": "invalid streaming key order",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te006",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te006",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/e006-in.jsonld",
-          "rdfs:comment": "Generate an error if embedded @context comes after @id"
+          "title": "Embedded @context must come before @id"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te007",
           "@type": [
-            "TestCriterion",
+            "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
             "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#NegativeEvaluationTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest"
+            "TestCriterion"
           ],
-          "title": "Embedded @context must come before properties",
+          "rdfs:comment": "Generate an error if embedded @context comes after properties",
           "mf:result": "invalid streaming key order",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te007",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te007",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/e007-in.jsonld",
-          "rdfs:comment": "Generate an error if embedded @context comes after properties"
+          "title": "Embedded @context must come before properties"
+        },
+        {
+          "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te008",
+          "@type": [
+            "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#NegativeEvaluationTest",
+            "TestCriterion"
+          ],
+          "rdfs:comment": "Generate an error if @type comes after @id",
+          "mf:result": "invalid streaming key order",
+          "assertions": [
+            {
+              "@type": "Assertion",
+              "result": {
+                "@type": "TestResult",
+                "outcome": "earl:passed"
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te008",
+              "mode": "earl:automatic"
+            }
+          ],
+          "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/e008-in.jsonld",
+          "title": "@type must come before @id"
+        },
+        {
+          "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te009",
+          "@type": [
+            "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#NegativeEvaluationTest",
+            "TestCriterion"
+          ],
+          "rdfs:comment": "Generate an error if @type comes after properties",
+          "mf:result": "invalid streaming key order",
+          "assertions": [
+            {
+              "@type": "Assertion",
+              "result": {
+                "@type": "TestResult",
+                "outcome": "earl:passed"
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te009",
+              "mode": "earl:automatic"
+            }
+          ],
+          "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/e009-in.jsonld",
+          "title": "@type must come before properties"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv001",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "@context, @id and properties",
+          "rdfs:comment": "@context, @id and properties",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv001-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv001",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv001",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv001-in.jsonld",
-          "rdfs:comment": "@context, @id and properties"
+          "title": "@context, @id and properties"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv002",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "@context, blank @id and properties",
+          "rdfs:comment": "@context, blank @id and properties",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv002-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv002",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv002",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv002-in.jsonld",
-          "rdfs:comment": "@context, blank @id and properties"
+          "title": "@context, blank @id and properties"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv003",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "@context, implicit @id and properties",
+          "rdfs:comment": "@context, implicit @id and properties",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv003-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv003",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv003",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv003-in.jsonld",
-          "rdfs:comment": "@context, implicit @id and properties"
+          "title": "@context, implicit @id and properties"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv004",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "Nested nodes",
+          "rdfs:comment": "Nested nodes",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv004-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv004",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv004",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv004-in.jsonld",
-          "rdfs:comment": "Nested nodes"
+          "title": "Nested nodes"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv005",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "Nested nodes and embedded context",
+          "rdfs:comment": "Nested nodes and embedded context",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv005-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv005",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv005",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv005-in.jsonld",
-          "rdfs:comment": "Nested nodes and embedded context"
+          "title": "Nested nodes and embedded context"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv006",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "@context, @type-scoped context, @id, and other properties",
+          "rdfs:comment": "@context, @type-scoped context, @id, and other properties",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv006-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
+              "result": {
+                "@type": "TestResult",
+                "outcome": "earl:passed"
+              },
               "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
               "assertedBy": "https://www.rubensworks.net/#me",
               "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv006",
-              "mode": "earl:automatic",
-              "result": {
-                "@type": "TestResult",
-                "outcome": "earl:passed"
-              }
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv006-in.jsonld",
-          "rdfs:comment": "@context, @type-scoped context, @id, and other properties"
-        },
-        {
-          "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv007",
-          "@type": [
-            "TestCriterion",
-            "TestCase",
-            "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
-          ],
-          "title": "@context, plain @type, @id, and other properties",
-          "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv007-out.nq",
-          "assertions": [
-            {
-              "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv007",
-              "mode": "earl:automatic",
-              "result": {
-                "@type": "TestResult",
-                "outcome": "earl:passed"
-              }
-            }
-          ],
-          "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv007-in.jsonld",
-          "rdfs:comment": "@type without an attached context may appear anywhere"
+          "title": "@context, @type-scoped context, @id, and other properties"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv008",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "No @context and @id",
+          "rdfs:comment": "@context and @id are not required",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv008-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv008",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv008",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv008-in.jsonld",
-          "rdfs:comment": "@context and @id are not required"
+          "title": "No @context and @id"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv009",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "Deeply nested nodes",
+          "rdfs:comment": "Deeply nested nodes",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv009-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv009",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv009",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv009-in.jsonld",
-          "rdfs:comment": "Deeply nested nodes"
+          "title": "Deeply nested nodes"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv010",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "Deeply nested nodes without @id",
+          "rdfs:comment": "Deeply nested nodes without @id",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv010-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv010",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv010",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv010-in.jsonld",
-          "rdfs:comment": "Deeply nested nodes without @id"
+          "title": "Deeply nested nodes without @id"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv011",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "@id after properties",
+          "rdfs:comment": "Properties should be buffered until @id is encountered",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv011-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv011",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv011",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv011-in.jsonld",
-          "rdfs:comment": "Properties should be buffered until @id is encountered"
+          "title": "@id after properties"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv012",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "No @id after properties",
+          "rdfs:comment": "Properties should be buffered until node closes",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv012-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv012",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv012",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv012-in.jsonld",
-          "rdfs:comment": "Properties should be buffered until node closes"
+          "title": "No @id after properties"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv013",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "@id after properties in nested node",
+          "rdfs:comment": "Properties in nested node should be buffered until @id is encountered",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv013-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv013",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv013",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv013-in.jsonld",
-          "rdfs:comment": "Properties in nested node should be buffered until @id is encountered"
+          "title": "@id after properties in nested node"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv014",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "No @id after properties in nested node",
+          "rdfs:comment": "Properties in nested node should be buffered until node closes",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv014-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv014",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv014",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv014-in.jsonld",
-          "rdfs:comment": "Properties in nested node should be buffered until node closes"
+          "title": "No @id after properties in nested node"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv015",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "@id after properties in nested node with outer @id after node",
+          "rdfs:comment": "Properties in nested node with @id after node should be buffered until @id is encountered",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv015-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv015",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv015",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv015-in.jsonld",
-          "rdfs:comment": "Properties in nested node with @id after node should be buffered until @id is encountered"
+          "title": "@id after properties in nested node with outer @id after node"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv016",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "No @id after properties in nested node and no outer @id",
+          "rdfs:comment": "Properties in nested node and no outer @id should be buffered until node closes",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv016-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv016",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv016",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv016-in.jsonld",
-          "rdfs:comment": "Properties in nested node and no outer @id should be buffered until node closes"
+          "title": "No @id after properties in nested node and no outer @id"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv017",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "@id after @graph and properties",
+          "rdfs:comment": "Properties with @graph should be buffered until @id is encountered",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv017-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv017",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv017",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv017-in.jsonld",
-          "rdfs:comment": "Properties with @graph should be buffered until @id is encountered"
+          "title": "@id after @graph and properties"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv018",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "No @id after @graph and properties",
+          "rdfs:comment": "Properties with @graph should be buffered until node closes",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv018-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv018",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv018",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv018-in.jsonld",
-          "rdfs:comment": "Properties with @graph should be buffered until node closes"
+          "title": "No @id after @graph and properties"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv019",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "@id after @graph and properties and late inner @id",
+          "rdfs:comment": "Properties with @graph should be buffered until @id is encountered",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv019-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv019",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv019",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv019-in.jsonld",
-          "rdfs:comment": "Properties with @graph should be buffered until @id is encountered"
+          "title": "@id after @graph and properties and late inner @id"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv020",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "No @id after @graph and properties and late inner @id",
+          "rdfs:comment": "Properties with @graph should be buffered until node closes and @id is encountered",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv020-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv020",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv020",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv020-in.jsonld",
-          "rdfs:comment": "Properties with @graph should be buffered until node closes and @id is encountered"
+          "title": "No @id after @graph and properties and late inner @id"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv021",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "@id after @graph and properties and no @id",
+          "rdfs:comment": "Properties with @graph should be buffered until node closes and @id is encountered",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv021-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv021",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv021",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv021-in.jsonld",
-          "rdfs:comment": "Properties with @graph should be buffered until node closes and @id is encountered"
+          "title": "@id after @graph and properties and no @id"
         },
         {
           "@id": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv022",
           "@type": [
-            "TestCriterion",
-            "TestCase",
             "https://w3c.github.io/json-ld-api/tests/vocab#ToRDFTest",
-            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest"
+            "TestCase",
+            "https://w3c.github.io/json-ld-api/tests/vocab#PositiveEvaluationTest",
+            "TestCriterion"
           ],
-          "title": "No @id after @graph and properties and no @id",
+          "rdfs:comment": "Properties with @graph should be buffered until nodes close",
           "testResult": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv022-out.nq",
           "assertions": [
             {
               "@type": "Assertion",
-              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
-              "assertedBy": "https://www.rubensworks.net/#me",
-              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv022",
-              "mode": "earl:automatic",
               "result": {
                 "@type": "TestResult",
                 "outcome": "earl:passed"
-              }
+              },
+              "subject": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+              "assertedBy": "https://www.rubensworks.net/#me",
+              "test": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv022",
+              "mode": "earl:automatic"
             }
           ],
           "testAction": "https://w3c.github.io/json-ld-streaming/tests/stream-toRdf/tv022-in.jsonld",
-          "rdfs:comment": "Properties with @graph should be buffered until nodes close"
+          "title": "No @id after @graph and properties and no @id"
         }
-      ],
-      "rdfs:comment": "JSON-LD Streaming tests.",
-      "https://w3c.github.io/json-ld-api/tests/vocab#baseIri": "https://w3c.github.io/json-ld-streaming/tests/"
+      ]
     }
   ],
-  "name": "Streaming JSON-LD 1.1"
+  "testSubjects": [
+    {
+      "@id": "https://www.npmjs.com/package/jsonld-streaming-parser/",
+      "@type": [
+        "doap:Project",
+        "Software",
+        "TestSubject"
+      ],
+      "language": "JavaScript",
+      "doapDesc": "Streaming JSON-LD parser",
+      "release": [
+        {
+          "revision": "2.0.0"
+        },
+        {
+          "revision": "2.0.0"
+        }
+      ],
+      "name": "jsonld-streaming-parser",
+      "developer": [
+        {
+          "@id": "https://www.rubensworks.net/#me",
+          "@type": [
+            "Assertor",
+            "foaf:Person"
+          ],
+          "foaf:homepage": "https://www.rubensworks.net/",
+          "foaf:name": "Ruben Taelman <rubensworks@gmail.com>"
+        }
+      ],
+      "homepage": "https://github.com/rubensworks/jsonld-streaming-parser.js#readme"
+    }
+  ]
 }

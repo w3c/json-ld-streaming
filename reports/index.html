@@ -74,8 +74,8 @@ JSON-LD 1.1 Processor Conformance
 EARL results from the JSON-LD 1.1 Test Suite
 </h2>
 <h2 id='w3c-document-28-october-2015'>
-<time class='dt-published' datetime='2020-03-25' property='dc:issued'>
-25 March 2020
+<time class='dt-published' datetime='2020-04-03' property='dc:issued'>
+03 April 2020
 </time>
 </h2>
 <dl>
@@ -156,8 +156,8 @@ Test Manifests
 <ul class='toc'>
 <li class='tocline'>
 <span class='secno'>2.1</span>
-<a class='tocxref' href='#JSON-LD-Streaming-tests.'>
-JSON-LD Streaming tests.
+<a class='tocxref' href='#JSON-LD-Streaming-To-RDF-tests.'>
+JSON-LD Streaming To RDF tests.
 </a>
 </li>
 </ul>
@@ -226,10 +226,10 @@ Report Generation Software
 <span class='secno'>2.</span>
 Test Manifests
 </h2>
-<section id='JSON-LD-Streaming-tests.'>
+<section id='JSON-LD-Streaming-To-RDF-tests.'>
 <h2>
 <span class='secno'>2.1</span>
-<span>Streaming</span>
+<span>Streaming Transform JSON-LD to RDF</span>
 </h2>
 <table class='report'>
 <tr>
@@ -298,6 +298,22 @@ PASS
 </tr>
 <tr>
 <td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te008'>Test te008: @type must come before @id</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te009'>Test te009: @type must come before properties</a>
+</td>
+<td class='PASS'>
+PASS
+</td>
+</tr>
+<tr>
+<td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv001'>Test tv001: @context, @id and properties</a>
 </td>
 <td class='PASS'>
@@ -339,14 +355,6 @@ PASS
 <tr>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv006'>Test tv006: @context, @type-scoped context, @id, and other properties</a>
-</td>
-<td class='PASS'>
-PASS
-</td>
-</tr>
-<tr>
-<td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv007'>Test tv007: @context, plain @type, @id, and other properties</a>
 </td>
 <td class='PASS'>
 PASS
@@ -474,7 +482,7 @@ PASS
 </tr>
 <tr class='summary'>
 <td>
-Percentage passed out of 29 Tests
+Percentage passed out of 30 Tests
 </td>
 <td class='passed-all'>
 100.0%
@@ -503,7 +511,7 @@ This report was tested using the following test subjects:
 <dt>Description</dt>
 <dd lang='en' property='doap:description'>Streaming JSON-LD parser</dd>
 <dt>Release</dt>
-<dd property='doap:release'><span property='doap:revision'>unknown</span></dd>
+<dd property='doap:release'><span property='doap:revision'>2.0.0</span></dd>
 <dt>Programming Language</dt>
 <dd property='doap:programming-language'>JavaScript</dd>
 <dt>Home Page</dt>
@@ -531,10 +539,10 @@ Test Suite Compliance
 <tbody>
 <tr>
 <td>
-Streaming
+Streaming Transform JSON-LD to RDF
 </td>
 <td class='passed-all'>
-29/29 (100.0%)
+30/30 (100.0%)
 </td>
 </tr>
 </tbody>
@@ -558,7 +566,7 @@ Individual test results used to construct this report are available here:
 </li>
 </ul>
 </section>
-<section class='appendix' id='report-generation-software' property='earl:generatedBy' resource='http://rubygems.org/gems/earl-report' typeof='Software doap:Project'>
+<section class='appendix' id='report-generation-software' property='earl:generatedBy' resource='http://rubygems.org/gems/earl-report' typeof='doap:Project Software'>
 <h2>
 <span class='secno'>D.</span>
 Report Generation Software
