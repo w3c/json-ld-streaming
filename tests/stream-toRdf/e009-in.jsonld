@@ -1,13 +1,11 @@
 {
   "@context": {
-    "Person": "http://schema.org/Person",
     "name": "http://schema.org/name",
     "url": "http://schema.org/url",
     "image": "http://schema.org/image"
   },
-  "@id": "https://www.rubensworks.net/#me",
   "name": "Ruben Taelman",
+  "@type": "http://schema.org/Person",
   "url": "https://www.rubensworks.net/",
-  "image": "https://www.rubensworks.net/img/ruben.jpg",
-  "@type": "Person"
+  "image": "https://www.rubensworks.net/img/ruben.jpg"
 }

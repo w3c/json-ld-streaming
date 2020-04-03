@@ -56,6 +56,20 @@
       "input": "stream-toRdf/e007-in.jsonld",
       "expectErrorCode": "invalid streaming key order"
     }, {
+      "@id": "#te008",
+      "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
+      "name": "@type must come before @id",
+      "purpose": "Generate an error if @type comes after @id",
+      "input": "stream-toRdf/e008-in.jsonld",
+      "expectErrorCode": "invalid streaming key order"
+    }, {
+      "@id": "#te009",
+      "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
+      "name": "@type must come before properties",
+      "purpose": "Generate an error if @type comes after properties",
+      "input": "stream-toRdf/e009-in.jsonld",
+      "expectErrorCode": "invalid streaming key order"
+    }, {
       "@id": "#tv001",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "@context, @id and properties",
@@ -97,13 +111,6 @@
       "purpose": "@context, @type-scoped context, @id, and other properties",
       "input": "stream-toRdf/tv006-in.jsonld",
       "expect": "stream-toRdf/tv006-out.nq"
-    }, {
-      "@id": "#tv007",
-      "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
-      "name": "@context, plain @type, @id, and other properties",
-      "purpose": "@type without an attached context may appear anywhere",
-      "input": "stream-toRdf/tv007-in.jsonld",
-      "expect": "stream-toRdf/tv007-out.nq"
     }, {
       "@id": "#tv008",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
