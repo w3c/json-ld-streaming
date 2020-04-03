@@ -190,7 +190,7 @@
         </p>
         <ol>
             <li><code>@context</code></li>
-            <li><code>@type</code> where its value indicates a <a class="externalDFN" href="https://www.w3.org/TR/json-ld/#dfn-type-scoped-context">type-scoped context</a>.</li>
+            <li><code>@type</code></li>
             <li><em>Other properties</em></li>
         </ol>
         <p>
@@ -198,8 +198,10 @@
             Only those that are present must occur in the following order.
         </p>
         <p>
-            This order is important because the <code>@context</code> and <code>@type</code> entries
+            This order is important because <code>@context</code>
             can change the meaning of all following entries in the node and its children.
+            Additionally, <code>@type</code> could indicate a <a class="externalDFN" href="https://www.w3.org/TR/json-ld/#dfn-type-scoped-context">type-scoped context</a>,
+            which may have the same implications of an <code>@context</code>.
             This means that these MUST always be processed before all other entries.
         </p>
         <div class="note" role="note" id="key-ordering-json">
@@ -318,16 +320,6 @@
                   "name": "Ruben Taelman",
                   "url": "https://www.rubensworks.net/",
                   "image": "https://www.rubensworks.net/img/ruben.jpg"
-                }
-              </pre>
-              <pre class="example" title="Valid streaming document with @context, plain @type, @id, and other properties">
-                {
-                  "@context": "http://schema.org/",
-                  "@id": "https://www.rubensworks.net/#me", 
-                  "name": "Ruben Taelman",
-                  "url": "https://www.rubensworks.net/",
-                  "image": "https://www.rubensworks.net/img/ruben.jpg",
-                  "@type": "Person" <span class="comment">// Defines no type-scoped context, so may appear anywhere</span>
                 }
               </pre>
           </section>
