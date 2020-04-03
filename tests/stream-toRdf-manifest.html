@@ -3,7 +3,7 @@
 <head>
 <meta content='text/html;charset=utf-8' http-equiv='Content-Type'>
 <title>
-Streaming
+Streaming Transform JSON-LD to RDF
 </title>
 <link href='stream-toRdf-manifest.jsonld' rel='alternate'>
 <link href='https://www.w3.org/StyleSheets/TR/base' rel='stylesheet'>
@@ -14,7 +14,7 @@ Streaming
 <img alt='W3C' height='48' src='http://www.w3.org/Icons/w3c_home' width='72'>
 </a>
 </p>
-<h1>Streaming</h1>
+<h1>Streaming Transform JSON-LD to RDF</h1>
 <p>This is an HTML version of a test manifest. The JSON-LD version of this manifest may be found at
 <a href="stream-toRdf-manifest.jsonld">stream-toRdf-manifest.jsonld</a>. The manifest vocabulary is described in the <a href="vocab.html">JSON-LD Test Vocabulary</a> (<a href="vocab.jsonld">JSON-LD</a>, <a href="vocab.ttl">Turtle</a>) and is based on the <a href="http://www.w3.org/TR/2014/NOTE-rdf11-testcases-20140225/">RDF Test Vocabulary</a>.</p>
 
@@ -102,7 +102,7 @@ to the <a href="mailto:json-ld-wg@w3.org">JSON-LD Working Group mailing list</a>
 <dt>baseIri</dt>
 <dd>https://w3c.github.io/json-ld-streaming/tests/</dd>
 </dl>
-<p>JSON-LD Streaming tests.</p>
+<p>JSON-LD Streaming To RDF tests.</p>
 <section>
 <h2>
 Test sequence:
@@ -255,6 +255,48 @@ invalid streaming key order
 </dd>
 </dl>
 </dd>
+<dt id='te008'>
+Test te008 @type must come before @id
+</dt>
+<dd>
+<dl class='entry'>
+<dt>id</dt>
+<dd>#te008</dd>
+<dt>Type</dt>
+<dd>jld:NegativeEvaluationTest, jld:ToRDFTest</dd>
+<dt>Purpose</dt>
+<dd>Generate an error if @type comes after @id</dd>
+<dt>input</dt>
+<dd>
+<a href='stream-toRdf/e008-in.jsonld'>stream-toRdf/e008-in.jsonld</a>
+</dd>
+<dt>expect</dt>
+<dd>
+invalid streaming key order
+</dd>
+</dl>
+</dd>
+<dt id='te009'>
+Test te009 @type must come before properties
+</dt>
+<dd>
+<dl class='entry'>
+<dt>id</dt>
+<dd>#te009</dd>
+<dt>Type</dt>
+<dd>jld:NegativeEvaluationTest, jld:ToRDFTest</dd>
+<dt>Purpose</dt>
+<dd>Generate an error if @type comes after properties</dd>
+<dt>input</dt>
+<dd>
+<a href='stream-toRdf/e009-in.jsonld'>stream-toRdf/e009-in.jsonld</a>
+</dd>
+<dt>expect</dt>
+<dd>
+invalid streaming key order
+</dd>
+</dl>
+</dd>
 <dt id='tv001'>
 Test tv001 @context, @id and properties
 </dt>
@@ -378,27 +420,6 @@ Test tv006 @context, @type-scoped context, @id, and other properties
 <dt>expect</dt>
 <dd>
 <a href='stream-toRdf/tv006-out.nq'>stream-toRdf/tv006-out.nq</a>
-</dd>
-</dl>
-</dd>
-<dt id='tv007'>
-Test tv007 @context, plain @type, @id, and other properties
-</dt>
-<dd>
-<dl class='entry'>
-<dt>id</dt>
-<dd>#tv007</dd>
-<dt>Type</dt>
-<dd>jld:PositiveEvaluationTest, jld:ToRDFTest</dd>
-<dt>Purpose</dt>
-<dd>@type without an attached context may appear anywhere</dd>
-<dt>input</dt>
-<dd>
-<a href='stream-toRdf/tv007-in.jsonld'>stream-toRdf/tv007-in.jsonld</a>
-</dd>
-<dt>expect</dt>
-<dd>
-<a href='stream-toRdf/tv007-out.nq'>stream-toRdf/tv007-out.nq</a>
 </dd>
 </dl>
 </dd>
