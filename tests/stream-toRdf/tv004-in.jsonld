@@ -11,6 +11,6 @@
   "image": "https://www.rubensworks.net/img/ruben.jpg",
   "knows": {
     "@id": "https://greggkellogg.net/foaf#me",
-    "name": "Gregg Kellogg",
+    "name": "Gregg Kellogg"
   }
 }

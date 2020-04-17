@@ -14,6 +14,6 @@
       "name": "http://xmlns.com/foaf/0.1/name"
     },
     "@id": "https://greggkellogg.net/foaf#me",
-    "name": "Gregg Kellogg",
+    "name": "Gregg Kellogg"
   }
 }
