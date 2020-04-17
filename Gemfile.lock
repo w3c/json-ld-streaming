@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/ruby-rdf/json-ld.git
+  remote: git://github.com/ruby-rdf/json-ld.git
   revision: 27f8065420819a4601647648cc49a8f345c5c1bc
   branch: develop
   specs:
@@ -179,4 +179,4 @@ DEPENDENCIES
   redcarpet
 
 BUNDLED WITH
-   2.1.4
+   1.17.3
