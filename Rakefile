@@ -29,17 +29,10 @@ file "reports/manifests.nt" do
   require 'json/ld'
   require 'rdf/ntriples'
   graph = RDF::Graph.new do |g|
-    %w( https://w3c.github.io/json-ld-api/tests/compact-manifest.jsonld
-        https://w3c.github.io/json-ld-api/tests/expand-manifest.jsonld
-        https://w3c.github.io/json-ld-api/tests/flatten-manifest.jsonld
-        https://w3c.github.io/json-ld-api/tests/fromRdf-manifest.jsonld
-        https://w3c.github.io/json-ld-api/tests/html-manifest.jsonld
-        https://w3c.github.io/json-ld-api/tests/remote-doc-manifest.jsonld
-        https://w3c.github.io/json-ld-api/tests/toRdf-manifest.jsonld
-        https://w3c.github.io/json-ld-framing/tests/frame-manifest.jsonld
+    %w( https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest.jsonld
     ).each do |man|
       puts "load #{man}"
-      local_man = if man.include?('json-ld-api')
+      local_man = if man.include?('json-ld-streaming')
         basename = File.basename(man)
         File.expand_path("../tests/#{basename}", __FILE__)
       else
