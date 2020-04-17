@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Streaming JSON-LD</title>
     <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove"></script>
+    <script type="text/javascript" src="common/common.js" class="remove" defer></script>
     <script class='remove'>
       // See https://github.com/w3c/respec/wiki/ for how to configure ReSpec
       var respecConfig = {
@@ -325,18 +326,20 @@
           </section>
           <section>
               <h3 id="streaming-document-examples-nonrec">Valid, Non-recommended Examples</h3>
-              <pre class="example" title="Non-recommended streaming document with @context and without @id">
+              <pre class="example nohighlight" data-transform="updateExample"
+                   title="Non-recommended streaming document with @context and without @id">
                 {
                   "@context": "http://schema.org/",
-                  <span class="comment">// @id is missing, considered a blank node</span>
+                  ####// @id is missing, considered a blank node####
                   "name": "Ruben Taelman",
                   "url": "https://www.rubensworks.net/",
                   "image": "https://www.rubensworks.net/img/ruben.jpg"
                 }
               </pre>
-              <pre class="example" title="Valid streaming document without @context and @id">
+              <pre class="example nohighlight" data-transform="updateExample"
+                   title="Valid streaming document without @context and @id">
                 {
-                  <span class="comment">// @context is not required, but @id is recommended here</span>
+                  ####// @context is not required, but @id is recommended here####
                   "http://schema.org/name": "Ruben Taelman",
                   "http://schema.org/url": {"@id": "https://www.rubensworks.net/"},
                   "http://schema.org/image": {"@id": "https://www.rubensworks.net/img/ruben.jpg"}
@@ -345,21 +348,23 @@
           </section>
           <section>
               <h3 id="streaming-document-examples-invalid">Invalid Examples</h3>
-              <pre class="example" title="Invalid streaming document where @context comes too late">
+              <pre class="example nohighlight" data-transform="updateExample"
+                   title="Invalid streaming document where @context comes too late">
                 {
                   "@id": "https://www.rubensworks.net/#me",
-                  <span class="comment">// @context must come before @id</span>
+                  ####// @context must come before @id####
                   "@context": "http://schema.org/",
                   "name": "Ruben Taelman",
                   "url": "https://www.rubensworks.net/",
                   "image": "https://www.rubensworks.net/img/ruben.jpg"
                 }
               </pre>
-              <pre class="example" title="Invalid streaming document where @type comes too late">
+              <pre class="example nohighlight" data-transform="updateExample"
+                   title="Invalid streaming document where @type comes too late">
                 {
                   "http://schema.org/name": "Ruben Taelman",
-                  "@type": "http://schema.org/Person", <span class="comment">// @type must come before properties</span>
-                  "http://schema.org/url": {"@id": https://www.rubensworks.net/"},
+                  "@type": "http://schema.org/Person", ####// @type must come before properties####
+                  "http://schema.org/url": {"@id": "https://www.rubensworks.net/"},
                   "http://schema.org/image": {"@id": "https://www.rubensworks.net/img/ruben.jpg"}
                 }
               </pre>
@@ -376,7 +381,7 @@
         <p>
             The following example illustrates how this profile parameter can be used to request a streaming document over HTTP.
         </p>
-        <div class="example" title="HTTP Request with profile requesting a streaming document">
+        <div class="example" data-ignore title="HTTP Request with profile requesting a streaming document">
           <pre data-content-type="http" data-ignore="" aria-busy="false"><code class="hljs http"><span class="hljs-keyword">GET</span> <span class="hljs-string">/ordinary-json-document.json</span> HTTP/1.1
 <span class="hljs-attribute">Host</span>: example.com
 <span class="hljs-attribute">Accept</span>: application/ld+json;<span class="hl-bold">profile=http://www.w3.org/ns/json-ld#streaming</span></code></pre>
@@ -401,19 +406,27 @@
             For instance, the following two RDF datasets (serialized in <a href="https://www.w3.org/TR/turtle/">Turtle</a>) have the same meaning,
             even though they have a different order of triples.
         </p>
-        <pre class="example" title="A first order of triples">
-          @prefix schema: &lt;http://schema.org/&gt; .
-          &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
-          &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://www.rubensworks.net/&gt; .
-          &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellogg" .
-          &lt;https://greggkellogg.net/foaf#me&gt; schema:url &lt;https://greggkellogg.net/&gt; .
+        <pre class="example" data-transform="updateExample"
+             data-content-type="text/turtle"
+             title="A first order of triples">
+          <!--
+          @prefix schema: <http://schema.org/> .
+          <https://www.rubensworks.net/#me> schema:name "Ruben Taelman" .
+          <https://www.rubensworks.net/#me> schema:url <https://www.rubensworks.net/> .
+          <https://greggkellogg.net/foaf#me> schema:name "Gregg Kellogg" .
+          <https://greggkellogg.net/foaf#me> schema:url <https://greggkellogg.net/> .
+          -->
         </pre>
-        <pre class="example" title="A second order of triples">
-          @prefix schema: &lt;http://schema.org/&gt; .
-          &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
-          &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellogg" .
-          &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://www.rubensworks.net/&gt; .
-          &lt;https://greggkellogg.net/foaf#me&gt; schema:url &lt;https://greggkellogg.net/&gt; .
+        <pre class="example" data-transform="updateExample"
+             data-content-type="text/turtle"
+             title="A second order of triples">
+          <!--
+          @prefix schema: <http://schema.org/> .
+          <https://www.rubensworks.net/#me> schema:name "Ruben Taelman" .
+          <https://greggkellogg.net/foaf#me> schema:name "Gregg Kellogg" .
+          <https://www.rubensworks.net/#me> schema:url <https://www.rubensworks.net/> .
+          <https://greggkellogg.net/foaf#me> schema:url <https://greggkellogg.net/> .
+          -->
         </pre>
         <p>
             For streaming JSON-LD processors, the order of RDF triples may be important.
@@ -528,20 +541,24 @@
           </p>
           <section>
               <h3 id="streaming-rdf-example-graph">@graph grouping</h3>
-              <pre class="example" title="Triples with the same named graph are grouped">
-                @prefix schema: &lt;http://schema.org/&gt; .
-                &lt;http://example.org/graph1&gt; {
-                  &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
+              <pre class="example" data-transform="updateExample"
+                   data-content-type="text/turtle"
+                   title="Triples with the same named graph are grouped">
+                <!--
+                @prefix schema: <http://schema.org/> .
+                <http://example.org/graph1> {
+                  <https://www.rubensworks.net/#me> schema:name "Ruben Taelman" .
                 }
-                &lt;http://example.org/graph1&gt; {
-                  &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://www.rubensworks.net/&gt; .
+                <http://example.org/graph1> {
+                  <https://www.rubensworks.net/#me> schema:url <https://www.rubensworks.net/> .
                 }
-                &lt;http://example.org/graph2&gt; {
-                  &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellogg" .
+                <http://example.org/graph2> {
+                  <https://greggkellogg.net/foaf#me> schema:name "Gregg Kellogg" .
                 }
-                &lt;http://example.org/graph2&gt; {
-                  &lt;https://greggkellogg.net/foaf#me&gt; schema:url &lt;https://greggkellogg.net/&gt; .
+                <http://example.org/graph2> {
+                  <https://greggkellogg.net/foaf#me> schema:url <https://greggkellogg.net/> .
                 }
+                -->
               </pre>
               <pre class="example" title="Triples with the same named graph can be grouped within the same @graph block">
                 [
@@ -570,12 +587,16 @@
           </section>
           <section>
               <h3 id="streaming-rdf-example-id">@id grouping</h3>
-              <pre class="example" title="Triples with the same subject are grouped">
-                @prefix schema: &lt;http://schema.org/&gt; .
-                &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
-                &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://www.rubensworks.net/&gt; .
-                &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellogg" .
-                &lt;https://greggkellogg.net/foaf#me&gt; schema:url &lt;https://greggkellogg.net/&gt; .
+              <pre class="example" data-transform="updateExample"
+                   data-content-type="text/turtle"
+                   title="Triples with the same subject are grouped">
+                <!--
+                @prefix schema: <http://schema.org/> .
+                <https://www.rubensworks.net/#me> schema:name "Ruben Taelman" .
+                <https://www.rubensworks.net/#me> schema:url <https://www.rubensworks.net/> .
+                <https://greggkellogg.net/foaf#me> schema:name "Gregg Kellogg" .
+                <https://greggkellogg.net/foaf#me> schema:url <https://greggkellogg.net/> .
+                -->
               </pre>
               <pre class="example" title="Triples with the same subject can be grouped within the same @id block">
                 [
@@ -594,12 +615,16 @@
           </section>
           <section>
               <h3 id="streaming-rdf-example-property">Property grouping</h3>
-              <pre class="example" title="Triples with the same predicate are grouped">
-                @prefix schema: &lt;http://schema.org/&gt; .
-                &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben" .
-                &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
-                &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://www.rubensworks.net/&gt; .
-                &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://github.com/rubensworks/&gt; .
+              <pre class="example" data-transform="updateExample"
+                   data-content-type="text/turtle"
+                   title="Triples with the same predicate are grouped">
+                <!--
+                @prefix schema: <http://schema.org/> .
+                <https://www.rubensworks.net/#me> schema:name "Ruben" .
+                <https://www.rubensworks.net/#me> schema:name "Ruben Taelman" .
+                <https://www.rubensworks.net/#me> schema:url <https://www.rubensworks.net/> .
+                <https://www.rubensworks.net/#me> schema:url <https://github.com/rubensworks/> .
+                -->
               </pre>
               <pre class="example" title="Triples with the same predicate can be grouped within the same property array">
                 [
@@ -619,22 +644,26 @@
           </section>
           <section>
               <h3 id="streaming-rdf-example-graph-id">@graph and @id grouping</h3>
-              <pre class="example" title="Statements about a named graph are group with triples within this named graph">
-                @prefix schema: &lt;http://schema.org/&gt; .
-                &lt;http://example.org/graph1&gt; {
-                  &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
+              <pre class="example" data-transform="updateExample"
+                   data-content-type="text/turtle"
+                   title="Statements about a named graph are group with triples within this named graph">
+                <!--
+                @prefix schema: <http://schema.org/> .
+                <http://example.org/graph1> {
+                  <https://www.rubensworks.net/#me> schema:name "Ruben Taelman" .
                 }
-                &lt;http://example.org/graph1&gt; {
-                  &lt;https://www.rubensworks.net/#me&gt; schema:url &lt;https://www.rubensworks.net/&gt; .
+                <http://example.org/graph1> {
+                  <https://www.rubensworks.net/#me> schema:url <https://www.rubensworks.net/> .
                 }
-                &lt;http://example.org/graph1&gt; schema:name "Graph 1" .
-                &lt;http://example.org/graph2&gt; {
-                  &lt;https://greggkellogg.net/foaf#me&gt; schema:name "Gregg Kellogg" .
+                <http://example.org/graph1> schema:name "Graph 1" .
+                <http://example.org/graph2> {
+                  <https://greggkellogg.net/foaf#me> schema:name "Gregg Kellogg" .
                 }
-                &lt;http://example.org/graph2&gt; {
-                  &lt;https://greggkellogg.net/foaf#me&gt; schema:url &lt;https://greggkellogg.net/&gt; .
+                <http://example.org/graph2> {
+                  <https://greggkellogg.net/foaf#me> schema:url <https://greggkellogg.net/> .
                 }
-                &lt;http://example.org/graph2&gt; schema:name "Graph 2" .
+                <http://example.org/graph2> schema:name "Graph 2" .
+                -->
               </pre>
               <pre class="example" title="Statements about a named graph can be attached within the same @graph block">
                 [
@@ -665,11 +694,15 @@
           </section>
           <section>
               <h3 id="streaming-rdf-example-object">Subject and object grouping</h3>
-              <pre class="example" title="Triples about a subject come right after triples having this as object">
-                @prefix schema: &lt;http://schema.org/&gt; .
-                &lt;https://www.rubensworks.net/#me&gt; schema:name "Ruben Taelman" .
-                &lt;https://www.rubensworks.net/#me&gt; schema:knows &lt;https://greggkellogg.net/foaf#me&gt; .
-                &lt;https://greggkellogg.net/foaf#me&gt; schema:knows "Gregg Kellogg" .
+              <pre class="example" data-transform="updateExample"
+                   data-content-type="text/turtle"
+                   title="Triples about a subject come right after triples having this as object">
+                <!--
+                @prefix schema: <http://schema.org/> .
+                <https://www.rubensworks.net/#me> schema:name "Ruben Taelman" .
+                <https://www.rubensworks.net/#me> schema:knows <https://greggkellogg.net/foaf#me> .
+                <https://greggkellogg.net/foaf#me> schema:knows "Gregg Kellogg" .
+                -->
               </pre>
               <pre class="example" title="Triples can be chained in nested nodes">
                 [
