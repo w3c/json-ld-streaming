@@ -4,11 +4,11 @@
     "ws": "http://data.wikipedia.org/snaks/",
     "wp": "http://en.wikipedia.org/wiki/"
   },
-  "@id": "ws:Assertions",
   "@type": "wd:SnakSet",
+  "@id": "ws:Assertions",
   "@graph": {
-    "@id": "ws:BerlinFact",
     "@type": "wd:Snak",
+    "@id": "ws:BerlinFact",
     "@graph": {
       "@id": "wp:Berlin",
       "wd:population": 3499879

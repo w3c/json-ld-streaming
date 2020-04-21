@@ -11,9 +11,9 @@
     1,
     10.0,
     {"@value": "plain"},
-    {"@value": true, "@type": "xsd:boolean"},
+    {"@type": "xsd:boolean", "@value": true},
     {"@value": "english", "@language": "en"},
-    {"@value": "2018-02-17", "@type": "xsd:date"},
+    {"@type": "xsd:date", "@value": "2018-02-17"},
     {"@id": "http://example.com/iri"}
   ]
 }

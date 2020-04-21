@@ -3,7 +3,6 @@
     "@base": "http://example.com/some/deep/directory/and/file#with-a-fragment",
     "links": { "@id": "http://www.example.com/link", "@type": "@id", "@container": "@list" }
   },
-  "@id": "relativeIris",
   "@type": [
     "link",
     "#fragment-works",
@@ -17,6 +16,7 @@
     "/absolute",
     "//example.org/scheme-relative"
   ],
+  "@id": "relativeIris",
   "links": [
     "link",
     "#fragment-works",

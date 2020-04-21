@@ -2,15 +2,15 @@
   "@context": {
     "@vocab": "http://example.org/vocab#"
   },
-  "@id": "example-with-vocab",
   "@type": "vocab-prefixed",
+  "@id": "example-with-vocab",
   "property": "property expanded using @vocab",
   "embed": {
     "@context": {
       "@vocab": null
     },
-    "@id": "example-vocab-reset",
     "@type": "document-relative",
+    "@id": "example-vocab-reset",
     "property": "@vocab reset, property will be dropped"
   }
 }

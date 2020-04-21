@@ -6,18 +6,18 @@
     "asOf": "http://example.org/asOf"
   },
   "@id": "http://example.org/linked-data-graph",
-  "asOf": {"@value": "2012-04-09", "@type": "xsd:date"},
+  "asOf": {"@type": "xsd:date", "@value": "2012-04-09"},
   "@graph":
   [
     {
-      "@id": "http://manu.sporny.org/i/public",
       "@type": "foaf:Person",
+      "@id": "http://manu.sporny.org/i/public",
       "name": "Manu Sporny",
       "knows": "http://greggkellogg.net/foaf#me"
     },
     {
-      "@id": "http://greggkellogg.net/foaf#me",
       "@type": "foaf:Person",
+      "@id": "http://greggkellogg.net/foaf#me",
       "name": "Gregg Kellogg",
       "knows": "http://manu.sporny.org/i/public"
     },
