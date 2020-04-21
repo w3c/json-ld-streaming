@@ -7,67 +7,67 @@
   "baseIri": "https://w3c.github.io/json-ld-streaming/tests/",
   "sequence": [
     {
-      "@id": "#te001",
+      "@id": "#tse01",
       "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
       "name": "@context must come before @id",
       "purpose": "Generate an error if @context comes after @id",
-      "input": "stream-toRdf/e001-in.jsonld",
+      "input": "stream-toRdf/se01-in.jsonld",
       "expectErrorCode": "invalid streaming key order"
     }, {
-      "@id": "#te002",
+      "@id": "#tse02",
       "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
       "name": "@context must come before properties",
       "purpose": "Generate an error if @context comes after properties",
-      "input": "stream-toRdf/e002-in.jsonld",
+      "input": "stream-toRdf/se02-in.jsonld",
       "expectErrorCode": "invalid streaming key order"
     }, {
-      "@id": "#te003",
+      "@id": "#tse03",
       "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
       "name": "@context must come before @type with context",
       "purpose": "Generate an error if @context comes after @type with a type-scoped context",
-      "input": "stream-toRdf/e003-in.jsonld",
+      "input": "stream-toRdf/se03-in.jsonld",
       "expectErrorCode": "invalid streaming key order"
     }, {
-      "@id": "#te004",
+      "@id": "#tse04",
       "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
       "name": "@type with context must come before @id",
       "purpose": "Generate an error if @type with context comes after @id",
-      "input": "stream-toRdf/e004-in.jsonld",
+      "input": "stream-toRdf/se04-in.jsonld",
       "expectErrorCode": "invalid streaming key order"
     }, {
-      "@id": "#te005",
+      "@id": "#tse05",
       "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
       "name": "@type with context must come before properties",
       "purpose": "Generate an error if @type with context comes after properties",
-      "input": "stream-toRdf/e005-in.jsonld",
+      "input": "stream-toRdf/se05-in.jsonld",
       "expectErrorCode": "invalid streaming key order"
     }, {
-      "@id": "#te006",
+      "@id": "#tse06",
       "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
       "name": "Embedded @context must come before @id",
       "purpose": "Generate an error if embedded @context comes after @id",
-      "input": "stream-toRdf/e006-in.jsonld",
+      "input": "stream-toRdf/se06-in.jsonld",
       "expectErrorCode": "invalid streaming key order"
     }, {
-      "@id": "#te007",
+      "@id": "#tse07",
       "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
       "name": "Embedded @context must come before properties",
       "purpose": "Generate an error if embedded @context comes after properties",
-      "input": "stream-toRdf/e007-in.jsonld",
+      "input": "stream-toRdf/se07-in.jsonld",
       "expectErrorCode": "invalid streaming key order"
     }, {
-      "@id": "#te008",
+      "@id": "#tse08",
       "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
       "name": "@type must come before @id",
       "purpose": "Generate an error if @type comes after @id",
-      "input": "stream-toRdf/e008-in.jsonld",
+      "input": "stream-toRdf/se08-in.jsonld",
       "expectErrorCode": "invalid streaming key order"
     }, {
-      "@id": "#te009",
+      "@id": "#tse09",
       "@type": ["jld:NegativeEvaluationTest", "jld:ToRDFTest"],
       "name": "@type must come before properties",
       "purpose": "Generate an error if @type comes after properties",
-      "input": "stream-toRdf/e009-in.jsonld",
+      "input": "stream-toRdf/se09-in.jsonld",
       "expectErrorCode": "invalid streaming key order"
     }, {
       "@id": "#tv001",

@@ -108,20 +108,20 @@ to the <a href="mailto:json-ld-wg@w3.org">JSON-LD Working Group mailing list</a>
 Test sequence:
 </h2>
 <dl class='entries'>
-<dt id='te001'>
-Test te001 @context must come before @id
+<dt id='tse01'>
+Test tse01 @context must come before @id
 </dt>
 <dd>
 <dl class='entry'>
 <dt>id</dt>
-<dd>#te001</dd>
+<dd>#tse01</dd>
 <dt>Type</dt>
 <dd>jld:NegativeEvaluationTest, jld:ToRDFTest</dd>
 <dt>Purpose</dt>
 <dd>Generate an error if @context comes after @id</dd>
 <dt>input</dt>
 <dd>
-<a href='stream-toRdf/e001-in.jsonld'>stream-toRdf/e001-in.jsonld</a>
+<a href='stream-toRdf/se01-in.jsonld'>stream-toRdf/se01-in.jsonld</a>
 </dd>
 <dt>expect</dt>
 <dd>
@@ -129,20 +129,20 @@ invalid streaming key order
 </dd>
 </dl>
 </dd>
-<dt id='te002'>
-Test te002 @context must come before properties
+<dt id='tse02'>
+Test tse02 @context must come before properties
 </dt>
 <dd>
 <dl class='entry'>
 <dt>id</dt>
-<dd>#te002</dd>
+<dd>#tse02</dd>
 <dt>Type</dt>
 <dd>jld:NegativeEvaluationTest, jld:ToRDFTest</dd>
 <dt>Purpose</dt>
 <dd>Generate an error if @context comes after properties</dd>
 <dt>input</dt>
 <dd>
-<a href='stream-toRdf/e002-in.jsonld'>stream-toRdf/e002-in.jsonld</a>
+<a href='stream-toRdf/se02-in.jsonld'>stream-toRdf/se02-in.jsonld</a>
 </dd>
 <dt>expect</dt>
 <dd>
@@ -150,20 +150,20 @@ invalid streaming key order
 </dd>
 </dl>
 </dd>
-<dt id='te003'>
-Test te003 @context must come before @type with context
+<dt id='tse03'>
+Test tse03 @context must come before @type with context
 </dt>
 <dd>
 <dl class='entry'>
 <dt>id</dt>
-<dd>#te003</dd>
+<dd>#tse03</dd>
 <dt>Type</dt>
 <dd>jld:NegativeEvaluationTest, jld:ToRDFTest</dd>
 <dt>Purpose</dt>
 <dd>Generate an error if @context comes after @type with a type-scoped context</dd>
 <dt>input</dt>
 <dd>
-<a href='stream-toRdf/e003-in.jsonld'>stream-toRdf/e003-in.jsonld</a>
+<a href='stream-toRdf/se03-in.jsonld'>stream-toRdf/se03-in.jsonld</a>
 </dd>
 <dt>expect</dt>
 <dd>
@@ -171,20 +171,20 @@ invalid streaming key order
 </dd>
 </dl>
 </dd>
-<dt id='te004'>
-Test te004 @type with context must come before @id
+<dt id='tse04'>
+Test tse04 @type with context must come before @id
 </dt>
 <dd>
 <dl class='entry'>
 <dt>id</dt>
-<dd>#te004</dd>
+<dd>#tse04</dd>
 <dt>Type</dt>
 <dd>jld:NegativeEvaluationTest, jld:ToRDFTest</dd>
 <dt>Purpose</dt>
 <dd>Generate an error if @type with context comes after @id</dd>
 <dt>input</dt>
 <dd>
-<a href='stream-toRdf/e004-in.jsonld'>stream-toRdf/e004-in.jsonld</a>
+<a href='stream-toRdf/se04-in.jsonld'>stream-toRdf/se04-in.jsonld</a>
 </dd>
 <dt>expect</dt>
 <dd>
@@ -192,20 +192,20 @@ invalid streaming key order
 </dd>
 </dl>
 </dd>
-<dt id='te005'>
-Test te005 @type with context must come before properties
+<dt id='tse05'>
+Test tse05 @type with context must come before properties
 </dt>
 <dd>
 <dl class='entry'>
 <dt>id</dt>
-<dd>#te005</dd>
+<dd>#tse05</dd>
 <dt>Type</dt>
 <dd>jld:NegativeEvaluationTest, jld:ToRDFTest</dd>
 <dt>Purpose</dt>
 <dd>Generate an error if @type with context comes after properties</dd>
 <dt>input</dt>
 <dd>
-<a href='stream-toRdf/e005-in.jsonld'>stream-toRdf/e005-in.jsonld</a>
+<a href='stream-toRdf/se05-in.jsonld'>stream-toRdf/se05-in.jsonld</a>
 </dd>
 <dt>expect</dt>
 <dd>
@@ -213,20 +213,20 @@ invalid streaming key order
 </dd>
 </dl>
 </dd>
-<dt id='te006'>
-Test te006 Embedded @context must come before @id
+<dt id='tse06'>
+Test tse06 Embedded @context must come before @id
 </dt>
 <dd>
 <dl class='entry'>
 <dt>id</dt>
-<dd>#te006</dd>
+<dd>#tse06</dd>
 <dt>Type</dt>
 <dd>jld:NegativeEvaluationTest, jld:ToRDFTest</dd>
 <dt>Purpose</dt>
 <dd>Generate an error if embedded @context comes after @id</dd>
 <dt>input</dt>
 <dd>
-<a href='stream-toRdf/e006-in.jsonld'>stream-toRdf/e006-in.jsonld</a>
+<a href='stream-toRdf/se06-in.jsonld'>stream-toRdf/se06-in.jsonld</a>
 </dd>
 <dt>expect</dt>
 <dd>
@@ -234,20 +234,20 @@ invalid streaming key order
 </dd>
 </dl>
 </dd>
-<dt id='te007'>
-Test te007 Embedded @context must come before properties
+<dt id='tse07'>
+Test tse07 Embedded @context must come before properties
 </dt>
 <dd>
 <dl class='entry'>
 <dt>id</dt>
-<dd>#te007</dd>
+<dd>#tse07</dd>
 <dt>Type</dt>
 <dd>jld:NegativeEvaluationTest, jld:ToRDFTest</dd>
 <dt>Purpose</dt>
 <dd>Generate an error if embedded @context comes after properties</dd>
 <dt>input</dt>
 <dd>
-<a href='stream-toRdf/e007-in.jsonld'>stream-toRdf/e007-in.jsonld</a>
+<a href='stream-toRdf/se07-in.jsonld'>stream-toRdf/se07-in.jsonld</a>
 </dd>
 <dt>expect</dt>
 <dd>
@@ -255,20 +255,20 @@ invalid streaming key order
 </dd>
 </dl>
 </dd>
-<dt id='te008'>
-Test te008 @type must come before @id
+<dt id='tse08'>
+Test tse08 @type must come before @id
 </dt>
 <dd>
 <dl class='entry'>
 <dt>id</dt>
-<dd>#te008</dd>
+<dd>#tse08</dd>
 <dt>Type</dt>
 <dd>jld:NegativeEvaluationTest, jld:ToRDFTest</dd>
 <dt>Purpose</dt>
 <dd>Generate an error if @type comes after @id</dd>
 <dt>input</dt>
 <dd>
-<a href='stream-toRdf/e008-in.jsonld'>stream-toRdf/e008-in.jsonld</a>
+<a href='stream-toRdf/se08-in.jsonld'>stream-toRdf/se08-in.jsonld</a>
 </dd>
 <dt>expect</dt>
 <dd>
@@ -276,20 +276,20 @@ invalid streaming key order
 </dd>
 </dl>
 </dd>
-<dt id='te009'>
-Test te009 @type must come before properties
+<dt id='tse09'>
+Test tse09 @type must come before properties
 </dt>
 <dd>
 <dl class='entry'>
 <dt>id</dt>
-<dd>#te009</dd>
+<dd>#tse09</dd>
 <dt>Type</dt>
 <dd>jld:NegativeEvaluationTest, jld:ToRDFTest</dd>
 <dt>Purpose</dt>
 <dd>Generate an error if @type comes after properties</dd>
 <dt>input</dt>
 <dd>
-<a href='stream-toRdf/e009-in.jsonld'>stream-toRdf/e009-in.jsonld</a>
+<a href='stream-toRdf/se09-in.jsonld'>stream-toRdf/se09-in.jsonld</a>
 </dd>
 <dt>expect</dt>
 <dd>
