@@ -5,7 +5,7 @@
     "type": {"@id" : "@type", "@container": "@set", "@protected" : true},
     "@type": {"@container": "@set", "@protected": true}
   },
-  "id": "http://example.com/1",
   "type": "http://example.org/ns/Foo",
-  "@type": "http://example.org/ns/Bar"
+  "@type": "http://example.org/ns/Bar",
+  "id": "http://example.com/1"
 }

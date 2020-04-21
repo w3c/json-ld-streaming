@@ -9,6 +9,6 @@
     "id": "@id",
     "type": "@type"
   }],
-  "id": "http://example/id",
-  "type": "http://example/type"
+  "type": "http://example/type",
+  "id": "http://example/id"
 }

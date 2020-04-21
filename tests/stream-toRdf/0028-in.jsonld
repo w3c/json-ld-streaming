@@ -7,8 +7,8 @@
     "sec:signer": {"@type": "@id"},
     "dcterms:created": {"@type": "xsd:dateTime"}
   },
-  "@id": "http://example.org/sig1",
   "@type": ["rdf:Graph", "sec:SignedGraph"],
+  "@id": "http://example.org/sig1",
   "dcterms:created": "2011-09-23T20:21:34Z",
   "sec:signer": "http://payswarm.example.com/i/john/keys/5",
   "sec:signatureValue": "OGQzNGVkMzVm4NTIyZTkZDYMmMzQzNmExMgoYzI43Q3ODIyOWM32NjI=",

@@ -3,7 +3,7 @@
     "prefix": "http://www.example.org/vocab#",
     "prefix:foo": "prefix:foo"
   },
-  "@id": "http://example.com/vocab#id",
   "@type": "prefix:Class",
+  "@id": "http://example.com/vocab#id",
   "prefix:foo": "bar"
 }

@@ -3,7 +3,7 @@
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "rdfs:subClassOf": { "@id": "rdfs:subClassOf", "@type": "@id" }
   },
-  "@id": "http://example.com/vocab#class",
   "@type": "rdfs:Class",
+  "@id": "http://example.com/vocab#class",
   "rdfs:subClassOf": "http://example.com/vocab#someOtherClass"
 }

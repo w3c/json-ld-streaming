@@ -11,8 +11,8 @@
   },
   "@id": "#base-id",
   "p": {
-    "@id": "#typed-id",
     "@type": "Type",
+    "@id": "#typed-id",
     "subjectReference": {
       "@id": "#subject-reference-id"
     },

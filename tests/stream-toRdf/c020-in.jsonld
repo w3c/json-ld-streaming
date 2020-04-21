@@ -10,7 +10,7 @@
   },
   "type": "Type",
   "v": {
-    "value": "value",
-    "type": "value-type"
+    "type": "value-type",
+    "value": "value"
   }
 }
