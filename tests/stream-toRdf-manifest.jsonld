@@ -3474,148 +3474,148 @@
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "@context, @id and properties",
       "purpose": "@context, @id and properties",
-      "input": "stream-toRdf/tv001-in.jsonld",
-      "expect": "stream-toRdf/tv001-out.nq"
+      "input": "stream-toRdf/v001-in.jsonld",
+      "expect": "stream-toRdf/v001-out.nq"
     }, {
       "@id": "#tv002",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "@context, blank @id and properties",
       "purpose": "@context, blank @id and properties",
-      "input": "stream-toRdf/tv002-in.jsonld",
-      "expect": "stream-toRdf/tv002-out.nq"
+      "input": "stream-toRdf/v002-in.jsonld",
+      "expect": "stream-toRdf/v002-out.nq"
     }, {
       "@id": "#tv003",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "@context, implicit @id and properties",
       "purpose": "@context, implicit @id and properties",
-      "input": "stream-toRdf/tv003-in.jsonld",
-      "expect": "stream-toRdf/tv003-out.nq"
+      "input": "stream-toRdf/v003-in.jsonld",
+      "expect": "stream-toRdf/v003-out.nq"
     }, {
       "@id": "#tv004",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "Nested nodes",
       "purpose": "Nested nodes",
-      "input": "stream-toRdf/tv004-in.jsonld",
-      "expect": "stream-toRdf/tv004-out.nq"
+      "input": "stream-toRdf/v004-in.jsonld",
+      "expect": "stream-toRdf/v004-out.nq"
     }, {
       "@id": "#tv005",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "Nested nodes and embedded context",
       "purpose": "Nested nodes and embedded context",
-      "input": "stream-toRdf/tv005-in.jsonld",
-      "expect": "stream-toRdf/tv005-out.nq"
+      "input": "stream-toRdf/v005-in.jsonld",
+      "expect": "stream-toRdf/v005-out.nq"
     }, {
       "@id": "#tv006",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "@context, @type-scoped context, @id, and other properties",
       "purpose": "@context, @type-scoped context, @id, and other properties",
-      "input": "stream-toRdf/tv006-in.jsonld",
-      "expect": "stream-toRdf/tv006-out.nq"
+      "input": "stream-toRdf/v006-in.jsonld",
+      "expect": "stream-toRdf/v006-out.nq"
     }, {
       "@id": "#tv008",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "No @context and @id",
       "purpose": "@context and @id are not required",
-      "input": "stream-toRdf/tv008-in.jsonld",
-      "expect": "stream-toRdf/tv008-out.nq"
+      "input": "stream-toRdf/v008-in.jsonld",
+      "expect": "stream-toRdf/v008-out.nq"
     }, {
       "@id": "#tv009",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "Deeply nested nodes",
       "purpose": "Deeply nested nodes",
-      "input": "stream-toRdf/tv009-in.jsonld",
-      "expect": "stream-toRdf/tv009-out.nq"
+      "input": "stream-toRdf/v009-in.jsonld",
+      "expect": "stream-toRdf/v009-out.nq"
     }, {
       "@id": "#tv010",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "Deeply nested nodes without @id",
       "purpose": "Deeply nested nodes without @id",
-      "input": "stream-toRdf/tv010-in.jsonld",
-      "expect": "stream-toRdf/tv010-out.nq"
+      "input": "stream-toRdf/v010-in.jsonld",
+      "expect": "stream-toRdf/v010-out.nq"
     }, {
       "@id": "#tv011",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "@id after properties",
       "purpose": "Properties should be buffered until @id is encountered",
-      "input": "stream-toRdf/tv011-in.jsonld",
-      "expect": "stream-toRdf/tv011-out.nq"
+      "input": "stream-toRdf/v011-in.jsonld",
+      "expect": "stream-toRdf/v011-out.nq"
     }, {
       "@id": "#tv012",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "No @id after properties",
       "purpose": "Properties should be buffered until node closes",
-      "input": "stream-toRdf/tv012-in.jsonld",
-      "expect": "stream-toRdf/tv012-out.nq"
+      "input": "stream-toRdf/v012-in.jsonld",
+      "expect": "stream-toRdf/v012-out.nq"
     }, {
       "@id": "#tv013",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "@id after properties in nested node",
       "purpose": "Properties in nested node should be buffered until @id is encountered",
-      "input": "stream-toRdf/tv013-in.jsonld",
-      "expect": "stream-toRdf/tv013-out.nq"
+      "input": "stream-toRdf/v013-in.jsonld",
+      "expect": "stream-toRdf/v013-out.nq"
     }, {
       "@id": "#tv014",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "No @id after properties in nested node",
       "purpose": "Properties in nested node should be buffered until node closes",
-      "input": "stream-toRdf/tv014-in.jsonld",
-      "expect": "stream-toRdf/tv014-out.nq"
+      "input": "stream-toRdf/v014-in.jsonld",
+      "expect": "stream-toRdf/v014-out.nq"
     }, {
       "@id": "#tv015",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "@id after properties in nested node with outer @id after node",
       "purpose": "Properties in nested node with @id after node should be buffered until @id is encountered",
-      "input": "stream-toRdf/tv015-in.jsonld",
-      "expect": "stream-toRdf/tv015-out.nq"
+      "input": "stream-toRdf/v015-in.jsonld",
+      "expect": "stream-toRdf/v015-out.nq"
     }, {
       "@id": "#tv016",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "No @id after properties in nested node and no outer @id",
       "purpose": "Properties in nested node and no outer @id should be buffered until node closes",
-      "input": "stream-toRdf/tv016-in.jsonld",
-      "expect": "stream-toRdf/tv016-out.nq"
+      "input": "stream-toRdf/v016-in.jsonld",
+      "expect": "stream-toRdf/v016-out.nq"
     }, {
       "@id": "#tv017",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "@id after @graph and properties",
       "purpose": "Properties with @graph should be buffered until @id is encountered",
-      "input": "stream-toRdf/tv017-in.jsonld",
-      "expect": "stream-toRdf/tv017-out.nq"
+      "input": "stream-toRdf/v017-in.jsonld",
+      "expect": "stream-toRdf/v017-out.nq"
     }, {
       "@id": "#tv018",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "No @id after @graph and properties",
       "purpose": "Properties with @graph should be buffered until node closes",
-      "input": "stream-toRdf/tv018-in.jsonld",
-      "expect": "stream-toRdf/tv018-out.nq"
+      "input": "stream-toRdf/v018-in.jsonld",
+      "expect": "stream-toRdf/v018-out.nq"
     }, {
       "@id": "#tv019",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "@id after @graph and properties and late inner @id",
       "purpose": "Properties with @graph should be buffered until @id is encountered",
-      "input": "stream-toRdf/tv019-in.jsonld",
-      "expect": "stream-toRdf/tv019-out.nq"
+      "input": "stream-toRdf/v019-in.jsonld",
+      "expect": "stream-toRdf/v019-out.nq"
     }, {
       "@id": "#tv020",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "No @id after @graph and properties and late inner @id",
       "purpose": "Properties with @graph should be buffered until node closes and @id is encountered",
-      "input": "stream-toRdf/tv020-in.jsonld",
-      "expect": "stream-toRdf/tv020-out.nq"
+      "input": "stream-toRdf/v020-in.jsonld",
+      "expect": "stream-toRdf/v020-out.nq"
     }, {
       "@id": "#tv021",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "@id after @graph and properties and no @id",
       "purpose": "Properties with @graph should be buffered until node closes and @id is encountered",
-      "input": "stream-toRdf/tv021-in.jsonld",
-      "expect": "stream-toRdf/tv021-out.nq"
+      "input": "stream-toRdf/v021-in.jsonld",
+      "expect": "stream-toRdf/v021-out.nq"
     }, {
       "@id": "#tv022",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
       "name": "No @id after @graph and properties and no @id",
       "purpose": "Properties with @graph should be buffered until nodes close",
-      "input": "stream-toRdf/tv022-in.jsonld",
-      "expect": "stream-toRdf/tv022-out.nq"
+      "input": "stream-toRdf/v022-in.jsonld",
+      "expect": "stream-toRdf/v022-out.nq"
     }, {
       "@id": "#twf01",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
