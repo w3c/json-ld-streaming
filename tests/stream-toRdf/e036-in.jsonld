@@ -19,8 +19,8 @@
       null,
       "simple string A",
       {
-        "@value": "typed literal A",
-        "@type": "http://example.org/type"
+        "@type": "http://example.org/type",
+        "@value": "typed literal A"
       },
       {
         "@value": "language-tagged string A",
@@ -42,8 +42,8 @@
       null,
       "simple string C",
       {
-        "@value": "typed literal C",
-        "@type": "http://example.org/type"
+        "@type": "http://example.org/type",
+        "@value": "typed literal C"
       },
       {
         "@value": "language-tagged string C",
@@ -77,8 +77,8 @@
     },
     "simple string no index",
     {
-      "@value": "typed literal Prop",
       "@type": "http://example.org/type",
+      "@value": "typed literal Prop",
       "@index": "prop"
     },
     {
