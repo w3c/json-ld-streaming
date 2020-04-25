@@ -5,9 +5,9 @@
       "@context": {
         "t2": {
           "@context": {"type": null}
-        },
+        }
+      },
       "@id": "ex:t1"
-      }
     }
   },
   "t1": "something"
