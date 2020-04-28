@@ -4,8 +4,8 @@
 <meta content='text/html;charset=utf-8' http-equiv='Content-Type' />
 <link href='earl.jsonld' rel='alternate' />
 <link href='https://www.w3.org/StyleSheets/TR/base' rel='stylesheet' />
-<link href='jsonld-streaming-parser-earl.ttl' rel='related' />
 <link href='ruby-json-ld-earl.ttl' rel='related' />
+<link href='jsonld-streaming-parser-earl.ttl' rel='related' />
 <title>
 Streaming JSON-LD 1.1 Processor Conformance
 </title>
@@ -57,6 +57,21 @@ Streaming JSON-LD 1.1 Processor Conformance
     }
     pre > code {
       color: #C83500;
+    }
+    .non-normative, .non-normative a:visited, .non-normative a:link {
+      color: gray;
+    }
+    #test-manifests .report td:last-child::before {
+      position: absolute;
+      left: 1em;
+      content: "X";
+      color: red;
+      font-weight: bold;
+    }
+    #test-manifests .report tr.summary td:last-child::before,
+    #test-manifests .report .PASS ~ td.PASS:last-child::before,
+    #test-manifests .report .PASS ~ .PASS ~ td:last-child::before {
+      display: none;
     }
   /*]]>*/
 </style>
@@ -144,21 +159,27 @@ Table of Contents
 </h2>
 <ul class='toc' id='respecContents' role='directory'>
 <li class='tocline'>
-<a class='tocxref' href='#instructions-for-submitting-implementation-reports'>
+<a class='tocxref' href='#introduction'>
 <span class='secno'>1.</span>
 Instructions for submitting implementation reports
+Introduction
+</a>
+</li>
+<li class='tocline'>
+<a class='tocxref' href='#instructions-for-submitting-implementation-reports'>
+<span class='secno'>2.</span>
 </a>
 </li>
 <li class='tocline'>
 <a class='tocxref' href='#test-manifests'>
-<span class='secno'>2.</span>
+<span class='secno'>3.</span>
 Test Manifests
 </a>
 <ul class='toc'>
 <li class='tocline'>
-<span class='secno'>2.1</span>
-<a class='tocxref' href='#JSON-LD-Streaming-To-RDF-tests.'>
-JSON-LD Streaming To RDF tests.
+<span class='secno'>3.1</span>
+<a class='tocxref' href='#Streaming-Transform-JSON-LD-to-RDF'>
+Streaming Transform JSON-LD to RDF
 </a>
 </li>
 </ul>
@@ -171,11 +192,17 @@ Test Subjects
 <ul class='toc'>
 <li class='tocline'>
 <span class='secno'>A.1</span>
-<a class='tocxref' href='#subj_0'>JSON::LD</a>
+<a class='tocxref' href='#subj_JSON_LD_Ruby'>
+JSON::LD
+ (Ruby)
+</a>
 </li>
 <li class='tocline'>
 <span class='secno'>A.2</span>
-<a class='tocxref' href='#subj_1'>jsonld-streaming-parser</a>
+<a class='tocxref' href='#subj_jsonld_streaming_parser_JavaScript'>
+jsonld-streaming-parser
+ (JavaScript)
+</a>
 </li>
 </ul>
 </li>
@@ -186,32 +213,51 @@ Individual Test Results
 </a>
 </li>
 <li class='tocline'>
-<a class='tocxref' href='#test-definitions'>
-<span class='secno'>C.</span>
-Test Definitions
-</a>
-</li>
-<li class='tocline'>
 <a class='tocxref' href='#report-generation-software'>
-<span class='secno'>D.</span>
+<span class='secno'>C.</span>
 Report Generation Software
 </a>
 </li>
 </ul>
 </section>
+<section id='introduction'>
+<h2>Introduction</h2>
+
+<p>This implementation report covers the implementations of the JSON-LD
+specifications which have submitted test results. It is intended to be
+maintained by the <a href="https://www.w3.org/community/json-ld/">JSON for Linking Data Community Group</a>,
+or a JSON-LD Working Group if one is active.
+The implementation report serves two purposes:</p>
+
+<ol>
+<li><p>To demonstrate that there are multiple, independent implementations of
+the specifications. This is a prerequisite for progression of any
+standard to Recommendation.</p></li>
+<li><p>To catalog the known, conforming implementations and which features
+each supports.</p></li>
+</ol>
+
+<p>There are other <a href="http://json-ld.org/#developers">JSON-LD implementations</a> which are not listed in this
+report, either due to not submitting tests or by not being intended as
+direct implementations of the specification, but instead layering on
+top of such libraries. For a broader list of implementations, please
+see the <a href="https://json-ld.org/">JSON-LD Website</a>.</p>
+</section>
 <section id='instructions-for-submitting-implementation-reports'>
 <h2>Instructions for submitting implementation reports</h2>
+
+<p>Reports should be submitted in Turtle format to
+  <a href="mailto:public-json-ld-wg@w3.org">Public JSON-LD WG</a> or via a Pull
+  Request to the <a href="https://github.com/w3c/json-ld-api/pulls">w3c/json-ld-api</a>.</p>
 
 <p>Tests should be run using the test manifests defined in the
   <a href="#test-manifests">Test Manifests</a> Section.</p>
 
 <p>The assumed base URI for the tests is <code>&lt;http://example/base/&gt;</code> if needed.</p>
 
-<p>Reports should be submitted in Turtle format to
-  <a href="mailto:public-json-ld-wg@w3.org">Public JSON-LD WG</a>
-  and include an <code>earl:Assertion</code>
-  for each test, referencing the test resource from the associated manifest
-  and the test subject being reported upon. An example test entry is be the following:</p>
+<p>Include an <code>earl:Assertion</code> for each test, referencing the test
+  resource from the associated manifest and the test subject being
+  reported upon. See the example below:</p>
 
 <pre><code>  [ a earl:Assertion;&#x000A;    earl:assertedBy &lt;--your-developer-identifier--&gt;;&#x000A;    earl:subject &lt;--your-software-identifier--&gt;;&#x000A;    earl:test &lt;--uri-of-test-from-manifest&gt;;&#x000A;    earl:result [&#x000A;      a earl:TestResult;&#x000A;      earl:outcome earl:passed;&#x000A;      dc:date &quot;2016-12-26T10:18:04-08:00&quot;^^xsd:dateTime];&#x000A;    earl:mode earl:automatic ] .&#x000A;</code></pre>
 
@@ -219,7 +265,7 @@ Report Generation Software
   homepage and developer(s) of the software (see <a href="https://github.com/edumbill/doap/wiki">DOAP</a>). Optionally, including the
   project description and programming language. An example test subject description is the following:</p>
 
-<pre><code>  &lt;&gt; foaf:primaryTopic &lt;--your-software-identifier--&gt; ;&#x000A;    dc:issued &quot;2016-12-26T10:18:04-08:00&quot;^^xsd:dateTime ;&#x000A;    foaf:maker &lt;--your-developer-identifier--&gt; .&#x000A;&#x000A;  &lt;--your-software-identifier--&gt; a doap:Project, earl:TestSubject, earl:Software ;&#x000A;    doap:name          &quot;My Cool JSON-LD Parser&quot; ;&#x000A;    doap:revision      &quot;Software version number&quot; ;&#x000A;    doap:developer     &lt;--your-developer-identifier--&gt; ;&#x000A;    doap:homepage      &lt;--your-software-homepace--&gt; ;&#x000A;    doap:description   &quot;--your-project-description--&quot;@en ;&#x000A;    doap:programming-language &quot;--your-implementation-language--&quot; .&#x000A;</code></pre>
+<pre><code>  &lt;&gt; foaf:primaryTopic &lt;--your-software-identifier--&gt; ;&#x000A;    dc:issued &quot;2016-12-26T10:18:04-08:00&quot;^^xsd:dateTime ;&#x000A;    foaf:maker &lt;--your-developer-identifier--&gt; .&#x000A;&#x000A;  &lt;--your-software-identifier--&gt; a doap:Project, earl:TestSubject, earl:Software ;&#x000A;    doap:name          &quot;My Cool JSON-LD Parser&quot; ;&#x000A;    doap:release [&#x000A;      doap:name     &quot;--short name wih version number--&quot;;&#x000A;      doap:revision &quot;--Software version number--&quot; ;&#x000A;      doap:created  &quot;2020-02-19&quot;^^xsd:date;&#x000A;    ] ;&#x000A;    doap:developer     &lt;--your-developer-identifier--&gt; ;&#x000A;    doap:homepage      &lt;--your-software-homepace--&gt; ;&#x000A;    doap:description   &quot;--your-project-description--&quot;@en ;&#x000A;    doap:programming-language &quot;--your-implementation-language--&quot; .&#x000A;</code></pre>
 
 <p>The software developer, either an organization or one or more individuals SHOULD be
   referenced from <code>doap:developer</code> using <a href="http://xmlns.com/foaf/spec">FOAF</a>. For example:</p>
@@ -228,27 +274,37 @@ Report Generation Software
 </section>
 <section id='test-manifests'>
 <h2>
-<span class='secno'>2.</span>
+<span class='secno'>3.</span>
 Test Manifests
 </h2>
-<section id='JSON-LD-Streaming-To-RDF-tests.'>
+<section id='Streaming-Transform-JSON-LD-to-RDF'>
 <h2>
-<span class='secno'>2.1</span>
+<span class='secno'>3.1</span>
 <span>Streaming Transform JSON-LD to RDF</span>
 </h2>
+<p>JSON-LD Streaming To RDF tests.</p>
+
 <table class='report'>
 <tr>
 <th>
 Test
 </th>
 <th>
-<a href='#subj_0'>JSON::LD</a>
+<a href='#subj_JSON_LD_Ruby'>
+JSON::LD
+<br />
+(Ruby)
+</a>
 </th>
 <th>
-<a href='#subj_1'>jsonld-streaming-parser</a>
+<a href='#subj_jsonld_streaming_parser_JavaScript'>
+jsonld-streaming-parser
+<br />
+(JavaScript)
+</a>
 </th>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0001'>Test t0001: Plain literal with URIs</a>
 </td>
@@ -259,7 +315,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0002'>Test t0002: Plain literal with CURIE from default context</a>
 </td>
@@ -270,7 +326,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0003'>Test t0003: Default subject is BNode</a>
 </td>
@@ -281,7 +337,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0004'>Test t0004: Literal with language tag</a>
 </td>
@@ -292,7 +348,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0005'>Test t0005: Extended character set literal</a>
 </td>
@@ -303,7 +359,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0006'>Test t0006: Typed literal</a>
 </td>
@@ -314,7 +370,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0007'>Test t0007: Tests &#39;a&#39; generates rdf:type and object is implicit IRI</a>
 </td>
@@ -325,7 +381,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0008'>Test t0008: Test prefix defined in @context</a>
 </td>
@@ -336,7 +392,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0009'>Test t0009: Test using an empty suffix</a>
 </td>
@@ -347,7 +403,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0010'>Test t0010: Test object processing defines object</a>
 </td>
@@ -358,7 +414,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0011'>Test t0011: Test object processing defines object with implicit BNode</a>
 </td>
@@ -369,7 +425,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0012'>Test t0012: Multiple Objects for a Single Property</a>
 </td>
@@ -380,7 +436,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0013'>Test t0013: Creation of an empty list</a>
 </td>
@@ -391,7 +447,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0014'>Test t0014: Creation of a list with single element</a>
 </td>
@@ -402,7 +458,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0015'>Test t0015: Creation of a list with multiple elements</a>
 </td>
@@ -413,7 +469,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0016'>Test t0016: Empty IRI expands to resource location</a>
 </td>
@@ -424,7 +480,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0017'>Test t0017: Relative IRI expands relative resource location</a>
 </td>
@@ -435,7 +491,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0018'>Test t0018: Frag ID expands relative resource location</a>
 </td>
@@ -446,7 +502,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0019'>Test t0019: Test type coercion to anyURI</a>
 </td>
@@ -457,7 +513,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0020'>Test t0020: Test type coercion to typed literal</a>
 </td>
@@ -468,7 +524,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0022'>Test t0022: Test coercion of double value</a>
 </td>
@@ -479,7 +535,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0023'>Test t0023: Test coercion of integer value</a>
 </td>
@@ -490,7 +546,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0024'>Test t0024: Test coercion of boolean value</a>
 </td>
@@ -501,7 +557,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0025'>Test t0025: Test list coercion with single element</a>
 </td>
@@ -512,7 +568,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0026'>Test t0026: Test creation of multiple types</a>
 </td>
@@ -523,7 +579,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0027'>Test t0027: Simple named graph (Wikidata)</a>
 </td>
@@ -534,7 +590,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0028'>Test t0028: Simple named graph</a>
 </td>
@@ -545,7 +601,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0029'>Test t0029: named graph with embedded named graph</a>
 </td>
@@ -556,7 +612,7 @@ FAIL
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0030'>Test t0030: top-level graph with string subject reference</a>
 </td>
@@ -567,7 +623,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0031'>Test t0031: Reverse property</a>
 </td>
@@ -578,7 +634,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0032'>Test t0032: @context reordering</a>
 </td>
@@ -589,7 +645,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0033'>Test t0033: @id reordering</a>
 </td>
@@ -600,7 +656,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0034'>Test t0034: context properties reordering</a>
 </td>
@@ -611,7 +667,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0035'>Test t0035: non-fractional numbers converted to xsd:double</a>
 </td>
@@ -622,7 +678,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0036'>Test t0036: Use nodeMapGeneration bnode labels</a>
 </td>
@@ -633,7 +689,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0113'>Test t0113: Dataset with a IRI named graph</a>
 </td>
@@ -644,7 +700,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0114'>Test t0114: Dataset with a IRI named graph</a>
 </td>
@@ -655,7 +711,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0115'>Test t0115: Dataset with a default and two named graphs</a>
 </td>
@@ -666,7 +722,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0116'>Test t0116: Dataset from node with embedded named graph</a>
 </td>
@@ -677,7 +733,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0117'>Test t0117: Dataset from node with embedded named graph (bnode)</a>
 </td>
@@ -688,7 +744,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0119'>Test t0119: Blank nodes with reverse properties</a>
 </td>
@@ -699,7 +755,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0120'>Test t0120: IRI Resolution (0)</a>
 </td>
@@ -710,7 +766,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0121'>Test t0121: IRI Resolution (1)</a>
 </td>
@@ -721,7 +777,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0122'>Test t0122: IRI Resolution (2)</a>
 </td>
@@ -732,7 +788,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0123'>Test t0123: IRI Resolution (3)</a>
 </td>
@@ -743,9 +799,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0124'>Test t0124: compact IRI as @vocab(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0124'>Test t0124: compact IRI as @vocab</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -754,9 +811,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0125'>Test t0125: IRI Resolution (5)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0125'>Test t0125: IRI Resolution (5)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -765,7 +823,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0126'>Test t0126: IRI Resolution (6)</a>
 </td>
@@ -776,7 +834,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0127'>Test t0127: IRI Resolution (7)</a>
 </td>
@@ -787,7 +845,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0128'>Test t0128: IRI Resolution (8)</a>
 </td>
@@ -798,7 +856,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0129'>Test t0129: IRI Resolution (9)</a>
 </td>
@@ -809,7 +867,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0130'>Test t0130: IRI Resolution (10)</a>
 </td>
@@ -820,7 +878,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0131'>Test t0131: IRI Resolution (11)</a>
 </td>
@@ -831,7 +889,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0132'>Test t0132: IRI Resolution (12)</a>
 </td>
@@ -842,9 +900,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc001'>Test tc001: adding new term(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc001'>Test tc001: adding new term</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -853,9 +912,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc002'>Test tc002: overriding a term(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc002'>Test tc002: overriding a term</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -864,9 +924,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc003'>Test tc003: property and value with different terms mapping to the same expanded property(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc003'>Test tc003: property and value with different terms mapping to the same expanded property</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -875,9 +936,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc004'>Test tc004: deep @context affects nested nodes(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc004'>Test tc004: deep @context affects nested nodes</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -886,9 +948,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc005'>Test tc005: scoped context layers on intemediate contexts(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc005'>Test tc005: scoped context layers on intemediate contexts</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -897,9 +960,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc006'>Test tc006: adding new term(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc006'>Test tc006: adding new term</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -908,9 +972,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc007'>Test tc007: overriding a term(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc007'>Test tc007: overriding a term</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -919,9 +984,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc008'>Test tc008: alias of @type(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc008'>Test tc008: alias of @type</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -930,9 +996,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc009'>Test tc009: deep @type-scoped @context does NOT affect nested nodes(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc009'>Test tc009: deep @type-scoped @context does NOT affect nested nodes</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -941,9 +1008,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc010'>Test tc010: scoped context layers on intemediate contexts(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc010'>Test tc010: scoped context layers on intemediate contexts</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -952,9 +1020,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc011'>Test tc011: orders @type terms when applying scoped contexts(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc011'>Test tc011: orders @type terms when applying scoped contexts</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -963,9 +1032,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc012'>Test tc012: deep property-term scoped @context in @type-scoped @context affects nested nodes(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc012'>Test tc012: deep property-term scoped @context in @type-scoped @context affects nested nodes</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -974,9 +1044,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc013'>Test tc013: type maps use scoped context from type index and not scoped context from containing(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc013'>Test tc013: type maps use scoped context from type index and not scoped context from containing</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -985,9 +1056,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc014'>Test tc014: type-scoped context nullification(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc014'>Test tc014: type-scoped context nullification</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -996,9 +1068,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc015'>Test tc015: type-scoped base(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc015'>Test tc015: type-scoped base</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1007,9 +1080,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc016'>Test tc016: type-scoped vocab(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc016'>Test tc016: type-scoped vocab</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1018,9 +1092,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc017'>Test tc017: multiple type-scoped contexts are properly reverted(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc017'>Test tc017: multiple type-scoped contexts are properly reverted</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1029,9 +1104,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc018'>Test tc018: multiple type-scoped types resolved against previous context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc018'>Test tc018: multiple type-scoped types resolved against previous context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1040,9 +1116,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc019'>Test tc019: type-scoped context with multiple property scoped terms(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc019'>Test tc019: type-scoped context with multiple property scoped terms</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1051,9 +1128,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc020'>Test tc020: type-scoped value(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc020'>Test tc020: type-scoped value</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1062,9 +1140,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc021'>Test tc021: type-scoped value mix(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc021'>Test tc021: type-scoped value mix</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1073,9 +1152,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc022'>Test tc022: type-scoped property-scoped contexts including @type:@vocab(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc022'>Test tc022: type-scoped property-scoped contexts including @type:@vocab</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1084,9 +1164,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc023'>Test tc023: composed type-scoped property-scoped contexts including @type:@vocab(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc023'>Test tc023: composed type-scoped property-scoped contexts including @type:@vocab</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1095,9 +1176,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc024'>Test tc024: type-scoped + property-scoped + values evaluates against previous context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc024'>Test tc024: type-scoped + property-scoped + values evaluates against previous context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1106,9 +1188,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc025'>Test tc025: type-scoped + graph container(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc025'>Test tc025: type-scoped + graph container</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1117,9 +1200,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc026'>Test tc026: @propagate: true on type-scoped context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc026'>Test tc026: @propagate: true on type-scoped context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1128,9 +1212,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc027'>Test tc027: @propagate: false on property-scoped context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc027'>Test tc027: @propagate: false on property-scoped context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1139,9 +1224,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc028'>Test tc028: @propagate: false on embedded context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc028'>Test tc028: @propagate: false on embedded context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1150,9 +1236,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc029'>Test tc029: @propagate is invalid in 1.0(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc029'>Test tc029: @propagate is invalid in 1.0</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1161,9 +1248,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc030'>Test tc030: @propagate must be boolean valued(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc030'>Test tc030: @propagate must be boolean valued</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1172,9 +1260,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc031'>Test tc031: @context resolutions respects relative URLs.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc031'>Test tc031: @context resolutions respects relative URLs.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1183,9 +1272,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc032'>Test tc032: Unused embedded context with error.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc032'>Test tc032: Unused embedded context with error.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1194,9 +1284,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc033'>Test tc033: Unused context with an embedded context error.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc033'>Test tc033: Unused context with an embedded context error.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1205,9 +1296,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc034'>Test tc034: Remote scoped context.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc034'>Test tc034: Remote scoped context.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1216,9 +1308,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc035'>Test tc035: Term scoping with embedded contexts.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tc035'>Test tc035: Term scoping with embedded contexts.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1227,9 +1320,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi01'>Test tdi01: Expand string using default and term directions(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi01'>Test tdi01: Expand string using default and term directions</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1238,9 +1332,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi02'>Test tdi02: Expand string using default and term directions and languages(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi02'>Test tdi02: Expand string using default and term directions and languages</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1249,9 +1344,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi03'>Test tdi03: expand list values with @direction(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi03'>Test tdi03: expand list values with @direction</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1260,9 +1356,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi04'>Test tdi04: simple language map with term direction(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi04'>Test tdi04: simple language map with term direction</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1271,9 +1368,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi05'>Test tdi05: simple language mapwith overriding term direction(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi05'>Test tdi05: simple language mapwith overriding term direction</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1282,9 +1380,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi06'>Test tdi06: simple language mapwith overriding null direction(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi06'>Test tdi06: simple language mapwith overriding null direction</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1293,9 +1392,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi07'>Test tdi07: simple language map with mismatching term direction(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi07'>Test tdi07: simple language map with mismatching term direction</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1304,9 +1404,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi08'>Test tdi08: @direction must be one of ltr or rtl(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi08'>Test tdi08: @direction must be one of ltr or rtl</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -1315,9 +1416,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='non-normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi09'>Test tdi09: rdfDirection: i18n-datatype with direction and no language(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi09'>Test tdi09: rdfDirection: i18n-datatype with direction and no language</a>
+(new in JSON-LD 1.1, non-normative)
 </td>
 <td class='PASS'>
 PASS
@@ -1326,9 +1428,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='non-normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi10'>Test tdi10: rdfDirection: i18n-datatype with direction and language(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi10'>Test tdi10: rdfDirection: i18n-datatype with direction and language</a>
+(new in JSON-LD 1.1, non-normative)
 </td>
 <td class='PASS'>
 PASS
@@ -1337,9 +1440,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='non-normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi11'>Test tdi11: rdfDirection: compound-literal with direction and no language(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi11'>Test tdi11: rdfDirection: compound-literal with direction and no language</a>
+(new in JSON-LD 1.1, non-normative)
 </td>
 <td class='PASS'>
 PASS
@@ -1348,9 +1452,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='non-normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi12'>Test tdi12: rdfDirection: compound-literal with direction and language(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tdi12'>Test tdi12: rdfDirection: compound-literal with direction and language</a>
+(new in JSON-LD 1.1, non-normative)
 </td>
 <td class='PASS'>
 PASS
@@ -1359,7 +1464,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te001'>Test te001: drop free-floating nodes</a>
 </td>
@@ -1370,7 +1475,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te002'>Test te002: basic</a>
 </td>
@@ -1381,7 +1486,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te003'>Test te003: drop null and unmapped properties</a>
 </td>
@@ -1392,7 +1497,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te004'>Test te004: optimize @set, keep empty arrays</a>
 </td>
@@ -1403,7 +1508,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te005'>Test te005: do not expand aliased @id/@type</a>
 </td>
@@ -1414,7 +1519,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te006'>Test te006: alias keywords</a>
 </td>
@@ -1425,7 +1530,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te007'>Test te007: date type-coercion</a>
 </td>
@@ -1436,7 +1541,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te008'>Test te008: @value with @language</a>
 </td>
@@ -1447,7 +1552,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te009'>Test te009: @graph with terms</a>
 </td>
@@ -1458,7 +1563,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te010'>Test te010: native types</a>
 </td>
@@ -1469,7 +1574,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te011'>Test te011: coerced @id</a>
 </td>
@@ -1480,7 +1585,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te012'>Test te012: @graph with embed</a>
 </td>
@@ -1491,7 +1596,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te013'>Test te013: expand already expanded</a>
 </td>
@@ -1502,7 +1607,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te015'>Test te015: collapse set of sets, keep empty lists</a>
 </td>
@@ -1513,7 +1618,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te016'>Test te016: context reset</a>
 </td>
@@ -1524,7 +1629,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te017'>Test te017: @graph and @id aliased</a>
 </td>
@@ -1535,7 +1640,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te018'>Test te018: override default @language</a>
 </td>
@@ -1546,7 +1651,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te019'>Test te019: remove @value = null</a>
 </td>
@@ -1557,7 +1662,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te020'>Test te020: do not remove @graph if not at top-level</a>
 </td>
@@ -1568,7 +1673,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te021'>Test te021: do not remove @graph at top-level if not only property</a>
 </td>
@@ -1579,7 +1684,7 @@ FAIL
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te022'>Test te022: expand value with default language</a>
 </td>
@@ -1590,7 +1695,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te023'>Test te023: Lists and sets of properties with list/set coercion</a>
 </td>
@@ -1601,7 +1706,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te024'>Test te024: Multiple contexts</a>
 </td>
@@ -1612,7 +1717,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te025'>Test te025: Problematic IRI expansion tests</a>
 </td>
@@ -1623,7 +1728,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te027'>Test te027: Keep duplicate values in @list and @set</a>
 </td>
@@ -1634,7 +1739,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te028'>Test te028: Use @vocab in properties and @type but not in @id</a>
 </td>
@@ -1645,7 +1750,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te029'>Test te029: Relative IRIs</a>
 </td>
@@ -1656,7 +1761,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te030'>Test te030: Language maps</a>
 </td>
@@ -1667,7 +1772,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te031'>Test te031: type-coercion of native types</a>
 </td>
@@ -1678,7 +1783,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te032'>Test te032: Mapping a term to null decouples it from @vocab</a>
 </td>
@@ -1689,7 +1794,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te033'>Test te033: Using @vocab with with type-coercion</a>
 </td>
@@ -1700,7 +1805,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te034'>Test te034: Multiple properties expanding to the same IRI</a>
 </td>
@@ -1711,7 +1816,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te035'>Test te035: Language maps with @vocab, default language, and colliding property</a>
 </td>
@@ -1722,7 +1827,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te036'>Test te036: Expanding @index</a>
 </td>
@@ -1733,7 +1838,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te037'>Test te037: Expanding @reverse</a>
 </td>
@@ -1744,7 +1849,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te039'>Test te039: Using terms in a reverse-maps</a>
 </td>
@@ -1755,7 +1860,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te040'>Test te040: language and index expansion on non-objects</a>
 </td>
@@ -1766,7 +1871,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te041'>Test te041: Reset the default language</a>
 </td>
@@ -1777,7 +1882,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te042'>Test te042: Expanding reverse properties</a>
 </td>
@@ -1788,7 +1893,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te043'>Test te043: Using reverse properties inside a @reverse-container</a>
 </td>
@@ -1799,7 +1904,7 @@ FAIL
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te044'>Test te044: Ensure index maps use language mapping</a>
 </td>
@@ -1810,7 +1915,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te045'>Test te045: Top-level value objects are removed</a>
 </td>
@@ -1821,7 +1926,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te046'>Test te046: Free-floating nodes are removed</a>
 </td>
@@ -1832,7 +1937,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te047'>Test te047: Remove free-floating set values and lists</a>
 </td>
@@ -1843,7 +1948,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te048'>Test te048: Terms are ignored in @id</a>
 </td>
@@ -1854,7 +1959,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te049'>Test te049: Using strings as value of a reverse property</a>
 </td>
@@ -1865,7 +1970,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te050'>Test te050: Term definitions with prefix separate from prefix definitions</a>
 </td>
@@ -1876,7 +1981,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te051'>Test te051: Expansion of keyword aliases in term definitions</a>
 </td>
@@ -1887,7 +1992,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te052'>Test te052: @vocab-relative IRIs in term definitions</a>
 </td>
@@ -1898,7 +2003,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te053'>Test te053: Expand absolute IRI with @type: @vocab</a>
 </td>
@@ -1909,7 +2014,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te054'>Test te054: Expand term with @type: @vocab</a>
 </td>
@@ -1920,7 +2025,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te055'>Test te055: Expand @vocab-relative term with @type: @vocab</a>
 </td>
@@ -1931,7 +2036,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te056'>Test te056: Use terms with @type: @vocab but not with @type: @id</a>
 </td>
@@ -1942,7 +2047,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te057'>Test te057: Expand relative IRI with @type: @vocab</a>
 </td>
@@ -1953,7 +2058,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te058'>Test te058: Expand compact IRI with @type: @vocab</a>
 </td>
@@ -1964,7 +2069,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te059'>Test te059: Reset @vocab by setting it to null</a>
 </td>
@@ -1975,7 +2080,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te060'>Test te060: Overwrite document base with @base and reset it again</a>
 </td>
@@ -1986,7 +2091,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te061'>Test te061: Coercing native types to arbitrary datatypes</a>
 </td>
@@ -1997,7 +2102,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te062'>Test te062: Various relative IRIs with with @base</a>
 </td>
@@ -2008,7 +2113,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te063'>Test te063: Expand a reverse property with an index-container</a>
 </td>
@@ -2019,7 +2124,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te064'>Test te064: Expand reverse property whose values are unlabeled blank nodes</a>
 </td>
@@ -2030,7 +2135,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te065'>Test te065: Keys that are not mapped to an IRI in a reverse-map are dropped</a>
 </td>
@@ -2041,7 +2146,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te066'>Test te066: Use @vocab to expand keys in reverse-maps</a>
 </td>
@@ -2052,7 +2157,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te067'>Test te067: prefix:://sufffix not a compact IRI</a>
 </td>
@@ -2063,7 +2168,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te068'>Test te068: _::sufffix not a compact IRI</a>
 </td>
@@ -2074,7 +2179,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te069'>Test te069: Compact IRI as term with type mapping</a>
 </td>
@@ -2085,7 +2190,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te070'>Test te070: Redefine compact IRI with itself</a>
 </td>
@@ -2096,7 +2201,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te072'>Test te072: Redefine term using @vocab, not itself</a>
 </td>
@@ -2107,7 +2212,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te073'>Test te073: @context not first property</a>
 </td>
@@ -2118,7 +2223,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te074'>Test te074: @id not first property</a>
 </td>
@@ -2129,7 +2234,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te075'>Test te075: @vocab as blank node identifier</a>
 </td>
@@ -2140,7 +2245,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te076'>Test te076: base option overrides document location</a>
 </td>
@@ -2151,7 +2256,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te077'>Test te077: expandContext option</a>
 </td>
@@ -2162,7 +2267,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te078'>Test te078: multiple reverse properties</a>
 </td>
@@ -2173,9 +2278,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te079'>Test te079: expand @graph container(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te079'>Test te079: expand @graph container</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2184,9 +2290,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te080'>Test te080: expand [@graph, @set] container(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te080'>Test te080: expand [@graph, @set] container</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2195,9 +2302,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te081'>Test te081: Creates an @graph container if value is a graph(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te081'>Test te081: Creates an @graph container if value is a graph</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2206,9 +2314,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te082'>Test te082: expand [@graph, @index] container(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te082'>Test te082: expand [@graph, @index] container</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2217,9 +2326,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te083'>Test te083: expand [@graph, @index, @set] container(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te083'>Test te083: expand [@graph, @index, @set] container</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2228,9 +2338,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te084'>Test te084: Do not expand [@graph, @index] container if value is a graph(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te084'>Test te084: Do not expand [@graph, @index] container if value is a graph</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='FAIL'>
 FAIL
@@ -2239,9 +2350,10 @@ FAIL
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te085'>Test te085: expand [@graph, @id] container(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te085'>Test te085: expand [@graph, @id] container</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2250,9 +2362,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te086'>Test te086: expand [@graph, @id, @set] container(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te086'>Test te086: expand [@graph, @id, @set] container</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2261,9 +2374,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te087'>Test te087: Do not expand [@graph, @id] container if value is a graph(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te087'>Test te087: Do not expand [@graph, @id] container if value is a graph</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='FAIL'>
 FAIL
@@ -2272,7 +2386,7 @@ FAIL
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te088'>Test te088: Do not expand native values to IRIs</a>
 </td>
@@ -2283,7 +2397,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te089'>Test te089: empty @base applied to the base option</a>
 </td>
@@ -2294,7 +2408,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te090'>Test te090: relative @base overrides base option and document location</a>
 </td>
@@ -2305,7 +2419,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te091'>Test te091: relative and absolute @base overrides base option and document location</a>
 </td>
@@ -2316,9 +2430,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te092'>Test te092: Various relative IRIs as properties with with @vocab: &#39;&#39;(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te092'>Test te092: Various relative IRIs as properties with with @vocab: &#39;&#39;</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2327,9 +2442,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te093'>Test te093: expand @graph container (multiple objects)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te093'>Test te093: expand @graph container (multiple objects)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2338,9 +2454,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te094'>Test te094: expand [@graph, @set] container (multiple objects)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te094'>Test te094: expand [@graph, @set] container (multiple objects)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2349,9 +2466,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te095'>Test te095: Creates an @graph container if value is a graph (multiple objects)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te095'>Test te095: Creates an @graph container if value is a graph (multiple objects)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2360,9 +2478,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te096'>Test te096: expand [@graph, @index] container (multiple indexed objects)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te096'>Test te096: expand [@graph, @index] container (multiple indexed objects)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2371,9 +2490,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te097'>Test te097: expand [@graph, @index, @set] container (multiple objects)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te097'>Test te097: expand [@graph, @index, @set] container (multiple objects)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2382,9 +2502,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te098'>Test te098: Do not expand [@graph, @index] container if value is a graph (multiple objects)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te098'>Test te098: Do not expand [@graph, @index] container if value is a graph (multiple objects)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='FAIL'>
 FAIL
@@ -2393,9 +2514,10 @@ FAIL
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te099'>Test te099: expand [@graph, @id] container (multiple objects)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te099'>Test te099: expand [@graph, @id] container (multiple objects)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2404,9 +2526,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te100'>Test te100: expand [@graph, @id, @set] container (multiple objects)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te100'>Test te100: expand [@graph, @id, @set] container (multiple objects)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2415,9 +2538,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te101'>Test te101: Do not expand [@graph, @id] container if value is a graph (multiple objects)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te101'>Test te101: Do not expand [@graph, @id] container if value is a graph (multiple objects)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='FAIL'>
 FAIL
@@ -2426,9 +2550,10 @@ FAIL
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te102'>Test te102: Expand @graph container if value is a graph (multiple objects)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te102'>Test te102: Expand @graph container if value is a graph (multiple objects)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2437,9 +2562,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te103'>Test te103: Expand @graph container if value is a graph (multiple graphs)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te103'>Test te103: Expand @graph container if value is a graph (multiple graphs)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2448,9 +2574,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te104'>Test te104: Creates an @graph container if value is a graph (mixed graph and object)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te104'>Test te104: Creates an @graph container if value is a graph (mixed graph and object)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2459,9 +2586,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te105'>Test te105: Do not expand [@graph, @index] container if value is a graph (mixed graph and object)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te105'>Test te105: Do not expand [@graph, @index] container if value is a graph (mixed graph and object)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='FAIL'>
 FAIL
@@ -2470,9 +2598,10 @@ FAIL
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te106'>Test te106: Do not expand [@graph, @id] container if value is a graph (mixed graph and object)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te106'>Test te106: Do not expand [@graph, @id] container if value is a graph (mixed graph and object)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='FAIL'>
 FAIL
@@ -2481,9 +2610,10 @@ FAIL
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te107'>Test te107: expand [@graph, @index] container (indexes with multiple objects)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te107'>Test te107: expand [@graph, @index] container (indexes with multiple objects)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2492,9 +2622,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te108'>Test te108: expand [@graph, @id] container (multiple ids and objects)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te108'>Test te108: expand [@graph, @id] container (multiple ids and objects)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2503,7 +2634,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te109'>Test te109: IRI expansion of fragments including &#39;:&#39;</a>
 </td>
@@ -2514,9 +2645,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te110'>Test te110: Various relative IRIs as properties with with relative @vocab(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te110'>Test te110: Various relative IRIs as properties with with relative @vocab</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2525,9 +2657,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te111'>Test te111: Various relative IRIs as properties with with relative @vocab itself relative to an existing vocabulary base(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te111'>Test te111: Various relative IRIs as properties with with relative @vocab itself relative to an existing vocabulary base</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2536,9 +2669,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te112'>Test te112: Various relative IRIs as properties with with relative @vocab relative to another relative vocabulary base(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te112'>Test te112: Various relative IRIs as properties with with relative @vocab relative to another relative vocabulary base</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2547,7 +2681,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te113'>Test te113: context with JavaScript Object property names</a>
 </td>
@@ -2558,9 +2692,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te114'>Test te114: Expansion allows multiple properties expanding to @type(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te114'>Test te114: Expansion allows multiple properties expanding to @type</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2569,9 +2704,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te117'>Test te117: A term starting with a colon can expand to a different IRI(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te117'>Test te117: A term starting with a colon can expand to a different IRI</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2580,9 +2716,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te118'>Test te118: Expanding a value staring with a colon does not treat that value as an IRI(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te118'>Test te118: Expanding a value staring with a colon does not treat that value as an IRI</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2591,9 +2728,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te119'>Test te119: Ignore some terms with @, allow others.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te119'>Test te119: Ignore some terms with @, allow others.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2602,9 +2740,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te120'>Test te120: Ignore some values of @id with @, allow others.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te120'>Test te120: Ignore some values of @id with @, allow others.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2613,9 +2752,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te121'>Test te121: Ignore some values of @reverse with @, allow others.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te121'>Test te121: Ignore some values of @reverse with @, allow others.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2624,9 +2764,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te122'>Test te122: Ignore some IRIs when that start with @ when expanding.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te122'>Test te122: Ignore some IRIs when that start with @ when expanding.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2635,9 +2776,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te123'>Test te123: Value objects including invalid literal datatype IRIs are rejected(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te123'>Test te123: Value objects including invalid literal datatype IRIs are rejected</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2646,9 +2788,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0124'>Test t0124: compact IRI as @vocab(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0124'>Test t0124: compact IRI as @vocab</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2657,9 +2800,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0125'>Test t0125: IRI Resolution (5)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#t0125'>Test t0125: IRI Resolution (5)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2668,9 +2812,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te126'>Test te126: A scoped context may include itself recursively (direct)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te126'>Test te126: A scoped context may include itself recursively (direct)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2679,9 +2824,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te127'>Test te127: A scoped context may include itself recursively (indirect)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te127'>Test te127: A scoped context may include itself recursively (indirect)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2690,9 +2836,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te128'>Test te128: Two scoped context may include a shared context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te128'>Test te128: Two scoped context may include a shared context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2701,9 +2848,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te129'>Test te129: Base without trailing slash, without path(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te129'>Test te129: Base without trailing slash, without path</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2712,9 +2860,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te130'>Test te130: Base without trailing slash, with path(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#te130'>Test te130: Base without trailing slash, with path</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2723,9 +2872,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tec01'>Test tec01: Invalid keyword in term definition(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tec01'>Test tec01: Invalid keyword in term definition</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2734,9 +2884,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tec02'>Test tec02: Term definition on @type with empty map(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tec02'>Test tec02: Term definition on @type with empty map</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2745,9 +2896,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tem01'>Test tem01: Invalid container mapping(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tem01'>Test tem01: Invalid container mapping</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2756,9 +2908,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ten01'>Test ten01: @nest MUST NOT have a string value(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ten01'>Test ten01: @nest MUST NOT have a string value</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2767,9 +2920,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ten02'>Test ten02: @nest MUST NOT have a boolen value(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ten02'>Test ten02: @nest MUST NOT have a boolen value</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2778,9 +2932,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ten03'>Test ten03: @nest MUST NOT have a numeric value(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ten03'>Test ten03: @nest MUST NOT have a numeric value</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2789,9 +2944,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ten04'>Test ten04: @nest MUST NOT have a value object value(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ten04'>Test ten04: @nest MUST NOT have a value object value</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2800,9 +2956,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ten05'>Test ten05: does not allow a keyword other than @nest for the value of @nest(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ten05'>Test ten05: does not allow a keyword other than @nest for the value of @nest</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2811,9 +2968,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ten06'>Test ten06: does not allow @nest with @reverse(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ten06'>Test ten06: does not allow @nest with @reverse</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2822,9 +2980,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tep02'>Test tep02: processingMode json-ld-1.0 conflicts with @version: 1.1(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tep02'>Test tep02: processingMode json-ld-1.0 conflicts with @version: 1.1</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2833,9 +2992,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tep03'>Test tep03: @version must be 1.1(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tep03'>Test tep03: @version must be 1.1</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2844,7 +3004,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter01'>Test ter01: Keywords cannot be aliased to other keywords</a>
 </td>
@@ -2855,7 +3015,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter04'>Test ter04: Error dereferencing a remote context</a>
 </td>
@@ -2866,9 +3026,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter05'>Test ter05: Invalid remote context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter05'>Test ter05: Invalid remote context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -2877,7 +3038,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter06'>Test ter06: Invalid local context</a>
 </td>
@@ -2888,7 +3049,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter07'>Test ter07: Invalid base IRI</a>
 </td>
@@ -2899,7 +3060,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter08'>Test ter08: Invalid vocab mapping</a>
 </td>
@@ -2910,7 +3071,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter09'>Test ter09: Invalid default language</a>
 </td>
@@ -2921,7 +3082,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter10'>Test ter10: Cyclic IRI mapping</a>
 </td>
@@ -2932,7 +3093,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter11'>Test ter11: Invalid term definition</a>
 </td>
@@ -2943,7 +3104,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter12'>Test ter12: Invalid type mapping (not a string)</a>
 </td>
@@ -2954,7 +3115,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter13'>Test ter13: Invalid type mapping (not absolute IRI)</a>
 </td>
@@ -2965,7 +3126,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter14'>Test ter14: Invalid reverse property (contains @id)</a>
 </td>
@@ -2976,7 +3137,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter15'>Test ter15: Invalid IRI mapping (@reverse not a string)</a>
 </td>
@@ -2987,7 +3148,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter17'>Test ter17: Invalid reverse property (invalid @container)</a>
 </td>
@@ -2998,7 +3159,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter18'>Test ter18: Invalid IRI mapping (@id not a string)</a>
 </td>
@@ -3009,7 +3170,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter19'>Test ter19: Invalid keyword alias (@context)</a>
 </td>
@@ -3020,7 +3181,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter20'>Test ter20: Invalid IRI mapping (no vocab mapping)</a>
 </td>
@@ -3031,9 +3192,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter21'>Test ter21: Invalid container mapping(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter21'>Test ter21: Invalid container mapping</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3042,7 +3204,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter22'>Test ter22: Invalid language mapping</a>
 </td>
@@ -3053,7 +3215,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter23'>Test ter23: Invalid IRI mapping (relative IRI in @type)</a>
 </td>
@@ -3064,7 +3226,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter25'>Test ter25: Invalid reverse property map</a>
 </td>
@@ -3075,7 +3237,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter26'>Test ter26: Colliding keywords</a>
 </td>
@@ -3086,7 +3248,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter27'>Test ter27: Invalid @id value</a>
 </td>
@@ -3097,7 +3259,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter28'>Test ter28: Invalid type value</a>
 </td>
@@ -3108,7 +3270,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter29'>Test ter29: Invalid value object value</a>
 </td>
@@ -3119,7 +3281,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter30'>Test ter30: Invalid language-tagged string</a>
 </td>
@@ -3130,7 +3292,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter31'>Test ter31: Invalid @index value</a>
 </td>
@@ -3141,7 +3303,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter33'>Test ter33: Invalid @reverse value</a>
 </td>
@@ -3152,7 +3314,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter34'>Test ter34: Invalid reverse property value (in @reverse)</a>
 </td>
@@ -3163,7 +3325,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter35'>Test ter35: Invalid language map value</a>
 </td>
@@ -3174,7 +3336,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter36'>Test ter36: Invalid reverse property value (through coercion)</a>
 </td>
@@ -3185,7 +3347,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter37'>Test ter37: Invalid value object (unexpected keyword)</a>
 </td>
@@ -3196,7 +3358,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter38'>Test ter38: Invalid value object (@type and @language)</a>
 </td>
@@ -3207,7 +3369,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter39'>Test ter39: Invalid language-tagged value</a>
 </td>
@@ -3218,7 +3380,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter40'>Test ter40: Invalid typed value</a>
 </td>
@@ -3229,7 +3391,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter41'>Test ter41: Invalid set or list object</a>
 </td>
@@ -3240,9 +3402,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter42'>Test ter42: Keywords may not be redefined in 1.0(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter42'>Test ter42: Keywords may not be redefined in 1.0</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3251,9 +3414,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter43'>Test ter43: Term definition with @id: @type(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter43'>Test ter43: Term definition with @id: @type</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3262,9 +3426,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter44'>Test ter44: Redefine terms looking like compact IRIs(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter44'>Test ter44: Redefine terms looking like compact IRIs</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3273,9 +3438,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter48'>Test ter48: Invalid term as relative IRI(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter48'>Test ter48: Invalid term as relative IRI</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3284,9 +3450,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter49'>Test ter49: A relative IRI cannot be used as a prefix(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter49'>Test ter49: A relative IRI cannot be used as a prefix</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3295,7 +3462,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter50'>Test ter50: Invalid reverse id</a>
 </td>
@@ -3306,7 +3473,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter51'>Test ter51: Invalid value object value using a value alias</a>
 </td>
@@ -3317,7 +3484,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter52'>Test ter52: Definition for the empty term</a>
 </td>
@@ -3328,7 +3495,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ter53'>Test ter53: Invalid prefix value</a>
 </td>
@@ -3339,9 +3506,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin01'>Test tin01: Basic Included array(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin01'>Test tin01: Basic Included array</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3350,9 +3518,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin02'>Test tin02: Basic Included object(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin02'>Test tin02: Basic Included object</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3361,9 +3530,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin03'>Test tin03: Multiple properties mapping to @included are folded together(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin03'>Test tin03: Multiple properties mapping to @included are folded together</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3372,9 +3542,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin04'>Test tin04: Included containing @included(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin04'>Test tin04: Included containing @included</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3383,9 +3554,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin05'>Test tin05: Property value with @included(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin05'>Test tin05: Property value with @included</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3394,9 +3566,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin06'>Test tin06: json.api example(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin06'>Test tin06: json.api example</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='FAIL'>
 FAIL
@@ -3405,9 +3578,10 @@ FAIL
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin07'>Test tin07: Error if @included value is a string(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin07'>Test tin07: Error if @included value is a string</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3416,9 +3590,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin08'>Test tin08: Error if @included value is a value object(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin08'>Test tin08: Error if @included value is a value object</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3427,9 +3602,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin09'>Test tin09: Error if @included value is a list object(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tin09'>Test tin09: Error if @included value is a list object</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3438,9 +3614,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs01'>Test tjs01: Transform JSON literal (boolean true)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs01'>Test tjs01: Transform JSON literal (boolean true)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3449,9 +3626,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs02'>Test tjs02: Transform JSON literal (boolean false)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs02'>Test tjs02: Transform JSON literal (boolean false)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3460,9 +3638,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs03'>Test tjs03: Transform JSON literal (double)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs03'>Test tjs03: Transform JSON literal (double)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3471,9 +3650,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs04'>Test tjs04: Transform JSON literal (double-zero)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs04'>Test tjs04: Transform JSON literal (double-zero)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3482,9 +3662,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs05'>Test tjs05: Transform JSON literal (integer)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs05'>Test tjs05: Transform JSON literal (integer)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3493,9 +3674,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs06'>Test tjs06: Transform JSON literal (object)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs06'>Test tjs06: Transform JSON literal (object)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3504,9 +3686,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs07'>Test tjs07: Transform JSON literal (array)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs07'>Test tjs07: Transform JSON literal (array)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3515,9 +3698,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs08'>Test tjs08: Transform JSON literal with array canonicalization(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs08'>Test tjs08: Transform JSON literal with array canonicalization</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3526,9 +3710,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs09'>Test tjs09: Transform JSON literal with string canonicalization(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs09'>Test tjs09: Transform JSON literal with string canonicalization</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3537,9 +3722,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs10'>Test tjs10: Transform JSON literal with structural canonicalization(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs10'>Test tjs10: Transform JSON literal with structural canonicalization</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3548,9 +3734,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs11'>Test tjs11: Transform JSON literal with unicode canonicalization(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs11'>Test tjs11: Transform JSON literal with unicode canonicalization</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3559,9 +3746,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs12'>Test tjs12: Transform JSON literal with value canonicalization(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs12'>Test tjs12: Transform JSON literal with value canonicalization</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3570,9 +3758,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs13'>Test tjs13: Transform JSON literal with wierd canonicalization(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs13'>Test tjs13: Transform JSON literal with wierd canonicalization</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3581,9 +3770,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs14'>Test tjs14: Transform JSON literal without expanding contents(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs14'>Test tjs14: Transform JSON literal without expanding contents</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3592,9 +3782,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs15'>Test tjs15: Transform JSON literal aleady in expanded form(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs15'>Test tjs15: Transform JSON literal aleady in expanded form</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3603,9 +3794,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs16'>Test tjs16: Transform JSON literal aleady in expanded form with aliased keys(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs16'>Test tjs16: Transform JSON literal aleady in expanded form with aliased keys</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3614,9 +3806,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs17'>Test tjs17: Transform JSON literal (string)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs17'>Test tjs17: Transform JSON literal (string)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3625,9 +3818,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs18'>Test tjs18: Transform JSON literal (null)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs18'>Test tjs18: Transform JSON literal (null)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3636,9 +3830,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs19'>Test tjs19: Transform JSON literal with aliased @type(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs19'>Test tjs19: Transform JSON literal with aliased @type</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3647,9 +3842,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs20'>Test tjs20: Transform JSON literal with aliased @value(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs20'>Test tjs20: Transform JSON literal with aliased @value</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3658,9 +3854,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs21'>Test tjs21: Transform JSON literal with @context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs21'>Test tjs21: Transform JSON literal with @context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3669,9 +3866,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs22'>Test tjs22: Transform JSON literal (null) aleady in expanded form.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs22'>Test tjs22: Transform JSON literal (null) aleady in expanded form.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3680,9 +3878,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs23'>Test tjs23: Transform JSON literal (empty array).(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tjs23'>Test tjs23: Transform JSON literal (empty array).</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3691,9 +3890,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli01'>Test tli01: @list containing @list(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli01'>Test tli01: @list containing @list</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3702,9 +3902,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli02'>Test tli02: @list containing empty @list(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli02'>Test tli02: @list containing empty @list</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3713,9 +3914,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli03'>Test tli03: @list containing @list (with coercion)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli03'>Test tli03: @list containing @list (with coercion)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3724,9 +3926,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli04'>Test tli04: @list containing empty @list (with coercion)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli04'>Test tli04: @list containing empty @list (with coercion)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3735,9 +3938,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli05'>Test tli05: coerced @list containing an array(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli05'>Test tli05: coerced @list containing an array</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3746,9 +3950,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli06'>Test tli06: coerced @list containing an empty array(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli06'>Test tli06: coerced @list containing an empty array</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3757,9 +3962,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli07'>Test tli07: coerced @list containing deep arrays(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli07'>Test tli07: coerced @list containing deep arrays</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3768,9 +3974,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli08'>Test tli08: coerced @list containing deep empty arrays(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli08'>Test tli08: coerced @list containing deep empty arrays</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3779,9 +3986,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli09'>Test tli09: coerced @list containing multiple lists(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli09'>Test tli09: coerced @list containing multiple lists</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3790,9 +3998,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli10'>Test tli10: coerced @list containing mixed list values(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tli10'>Test tli10: coerced @list containing mixed list values</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3801,9 +4010,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm001'>Test tm001: Adds @id to object not having an @id(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm001'>Test tm001: Adds @id to object not having an @id</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3812,9 +4022,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm002'>Test tm002: Retains @id in object already having an @id(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm002'>Test tm002: Retains @id in object already having an @id</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3823,9 +4034,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm003'>Test tm003: Adds @type to object not having an @type(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm003'>Test tm003: Adds @type to object not having an @type</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3834,9 +4046,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm004'>Test tm004: Prepends @type in object already having an @type(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm004'>Test tm004: Prepends @type in object already having an @type</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3845,9 +4058,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm005'>Test tm005: Adds expanded @id to object(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm005'>Test tm005: Adds expanded @id to object</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3856,9 +4070,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm006'>Test tm006: Adds vocabulary expanded @type to object(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm006'>Test tm006: Adds vocabulary expanded @type to object</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3867,9 +4082,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm007'>Test tm007: Adds document expanded @type to object(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm007'>Test tm007: Adds document expanded @type to object</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3878,9 +4094,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm008'>Test tm008: When type is in a type map(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm008'>Test tm008: When type is in a type map</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3889,9 +4106,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm009'>Test tm009: language map with @none(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm009'>Test tm009: language map with @none</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3900,9 +4118,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm010'>Test tm010: language map with alias of @none(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm010'>Test tm010: language map with alias of @none</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3911,9 +4130,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm011'>Test tm011: id map with @none(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm011'>Test tm011: id map with @none</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3922,9 +4142,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm012'>Test tm012: type map with alias of @none(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm012'>Test tm012: type map with alias of @none</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3933,9 +4154,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm013'>Test tm013: graph index map with @none(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm013'>Test tm013: graph index map with @none</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3944,9 +4166,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm014'>Test tm014: graph index map with alias @none(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm014'>Test tm014: graph index map with alias @none</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3955,9 +4178,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm015'>Test tm015: graph id index map with aliased @none(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm015'>Test tm015: graph id index map with aliased @none</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3966,9 +4190,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm016'>Test tm016: graph id index map with aliased @none(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm016'>Test tm016: graph id index map with aliased @none</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3977,9 +4202,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm017'>Test tm017: string value of type map expands to node reference(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm017'>Test tm017: string value of type map expands to node reference</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3988,9 +4214,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm018'>Test tm018: string value of type map expands to node reference with @type: @id(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm018'>Test tm018: string value of type map expands to node reference with @type: @id</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -3999,9 +4226,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm019'>Test tm019: string value of type map expands to node reference with @type: @vocab(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm019'>Test tm019: string value of type map expands to node reference with @type: @vocab</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4010,9 +4238,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm020'>Test tm020: string value of type map must not be a literal(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tm020'>Test tm020: string value of type map must not be a literal</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4021,9 +4250,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tn001'>Test tn001: Expands input using @nest(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tn001'>Test tn001: Expands input using @nest</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4032,9 +4262,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tn002'>Test tn002: Expands input using aliased @nest(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tn002'>Test tn002: Expands input using aliased @nest</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4043,9 +4274,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tn003'>Test tn003: Appends nested values when property at base and nested(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tn003'>Test tn003: Appends nested values when property at base and nested</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4054,9 +4286,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tn004'>Test tn004: Appends nested values from all @nest aliases in term order(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tn004'>Test tn004: Appends nested values from all @nest aliases in term order</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4065,9 +4298,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tn005'>Test tn005: Nested nested containers(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tn005'>Test tn005: Nested nested containers</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4076,9 +4310,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tn006'>Test tn006: Arrays of nested values(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tn006'>Test tn006: Arrays of nested values</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4087,9 +4322,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tn007'>Test tn007: A nest of arrays(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tn007'>Test tn007: A nest of arrays</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4098,9 +4334,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tn008'>Test tn008: Multiple keys may mapping to @type when nesting(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tn008'>Test tn008: Multiple keys may mapping to @type when nesting</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4109,7 +4346,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tnt01'>Test tnt01: literal_ascii_boundaries</a>
 </td>
@@ -4120,7 +4357,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tnt02'>Test tnt02: literal_with_UTF8_boundaries</a>
 </td>
@@ -4131,7 +4368,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tnt03'>Test tnt03: literal_all_controls</a>
 </td>
@@ -4142,7 +4379,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tnt04'>Test tnt04: literal_all_punctuation</a>
 </td>
@@ -4153,7 +4390,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tnt05'>Test tnt05: literal_with_squote</a>
 </td>
@@ -4164,7 +4401,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tnt06'>Test tnt06: literal_with_2_squotes</a>
 </td>
@@ -4175,7 +4412,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tnt07'>Test tnt07: literal_with_dquote</a>
 </td>
@@ -4186,7 +4423,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tnt08'>Test tnt08: literal_with_2_dquotes</a>
 </td>
@@ -4197,7 +4434,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tnt09'>Test tnt09: literal_with_REVERSE_SOLIDUS2</a>
 </td>
@@ -4208,7 +4445,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tnt10'>Test tnt10: literal_with_CHARACTER_TABULATION</a>
 </td>
@@ -4219,7 +4456,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tnt11'>Test tnt11: literal_with_BACKSPACE</a>
 </td>
@@ -4230,7 +4467,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tnt12'>Test tnt12: literal_with_LINE_FEED</a>
 </td>
@@ -4241,7 +4478,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tnt13'>Test tnt13: literal_with_CARRIAGE_RETURN</a>
 </td>
@@ -4252,7 +4489,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tnt14'>Test tnt14: literal_with_FORM_FEED</a>
 </td>
@@ -4263,7 +4500,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tnt15'>Test tnt15: literal_with_REVERSE_SOLIDUS</a>
 </td>
@@ -4274,7 +4511,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tnt16'>Test tnt16: literal_with_numeric_escape4</a>
 </td>
@@ -4285,9 +4522,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tp001'>Test tp001: @version may be specified after first context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tp001'>Test tp001: @version may be specified after first context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4296,9 +4534,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tp002'>Test tp002: @version setting [1.0, 1.1, 1.0](new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tp002'>Test tp002: @version setting [1.0, 1.1, 1.0]</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4307,9 +4546,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tp003'>Test tp003: @version setting [1.1, 1.0](new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tp003'>Test tp003: @version setting [1.1, 1.0]</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4318,9 +4558,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tp004'>Test tp004: @version setting [1.1, 1.0, 1.1](new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tp004'>Test tp004: @version setting [1.1, 1.0, 1.1]</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4329,9 +4570,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi01'>Test tpi01: error if @version is json-ld-1.0 for property-valued index(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi01'>Test tpi01: error if @version is json-ld-1.0 for property-valued index</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4340,9 +4582,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi02'>Test tpi02: error if @container does not include @index for property-valued index(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi02'>Test tpi02: error if @container does not include @index for property-valued index</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4351,9 +4594,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi03'>Test tpi03: error if @index is a keyword for property-valued index(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi03'>Test tpi03: error if @index is a keyword for property-valued index</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4362,9 +4606,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi04'>Test tpi04: error if @index is not a string for property-valued index(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi04'>Test tpi04: error if @index is not a string for property-valued index</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4373,9 +4618,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi05'>Test tpi05: error if attempting to add property to value object for property-valued index(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi05'>Test tpi05: error if attempting to add property to value object for property-valued index</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4384,9 +4630,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi06'>Test tpi06: property-valued index expands to property value, instead of @index (value)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi06'>Test tpi06: property-valued index expands to property value, instead of @index (value)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4395,9 +4642,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi07'>Test tpi07: property-valued index appends to property value, instead of @index (value)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi07'>Test tpi07: property-valued index appends to property value, instead of @index (value)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4406,9 +4654,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi08'>Test tpi08: property-valued index expands to property value, instead of @index (node)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi08'>Test tpi08: property-valued index expands to property value, instead of @index (node)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4417,9 +4666,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi09'>Test tpi09: property-valued index appends to property value, instead of @index (node)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi09'>Test tpi09: property-valued index appends to property value, instead of @index (node)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4428,9 +4678,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi10'>Test tpi10: property-valued index does not output property for @none(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi10'>Test tpi10: property-valued index does not output property for @none</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4439,9 +4690,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi11'>Test tpi11: property-valued index adds property to graph object(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpi11'>Test tpi11: property-valued index adds property to graph object</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4450,9 +4702,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr01'>Test tpr01: Protect a term(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr01'>Test tpr01: Protect a term</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4461,9 +4714,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr02'>Test tpr02: Set a term to not be protected(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr02'>Test tpr02: Set a term to not be protected</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4472,9 +4726,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr03'>Test tpr03: Protect all terms in context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr03'>Test tpr03: Protect all terms in context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4483,9 +4738,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr04'>Test tpr04: Do not protect term with @protected: false(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr04'>Test tpr04: Do not protect term with @protected: false</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4494,9 +4750,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr05'>Test tpr05: Clear active context with protected terms from an embedded context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr05'>Test tpr05: Clear active context with protected terms from an embedded context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4505,9 +4762,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr06'>Test tpr06: Clear active context of protected terms from a term.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr06'>Test tpr06: Clear active context of protected terms from a term.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4516,9 +4774,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr08'>Test tpr08: Term with protected scoped context.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr08'>Test tpr08: Term with protected scoped context.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4527,9 +4786,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr09'>Test tpr09: Attempt to redefine term in other protected context.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr09'>Test tpr09: Attempt to redefine term in other protected context.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4538,9 +4798,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr10'>Test tpr10: Simple protected and unprotected terms.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr10'>Test tpr10: Simple protected and unprotected terms.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4549,9 +4810,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr11'>Test tpr11: Fail to override protected term.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr11'>Test tpr11: Fail to override protected term.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4560,9 +4822,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr12'>Test tpr12: Scoped context fail to override protected term.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr12'>Test tpr12: Scoped context fail to override protected term.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4571,9 +4834,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr13'>Test tpr13: Override unprotected term.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr13'>Test tpr13: Override unprotected term.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4582,9 +4846,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr14'>Test tpr14: Clear protection with null context.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr14'>Test tpr14: Clear protection with null context.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4593,9 +4858,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr15'>Test tpr15: Clear protection with array with null context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr15'>Test tpr15: Clear protection with array with null context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4604,9 +4870,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr16'>Test tpr16: Override protected terms after null.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr16'>Test tpr16: Override protected terms after null.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4615,9 +4882,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr17'>Test tpr17: Fail to override protected terms with type.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr17'>Test tpr17: Fail to override protected terms with type.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4626,9 +4894,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr18'>Test tpr18: Fail to override protected terms with type+null+ctx.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr18'>Test tpr18: Fail to override protected terms with type+null+ctx.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4637,9 +4906,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr19'>Test tpr19: Mix of protected and unprotected terms.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr19'>Test tpr19: Mix of protected and unprotected terms.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4648,9 +4918,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr20'>Test tpr20: Fail with mix of protected and unprotected terms with type+null+ctx.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr20'>Test tpr20: Fail with mix of protected and unprotected terms with type+null+ctx.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4659,9 +4930,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr21'>Test tpr21: Fail with mix of protected and unprotected terms with type+null.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr21'>Test tpr21: Fail with mix of protected and unprotected terms with type+null.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4670,9 +4942,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr22'>Test tpr22: Check legal overriding of type-scoped protected term from nested node.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr22'>Test tpr22: Check legal overriding of type-scoped protected term from nested node.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4681,9 +4954,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr23'>Test tpr23: Allows redefinition of protected alias term with same definition.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr23'>Test tpr23: Allows redefinition of protected alias term with same definition.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4692,9 +4966,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr24'>Test tpr24: Allows redefinition of protected prefix term with same definition.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr24'>Test tpr24: Allows redefinition of protected prefix term with same definition.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4703,9 +4978,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr25'>Test tpr25: Allows redefinition of terms with scoped contexts using same definitions.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr25'>Test tpr25: Allows redefinition of terms with scoped contexts using same definitions.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4714,9 +4990,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr26'>Test tpr26: Fails on redefinition of terms with scoped contexts using different definitions.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr26'>Test tpr26: Fails on redefinition of terms with scoped contexts using different definitions.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4725,9 +5002,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr27'>Test tpr27: Allows redefinition of protected alias term with same definition modulo protected flag.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr27'>Test tpr27: Allows redefinition of protected alias term with same definition modulo protected flag.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4736,9 +5014,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr28'>Test tpr28: Fails if trying to redefine a protected null term.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr28'>Test tpr28: Fails if trying to redefine a protected null term.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4747,9 +5026,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr29'>Test tpr29: Does not expand a Compact IRI using a non-prefix term.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr29'>Test tpr29: Does not expand a Compact IRI using a non-prefix term.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4758,9 +5038,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr30'>Test tpr30: Keywords may be protected.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr30'>Test tpr30: Keywords may be protected.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4769,9 +5050,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr31'>Test tpr31: Protected keyword aliases cannot be overridden.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr31'>Test tpr31: Protected keyword aliases cannot be overridden.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4780,9 +5062,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr32'>Test tpr32: Protected @type cannot be overridden.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr32'>Test tpr32: Protected @type cannot be overridden.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4791,9 +5074,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr33'>Test tpr33: Fails if trying to declare a keyword alias as prefix.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr33'>Test tpr33: Fails if trying to declare a keyword alias as prefix.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4802,9 +5086,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr34'>Test tpr34: Ignores a non-keyword term starting with &#39;@&#39;(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr34'>Test tpr34: Ignores a non-keyword term starting with &#39;@&#39;</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4813,9 +5098,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr35'>Test tpr35: Ignores a non-keyword term starting with &#39;@&#39; (with @vocab)(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr35'>Test tpr35: Ignores a non-keyword term starting with &#39;@&#39; (with @vocab)</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4824,9 +5110,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr36'>Test tpr36: Ignores a term mapping to a value in the form of a keyword.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr36'>Test tpr36: Ignores a term mapping to a value in the form of a keyword.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4835,9 +5122,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr37'>Test tpr37: Ignores a term mapping to a value in the form of a keyword (with @vocab).(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr37'>Test tpr37: Ignores a term mapping to a value in the form of a keyword (with @vocab).</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4846,9 +5134,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr38'>Test tpr38: Ignores a term mapping to a value in the form of a keyword (@reverse).(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr38'>Test tpr38: Ignores a term mapping to a value in the form of a keyword (@reverse).</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4857,9 +5146,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr39'>Test tpr39: Ignores a term mapping to a value in the form of a keyword (@reverse with @vocab).(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr39'>Test tpr39: Ignores a term mapping to a value in the form of a keyword (@reverse with @vocab).</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4868,9 +5158,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr40'>Test tpr40: Protected terms and property-scoped contexts(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tpr40'>Test tpr40: Protected terms and property-scoped contexts</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4879,9 +5170,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#trt01'>Test trt01: Representing numbers &gt;= 1e21(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#trt01'>Test trt01: Representing numbers &gt;= 1e21</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -4890,7 +5182,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tse01'>Test tse01: @context must come before @id</a>
 </td>
@@ -4901,7 +5193,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tse02'>Test tse02: @context must come before properties</a>
 </td>
@@ -4912,7 +5204,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tse03'>Test tse03: @context must come before @type with context</a>
 </td>
@@ -4923,7 +5215,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tse04'>Test tse04: @type with context must come before @id</a>
 </td>
@@ -4934,7 +5226,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tse05'>Test tse05: @type with context must come before properties</a>
 </td>
@@ -4945,7 +5237,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tse06'>Test tse06: Embedded @context must come before @id</a>
 </td>
@@ -4956,7 +5248,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tse07'>Test tse07: Embedded @context must come before properties</a>
 </td>
@@ -4967,7 +5259,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tse08'>Test tse08: @type must come before @id</a>
 </td>
@@ -4978,7 +5270,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tse09'>Test tse09: @type must come before properties</a>
 </td>
@@ -4989,9 +5281,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso01'>Test tso01: @import is invalid in 1.0.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso01'>Test tso01: @import is invalid in 1.0.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5000,9 +5293,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso02'>Test tso02: @import must be a string(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso02'>Test tso02: @import must be a string</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5011,9 +5305,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso03'>Test tso03: @import overflow(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso03'>Test tso03: @import overflow</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5022,9 +5317,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso05'>Test tso05: @propagate: true on type-scoped context with @import(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso05'>Test tso05: @propagate: true on type-scoped context with @import</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5033,9 +5329,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso06'>Test tso06: @propagate: false on property-scoped context with @import(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso06'>Test tso06: @propagate: false on property-scoped context with @import</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5044,9 +5341,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso07'>Test tso07: Protect all terms in sourced context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso07'>Test tso07: Protect all terms in sourced context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5055,9 +5353,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso08'>Test tso08: Override term defined in sourced context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso08'>Test tso08: Override term defined in sourced context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5066,9 +5365,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso09'>Test tso09: Override @vocab defined in sourced context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso09'>Test tso09: Override @vocab defined in sourced context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5077,9 +5377,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso10'>Test tso10: Protect terms in sourced context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso10'>Test tso10: Protect terms in sourced context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5088,9 +5389,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso11'>Test tso11: Override protected terms in sourced context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso11'>Test tso11: Override protected terms in sourced context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5099,9 +5401,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso12'>Test tso12: @import may not be used in an imported context.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso12'>Test tso12: @import may not be used in an imported context.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5110,9 +5413,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso13'>Test tso13: @import can only reference a single context(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tso13'>Test tso13: @import can only reference a single context</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5121,9 +5425,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ttn01'>Test ttn01: @type: @none is illegal in 1.0.(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ttn01'>Test ttn01: @type: @none is illegal in 1.0.</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5132,9 +5437,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ttn02'>Test ttn02: @type: @none expands strings as value objects(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#ttn02'>Test ttn02: @type: @none expands strings as value objects</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5143,7 +5449,7 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv001'>Test tv001: @context, @id and properties</a>
 </td>
@@ -5154,7 +5460,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv002'>Test tv002: @context, blank @id and properties</a>
 </td>
@@ -5165,7 +5471,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv003'>Test tv003: @context, implicit @id and properties</a>
 </td>
@@ -5176,7 +5482,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv004'>Test tv004: Nested nodes</a>
 </td>
@@ -5187,7 +5493,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv005'>Test tv005: Nested nodes and embedded context</a>
 </td>
@@ -5198,7 +5504,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv006'>Test tv006: @context, @type-scoped context, @id, and other properties</a>
 </td>
@@ -5209,7 +5515,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv008'>Test tv008: No @context and @id</a>
 </td>
@@ -5220,7 +5526,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv009'>Test tv009: Deeply nested nodes</a>
 </td>
@@ -5231,7 +5537,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv010'>Test tv010: Deeply nested nodes without @id</a>
 </td>
@@ -5242,7 +5548,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv011'>Test tv011: @id after properties</a>
 </td>
@@ -5253,7 +5559,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv012'>Test tv012: No @id after properties</a>
 </td>
@@ -5264,7 +5570,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv013'>Test tv013: @id after properties in nested node</a>
 </td>
@@ -5275,7 +5581,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv014'>Test tv014: No @id after properties in nested node</a>
 </td>
@@ -5286,7 +5592,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv015'>Test tv015: @id after properties in nested node with outer @id after node</a>
 </td>
@@ -5297,7 +5603,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv016'>Test tv016: No @id after properties in nested node and no outer @id</a>
 </td>
@@ -5308,7 +5614,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv017'>Test tv017: @id after @graph and properties</a>
 </td>
@@ -5319,7 +5625,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv018'>Test tv018: No @id after @graph and properties</a>
 </td>
@@ -5330,7 +5636,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv019'>Test tv019: @id after @graph and properties and late inner @id</a>
 </td>
@@ -5341,7 +5647,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv020'>Test tv020: No @id after @graph and properties and late inner @id</a>
 </td>
@@ -5352,7 +5658,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv021'>Test tv021: @id after @graph and properties and no @id</a>
 </td>
@@ -5363,7 +5669,7 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
 <a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#tv022'>Test tv022: No @id after @graph and properties and no @id</a>
 </td>
@@ -5374,9 +5680,10 @@ PASS
 PASS
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#twf01'>Test twf01: Triples including invalid subject IRIs are rejected(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#twf01'>Test twf01: Triples including invalid subject IRIs are rejected</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5385,9 +5692,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#twf02'>Test twf02: Triples including invalid predicate IRIs are rejected(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#twf02'>Test twf02: Triples including invalid predicate IRIs are rejected</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5396,9 +5704,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#twf03'>Test twf03: Triples including invalid object IRIs are rejected(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#twf03'>Test twf03: Triples including invalid object IRIs are rejected</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5407,9 +5716,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#twf04'>Test twf04: Triples including invalid type IRIs are rejected(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#twf04'>Test twf04: Triples including invalid type IRIs are rejected</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5418,9 +5728,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#twf05'>Test twf05: Triples including invalid language tags are rejected(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#twf05'>Test twf05: Triples including invalid language tags are rejected</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5429,9 +5740,10 @@ PASS
 UNTESTED
 </td>
 </tr>
-<tr>
+<tr class='normative'>
 <td>
-<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#twf07'>Test twf07: Triples including invalid graph name IRIs are rejected(new in JSON-LD 1.1)</a>
+<a href='https://w3c.github.io/json-ld-streaming/tests/stream-toRdf-manifest#twf07'>Test twf07: Triples including invalid graph name IRIs are rejected</a>
+(new in JSON-LD 1.1)
 </td>
 <td class='PASS'>
 PASS
@@ -5463,7 +5775,7 @@ Test Subjects
 This report was tested using the following test subjects:
 </p>
 <dl>
-<dt id='subj_0'>
+<dt id='subj_JSON_LD_Ruby'>
 <span class='secno'>A.1</span>
 <a href='https://rubygems.org/gems/json-ld'>
 <span about='https://rubygems.org/gems/json-ld' property='doap:name'>JSON::LD</span>
@@ -5475,6 +5787,8 @@ This report was tested using the following test subjects:
 <dd lang='en' property='doap:description'>RDF.rb extension for parsing/serializing JSON-LD data.</dd>
 <dt>Release</dt>
 <dd property='doap:release'><span property='doap:revision'>3.1.4</span></dd>
+<dt>Programming Language</dt>
+<dd property='doap:programming-language'>Ruby</dd>
 <dt>Home Page</dt>
 <dd>
 <a href='https://github.com/ruby-rdf/json-ld/' property='doap:homepage'>
@@ -5508,7 +5822,7 @@ Streaming Transform JSON-LD to RDF
 </dd>
 </dl>
 </dd>
-<dt id='subj_1'>
+<dt id='subj_jsonld_streaming_parser_JavaScript'>
 <span class='secno'>A.2</span>
 <a href='https://www.npmjs.com/package/jsonld-streaming-parser/'>
 <span about='https://www.npmjs.com/package/jsonld-streaming-parser/' property='doap:name'>jsonld-streaming-parser</span>
@@ -5570,16 +5884,16 @@ Individual test results used to construct this report are available here:
 </p>
 <ul>
 <li>
-<a class='source' href='jsonld-streaming-parser-earl.ttl'>jsonld-streaming-parser-earl.ttl</a>
+<a class='source' href='ruby-json-ld-earl.ttl'>ruby-json-ld-earl.ttl</a>
 </li>
 <li>
-<a class='source' href='ruby-json-ld-earl.ttl'>ruby-json-ld-earl.ttl</a>
+<a class='source' href='jsonld-streaming-parser-earl.ttl'>jsonld-streaming-parser-earl.ttl</a>
 </li>
 </ul>
 </section>
-<section class='appendix' id='report-generation-software' property='earl:generatedBy' resource='http://rubygems.org/gems/earl-report' typeof='doap:Project Software'>
+<section class='appendix' id='report-generation-software' property='earl:generatedBy' resource='http://rubygems.org/gems/earl-report' typeof='Software doap:Project'>
 <h2>
-<span class='secno'>D.</span>
+<span class='secno'>C.</span>
 Report Generation Software
 </h2>
 <p>
@@ -5593,8 +5907,7 @@ version
 <meta content='earl-report-0.5.1' property='doap:name' />
 <meta datatype='xsd:date' property='doap:created' />
 </span>
-an
-<a href='http://unlicense.org' property='doap:license'>Unlicensed</a>
+an <a href='http://unlicense.org' property='doap:license'>Unlicense</a>.
 <span property='doap:programming-language'>Ruby</span>
 application. More information is available at
 <a href='https://github.com/gkellogg/earl-report' property='doap:homepage'>https://github.com/gkellogg/earl-report</a>
