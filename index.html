@@ -36,8 +36,8 @@
       <p>
         JSON-LD [[JSON-LD]] offers a JSON-based serialization for Linked Data.
         One of the primary uses of JSON-LD is its ability to exchange RDF [[RDF11-CONCEPTS]] data across the Web.
-        This can be done by first <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#serialize-rdf-as-json-ld-algorithm">serializing RDF to JSON-LD</a>,
-        after which data consumers can <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#deserialize-json-ld-to-rdf-algorithm">deserialize JSON-LD to RDF</a>.
+        This can be done by first <a data-cite="JSON-LD11-API#serialize-rdf-as-json-ld-algorithm">serializing RDF to JSON-LD</a>,
+        after which data consumers can <a data-cite="JSON-LD11-API#deserialize-json-ld-to-rdf-algorithm">deserialize JSON-LD to RDF</a>.
     </p>
     <p>
         Since RDF datasets may contain many triples,
@@ -49,12 +49,12 @@
         as opposed to waiting until the whole dataset or document has been processed.
     </p>
     <p>
-        The <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/">recommended processing algorithms</a>
+        The <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/">recommended processing algorithms</a> [[JSON-LD11-API]]
         do not work in a streaming manner, as these first load all required data in memory,
         after which this data can be processed.
         This note discusses the processing of JSON-LD in a streaming manner.
         Concretely, a set of guidelines is introduced for efficiently serializing and deserializing JSON-LD in a streaming way.
-        These guidelines are encapsulated in a JSON-LD streaming document form, and a streaming RDF form.
+        These guidelines are encapsulated in a JSON-LD <a>streaming document form</a>, and a streaming RDF form.
         These forms, when they are detected, allow implementations to apply streaming optimizations.
       </p>
     </section>
@@ -84,7 +84,7 @@
       <p>
           To understand the basics in this note you must first be familiar with
           <a data-cite="RFC8259" data-no-xref="">JSON</a>, which is detailed in [[RFC8259]]. You must also understand the
-          JSON-LD syntax defined in the <a data-cite="JSON-LD11" data-no-xref="">JSON-LD 1.1 Syntax specification</a> [[JSON-LD11]],
+          JSON-LD syntax defined in [[[JSON-LD11]]] [[JSON-LD11]],
           which is the base syntax used for streaming processing.
           To understand how JSON-LD maps to RDF, it is helpful to be
           familiar with the basic RDF concepts [[RDF11-CONCEPTS]].
@@ -97,25 +97,25 @@
       </p>
 
       <p>
-        A conforming <dfn data-lt="Streaming RDF Deserializers">Streaming RDF Deserializer</dfn> is a system that can
+        A conforming <dfn>Streaming RDF Deserializer</dfn> is a system that can
         <a href="#streaming-deserialization">deserialize JSON-LD to RDF</a>
-        for JSON-LD documents adhering to the <a href="streaming-document-form">Streaming Document Form</a>
+        for JSON-LD documents adhering to the <a>Streaming Document Form</a>
         as defined in this specification,
-        and is a conforming <a href="https://www.w3.org/TR/json-ld-api/#dfn-rdf-serializers-deserializers">RDF Deserializer</a>
+        and is a conforming <a data-cite="JSON-LD11-API#dfn-rdf-serializers-deserializers">RDF Deserializer</a>
         according to the JSON-LD [[JSON-LD]] specification minus the exceptions listed in this specification.
       </p>
       
       <p>
-        A conforming <dfn data-lt="Streaming RDF Serializers">Streaming RDF Serializer</dfn> is a system that can
+        A conforming <dfn>Streaming RDF Serializer</dfn> is a system that can
         <a href="#streaming-serialization">serialize RDF to JSON-LD</a>
         for RDF datasets adhering to the <a href="streaming-rdf-form">Streaming RDF Form</a>
         as defined in this specification,
-        and is a conforming <a href="https://www.w3.org/TR/json-ld-api/#dfn-rdf-serializers-deserializers">RDF Serializer</a>
+        and is a conforming <a data-cite="JSON-LD11-API#dfn-rdf-serializers-deserializers">RDF Serializer</a>
         according to the JSON-LD [[JSON-LD]] specification minus the exceptions listed in this specification.
       </p>
 
       <p>
-        The <a href="streaming-processing">processing discussion</a> in this specification merely contains implementation guidelines.
+        The <a href="#streaming-processing">processing discussion</a> in this specification merely contains implementation guidelines.
         Thus, <a>Streaming RDF Deserializers</a> and <a>Streaming RDF Serializers</a> may
         implement the algorithms given in this specification in any way desired,
         so long as the end result is indistinguishable from the result that would
@@ -135,7 +135,7 @@
     <section id="streaming-document-form">
       <h2>Streaming Document Form</h2>
       <p>
-          There are <a class="externalDFN" href="https://www.w3.org/TR/json-ld/#forms-of-json-ld">multiple ways of describing data in JSON-LD</a>,
+          There are <a data-cite="JSON-LD11#forms-of-json-ld">multiple ways of describing data in JSON-LD</a>,
           each having their own use cases.
           This section introduces a <em>streaming JSON-LD document form</em>,
           which enables JSON-LD documents to be <em>deserialized</em> in a streaming manner.
@@ -189,7 +189,7 @@
       <section>
         <h3 id="key-ordering-required">Required Key Ordering</h3>
         <p>
-            In order for a JSON-LD document to be a in a <dfn data-dfn-type="dfn" id="dfn-streaming-document-form">streaming document form</dfn>,
+            In order for a JSON-LD document to be a in a <a>streaming document form</a>,
             the keys in each JSON node MUST be ordered according to the following order:
         </p>
         <ol>
@@ -204,20 +204,20 @@
         <p>
             This order is important because <code>@context</code>
             can change the meaning of all following entries in the node and its children.
-            Additionally, <code>@type</code> could indicate a <a class="externalDFN" href="https://www.w3.org/TR/json-ld/#dfn-type-scoped-context">type-scoped context</a>,
+            Additionally, <code>@type</code> could indicate a <a data-cite="JSON-LD11#dfn-type-scoped-context">type-scoped context</a>,
             which may have the same implications of an <code>@context</code>.
             This means that these MUST always be processed before all other entries.
         </p>
         <div class="note" role="note" id="key-ordering-json">
             <p class="">
                 Entries in nodes have a defined order when serialized as JSON.
-                <a href="https://tools.ietf.org/html/rfc8259#section-4">However, this this order is not always kept by JSON parsing libraries</a>.
+                <a data-cite="rfc8259#section-4">However, this this order is not always kept by JSON parsing libraries</a>.
                 This means that streaming processors MUST make use of JSON parsers that preserve this order to be effective.
             </p>
         </div>
         <div class="note" role="note" id="key-ordering-alias">
             <p class="">
-                <code>@type</code> can be <a href="https://www.w3.org/TR/json-ld/#aliasing-keywords">aliased</a> to other keys,
+                <code>@type</code> can be <a data-cite="JSON-LD11#aliasing-keywords">aliased</a> to other keys,
                 for which the order also applies.
             </p>
         </div>
@@ -239,7 +239,7 @@
             If a node does not define an explicit <code>@id</code>,
             the subject of this node usually becomes an implicit <em>blank node</em>.
             To improve potential processing performance,
-            it is recommended to always add an explicit <a class="externalDFN" href="https://www.w3.org/TR/rdf11-concepts/#dfn-blank-node-identifier">blank node identifier</a> in these cases using <code>@id</code>.
+            it is recommended to always add an explicit <a data-cite="RDF11-CONCEPTS#dfn-blank-node-identifier">blank node identifier</a> in these cases using <code>@id</code>.
         </p>
         <p>
             While not recommended, <code>@id</code> can also come after any other properties,
@@ -260,7 +260,7 @@
           <h3 id="streaming-document-examples">Examples</h3>
           <p>
               Hereafter, a couple of JSON-LD document examples are listed that either adhere, adhere with non-recommended order, or do not adhere
-              to the <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>.
+              to the <a>streaming document form</a>.
           </p>
           <section>
               <h3 id="streaming-document-examples-valid">Valid Examples</h3>
@@ -377,8 +377,8 @@
       <section>
         <h3 id="streaming-profile">Streaming Document Profile</h3>
         <p>
-            JSON-LD documents can be signaled or requested in <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>.
-            The profile URI identifying the <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>
+            JSON-LD documents can be signaled or requested in <dfn data-lt="streaming document">streaming document form</dfn>.
+            The profile URI identifying the <a>streaming document form</a>
             is <code>http://www.w3.org/ns/json-ld#streaming</code>.
         </p>
         <p>
@@ -389,7 +389,7 @@
 <span class="hljs-attribute">Host</span>: example.com
 <span class="hljs-attribute">Accept</span>: application/ld+json;<span class="hl-bold">profile=http://www.w3.org/ns/json-ld#streaming</span></code></pre>
           <p>Requests the server to return the requested resource as JSON-LD
-            in <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>.</p>
+            in <a>streaming document form</a>.</p>
         </div>
       </section>
 
@@ -398,7 +398,7 @@
     <section id="streaming-rdf-form">
       <h2>Streaming RDF Form</h2>
       <p>
-          This section introduces a <dfn data-dfn-type="dfn" id="dfn-streaming-RDF-dataset-form">streaming RDF dataset form</dfn>,
+          This section introduces a <dfn>streaming RDF dataset form</dfn>,
           which enables RDF datasets to be processed in a streaming manner
           so that they can efficiently <em>serialized</em> into JSON-LD by a streaming JSON-LD processor.
       </p>
@@ -406,7 +406,7 @@
         <h3 id="triple-ordering-importance">Importance of Triple Ordering</h3>
         <p>
             The order in which RDF triples occur in an RDF dataset convey no meaning.
-            For instance, the following two RDF datasets (serialized in <a href="https://www.w3.org/TR/turtle/">Turtle</a>) have the same meaning,
+            For instance, the following two RDF datasets (serialized in [[[Turtle]]] [[Turtle]]) have the same meaning,
             even though they have a different order of triples.
         </p>
         <pre class="example" data-transform="updateExample"
@@ -529,7 +529,7 @@
         </div>
         <p>
             An RDF dataset that adheres to at least one of these recommendations is considered to have
-            a <a href="#dfn-streaming-RDF-dataset-form" class="internalDFN" data-link-type="dfn">streaming RDF dataset form</a>.
+            a <a>streaming RDF dataset form</a>.
         </p>
       </section>
       <section>
@@ -537,10 +537,10 @@
           <p>
               Hereafter, a couple of RDF datasets are listed, together with corresponding serialized JSON-LD in a streaming manner.
               Each example illustrates the importance of the recommended triple ordering within
-              the <a href="#dfn-streaming-RDF-dataset-form" class="internalDFN" data-link-type="dfn">streaming RDF dataset form</a>.
+              the <a>streaming RDF dataset form</a>.
           </p>
           <p>
-              The examples using named graphs are serialized in the <a href="https://www.w3.org/TR/trig/">TriG</a> format.
+              The examples using named graphs are serialized in the [[[TriG]]] format [[TriG]].
           </p>
           <section>
               <h3 id="streaming-rdf-example-graph">@graph grouping</h3>
@@ -726,14 +726,14 @@
     <section id="streaming-processing">
       <h2>Streaming Processing</h2>
       <p>
-          Whenever a JSON-LD document is present in <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>,
-          or if an RDF dataset is present in a <a href="#dfn-streaming-RDF-dataset-form" class="internalDFN" data-link-type="dfn">streaming RDF dataset form</a>,
+          Whenever a JSON-LD document is present in <a>streaming document form</a>,
+          or if an RDF dataset is present in a <a>streaming RDF dataset form</a>,
           a processor MAY process these in a streaming manner.
       </p>
       <p>
           This section describes high-level guidelines for processing JSON-LD in a streaming manner.
-          Concretely, guidelines are given for <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#deserialize-json-ld-to-rdf-algorithm">deserializing JSON-LD to RDF</a>, and <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#serialize-rdf-as-json-ld-algorithm">serializing RDF to JSON-LD</a>.
-          Further details on processing can be found in <a href="https://www.w3.org/TR/json-ld-api/">the JSON-LD processing algorithms</a>.
+          Concretely, guidelines are given for <a data-cite="JSON-LD11-API#deserialize-json-ld-to-rdf-algorithm">deserializing JSON-LD to RDF</a>, and <a data-cite="JSON-LD11-API#serialize-rdf-as-json-ld-algorithm">serializing RDF to JSON-LD</a>.
+          Further details on processing can be found in [[[JSON-LD11-API]]] [[JSON-LD11-API]].
       </p>
       <section>
         <h3 id="streaming-deserialization">Deserialization</h3>
@@ -742,7 +742,7 @@
             By reading character-by-character, a deserializer can detect the contained JSON nodes and its key-value pairs.
         </p>
         <p>
-            A streaming deserializer MUST assume that the <a href="#key-ordering-required">required key ordering</a> of a <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document</a> is present. If a different order is detected, an error MUST be thrown with error code <code>"invalid streaming key order"</code>.
+            A streaming deserializer MUST assume that the <a href="#key-ordering-required">required key ordering</a> of a <a>streaming document</a> is present. If a different order is detected, an error MUST be thrown with error code <code>"invalid streaming key order"</code>.
         </p>
         <p>
             The first expected entry in a node is <code>@context</code>.
@@ -780,10 +780,10 @@
             and outputs a JSON-LD document character-by-character,
             which can be emitted in a streaming manner.
             <br />
-            This MAY be a JSON-LD document in the <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>.
+            This MAY be a JSON-LD document in the <a>streaming document form</a>.
         </p>
         <p>
-            A streaming serializer can benefit from having <a href="#triple-ordering-recommended">triples ordered</a> following a <a href="#dfn-streaming-RDF-dataset-form" class="internalDFN" data-link-type="dfn">streaming RDF dataset form</a>,
+            A streaming serializer can benefit from having <a href="#triple-ordering-recommended">triples ordered</a> following a <a>streaming RDF dataset form</a>,
             but it SHOULD NOT assume that RDF datasets follow this form in full.
         </p>
         <p>
@@ -797,8 +797,8 @@
             These optimizations are dependent on the surrounding triples, which is determine by the overall triple order.
         </p>
         <p>
-            When a <a class="externalDFN" href="https://www.w3.org/TR/json-ld-syntaxt/#the-context">JSON-LD context</a>
-            is passed to a streaming serializer, <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#compaction">compaction techniques</a>
+            When a <a data-cite="JSON-LD11#the-context">JSON-LD context</a>
+            is passed to a streaming serializer, <a data-cite="JSON-LD11-API#compaction">compaction techniques</a>
             MAY be applied.
             For instance, instead of writing properties as full IRIs, they can be <em>compacted</em> based on the presence of terms and prefixes in the context.
         </p>
