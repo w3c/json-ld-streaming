@@ -1,0 +1,946 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="generator" content="ReSpec 25.6.2"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><style>span.example-title{text-transform:none}aside.example,div.example,div.illegal-example{padding:.5em;margin:1em 0;position:relative;clear:both}div.illegal-example{color:red}div.illegal-example p{color:#000}aside.example,div.example{padding:.5em;border-left-width:.5em;border-left-style:solid;border-color:#e0cb52;background:#fcfaee}aside.example div.example{border-left-width:.1em;border-color:#999;background:#fff}aside.example div.example span.example-title{color:#999}</style><style>.issue-label{text-transform:initial}.warning>p:first-child{margin-top:0}.warning{padding:.5em;border-left-width:.5em;border-left-style:solid}span.warning{padding:.1em .5em .15em}.issue.closed span.issue-number{text-decoration:line-through}.warning{border-color:#f11;border-width:.2em;border-style:solid;background:#fbe9e9}.warning-title:before{content:"⚠";font-size:1.3em;float:left;padding-right:.3em;margin-top:-.3em}li.task-list-item{list-style:none}input.task-list-item-checkbox{margin:0 .35em .25em -1.6em;vertical-align:middle}.issue a.respec-gh-label{padding:5px;margin:0 2px 0 2px;font-size:10px;text-transform:none;text-decoration:none;font-weight:700;border-radius:4px;position:relative;bottom:2px;border:none;display:inline-block}</style>
+    
+    <title>Streaming JSON-LD</title>
+    <style id="respec-mainstyle">@keyframes pop{0%{transform:scale(1,1)}25%{transform:scale(1.25,1.25);opacity:.75}100%{transform:scale(1,1)}}.hljs{background:0 0!important}a abbr,h1 abbr,h2 abbr,h3 abbr,h4 abbr,h5 abbr,h6 abbr{border:none}dfn{font-weight:700}a.internalDFN{color:inherit;border-bottom:1px solid #99c;text-decoration:none}a.externalDFN{color:inherit;border-bottom:1px dotted #ccc;text-decoration:none}a.bibref{text-decoration:none}.respec-offending-element:target{animation:pop .25s ease-in-out 0s 1}.respec-offending-element,a[href].respec-offending-element{text-decoration:red wavy underline}@supports not (text-decoration:red wavy underline){.respec-offending-element:not(pre){display:inline-block}.respec-offending-element{background:url(data:image/gif;base64,R0lGODdhBAADAPEAANv///8AAP///wAAACwAAAAABAADAEACBZQjmIAFADs=) bottom repeat-x}}#references :target{background:#eaf3ff;animation:pop .4s ease-in-out 0s 1}cite .bibref{font-style:normal}code{color:#c63501}th code{color:inherit}a[href].orcid{padding-left:4px;padding-right:4px}a[href].orcid>svg{margin-bottom:-2px}.toc a,.tof a{text-decoration:none}a .figno,a .secno{color:#000}ol.tof,ul.tof{list-style:none outside none}.caption{margin-top:.5em;font-style:italic}table.simple{border-spacing:0;border-collapse:collapse;border-bottom:3px solid #005a9c}.simple th{background:#005a9c;color:#fff;padding:3px 5px;text-align:left}.simple th a{color:#fff;padding:3px 5px;text-align:left}.simple th[scope=row]{background:inherit;color:inherit;border-top:1px solid #ddd}.simple td{padding:3px 10px;border-top:1px solid #ddd}.simple tr:nth-child(even){background:#f0f6ff}.section dd>p:first-child{margin-top:0}.section dd>p:last-child{margin-bottom:0}.section dd{margin-bottom:1em}.section dl.attrs dd,.section dl.eldef dd{margin-bottom:0}#issue-summary>ul,.respec-dfn-list{column-count:2}#issue-summary li,.respec-dfn-list li{list-style:none}details.respec-tests-details{margin-left:1em;display:inline-block;vertical-align:top}details.respec-tests-details>*{padding-right:2em}details.respec-tests-details[open]{z-index:999999;position:absolute;border:thin solid #cad3e2;border-radius:.3em;background-color:#fff;padding-bottom:.5em}details.respec-tests-details[open]>summary{border-bottom:thin solid #cad3e2;padding-left:1em;margin-bottom:1em;line-height:2em}details.respec-tests-details>ul{width:100%;margin-top:-.3em}details.respec-tests-details>li{padding-left:1em}a[href].self-link:hover{opacity:1;text-decoration:none;background-color:transparent}h2,h3,h4,h5,h6{position:relative}aside.example .marker>a.self-link{color:inherit}h2>a.self-link,h3>a.self-link,h4>a.self-link,h5>a.self-link,h6>a.self-link{border:none;color:inherit;font-size:83%;height:2em;left:-1.6em;opacity:.5;position:absolute;text-align:center;text-decoration:none;top:0;transition:opacity .2s;width:2em}h2>a.self-link::before,h3>a.self-link::before,h4>a.self-link::before,h5>a.self-link::before,h6>a.self-link::before{content:"§";display:block}@media (max-width:767px){dd{margin-left:0}h2>a.self-link,h3>a.self-link,h4>a.self-link,h5>a.self-link,h6>a.self-link{left:auto;top:auto}}@media print{.removeOnSave{display:none}}</style>
+    
+    
+  <meta name="description" content="JSON-LD [JSON-LD] offers a JSON-based serialization for Linked Data.
+        One of the primary uses of JSON-LD is its ability to exchange RDF [RDF11-CONCEPTS] data across the Web.
+        This can be done by first serializing RDF to JSON-LD,
+        after which data consumers can deserialize JSON-LD to RDF."><link rel="canonical" href="https://www.w3.org/TR/json-ld11-streaming/"><style>.hljs{display:block;overflow-x:auto;padding:.5em;color:#383a42;background:#fafafa}.hljs-comment,.hljs-quote{color:#717277;font-style:italic}.hljs-doctag,.hljs-formula,.hljs-keyword{color:#a626a4}.hljs-deletion,.hljs-name,.hljs-section,.hljs-selector-tag,.hljs-subst{color:#ca4706;font-weight:700}.hljs-literal{color:#0b76c5}.hljs-addition,.hljs-attribute,.hljs-meta-string,.hljs-regexp,.hljs-string{color:#42803c}.hljs-built_in,.hljs-class .hljs-title{color:#9a6a01}.hljs-attr,.hljs-number,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-pseudo,.hljs-template-variable,.hljs-type,.hljs-variable{color:#986801}.hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-symbol,.hljs-title{color:#336ae3}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}.hljs-link{text-decoration:underline}</style><style>var{position:relative;cursor:pointer}var[data-type]::after,var[data-type]::before{position:absolute;left:50%;top:-6px;opacity:0;transition:opacity .4s;pointer-events:none}var[data-type]::before{content:"";transform:translateX(-50%);border-width:4px 6px 0 6px;border-style:solid;border-color:transparent;border-top-color:#000}var[data-type]::after{content:attr(data-type);transform:translateX(-50%) translateY(-100%);background:#000;text-align:center;font-family:"Dank Mono","Fira Code",monospace;font-style:normal;padding:6px;border-radius:3px;color:#daca88;text-indent:0;font-weight:400}var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}</style><script id="initialUserConfig" type="application/json">{
+  "specStatus": "FPWD-NOTE",
+  "testSuiteURI": "https://w3c.github.io/json-ld-streaming/tests/",
+  "implementationReportURI": "https://w3c.github.io/json-ld-streaming/reports/",
+  "shortName": "json-ld11-streaming",
+  "editors": [
+    {
+      "name": "Ruben Taelman",
+      "url": "https://www.rubensworks.net/",
+      "company": "Ghent University – imec",
+      "companyURL": "http://idlab.ugent.be/",
+      "w3cid": "84199"
+    }
+  ],
+  "wg": "JSON-LD Working Group",
+  "wgURI": "https://www.w3.org/2018/json-ld-wg/",
+  "wgId": 107714,
+  "wgPublicList": "public-json-ld-wg",
+  "wgPatentURI": "https://www.w3.org/2004/01/pp-impl/107714/status",
+  "processVersion": 2018,
+  "maxTocLevel": 4,
+  "noRecTrack": "true",
+  "github": "https://github.com/w3c/json-ld-streaming/",
+  "publishDate": "2020-05-07",
+  "publishISODate": "2020-05-07T00:00:00.000Z",
+  "generatedSubtitle": "First Public Working Group Note 07 May 2020"
+}</script><link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2016/W3C-WG-NOTE.css"></head>
+  <body class="h-entry toc-inline"><div class="head">
+    <a class="logo" href="https://www.w3.org/"><img alt="W3C" width="72" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C"></a> <h1 id="title" class="title">Streaming JSON-LD</h1>
+    
+    <h2>
+      W3C Working Group Note
+      <time class="dt-published" datetime="2020-05-07">07 May 2020</time>
+    </h2>
+    <dl>
+      <dt>This version:</dt><dd>
+              <a class="u-url" href="https://www.w3.org/TR/2020/NOTE-json-ld11-streaming-20200507/">https://www.w3.org/TR/2020/NOTE-json-ld11-streaming-20200507/</a>
+            </dd><dt>Latest published version:</dt><dd>
+              <a href="https://www.w3.org/TR/json-ld11-streaming/">https://www.w3.org/TR/json-ld11-streaming/</a>
+            </dd>
+      <dt>Latest editor's draft:</dt><dd><a href="https://w3c.github.io/json-ld-streaming/">https://w3c.github.io/json-ld-streaming/</a></dd>
+      <dt>Test suite:</dt><dd><a href="https://w3c.github.io/json-ld-streaming/tests/">https://w3c.github.io/json-ld-streaming/tests/</a></dd>
+      <dt>Implementation report:</dt><dd>
+              <a href="https://w3c.github.io/json-ld-streaming/reports/">https://w3c.github.io/json-ld-streaming/reports/</a>
+            </dd>
+      
+      
+      
+      <dt>Editor:</dt>
+      <dd class="p-author h-card vcard" data-editor-id="84199"><a class="u-url url p-name fn" href="https://www.rubensworks.net/">Ruben Taelman</a>
+            (<a class="p-org org h-org h-card" href="http://idlab.ugent.be/">Ghent University – imec</a>)
+          </dd>
+      
+      
+      <dt>Participate:</dt><dd>
+    <a href="https://github.com/w3c/json-ld-streaming/">GitHub w3c/json-ld-streaming</a>
+  </dd><dd>
+    <a href="https://github.com/w3c/json-ld-streaming/issues/">File a bug</a>
+  </dd><dd>
+    <a href="https://github.com/w3c/json-ld-streaming/commits/gh-pages">Commit history</a>
+  </dd><dd>
+    <a href="https://github.com/w3c/json-ld-streaming/pulls/">Pull requests</a>
+  </dd>
+    </dl>
+    
+    
+    
+    <p class="copyright">
+    <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a>
+    ©
+    2020
+    
+    <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>,
+    <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>,
+    <a href="https://ev.buaa.edu.cn/">Beihang</a>). 
+    W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
+    <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document">permissive document license</a> rules
+    apply.
+  </p>
+    <hr title="Separator for header">
+  </div>
+    <section id="abstract" class="introductory"><h2>Abstract</h2>
+      <p>
+        JSON-LD [<cite><a class="bibref" data-link-type="biblio" href="#bib-json-ld" title="JSON-LD 1.0">JSON-LD</a></cite>] offers a JSON-based serialization for Linked Data.
+        One of the primary uses of JSON-LD is its ability to exchange RDF [<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf11-concepts" title="RDF 1.1 Concepts and Abstract Syntax">RDF11-CONCEPTS</a></cite>] data across the Web.
+        This can be done by first <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#serialize-rdf-as-json-ld-algorithm">serializing RDF to JSON-LD</a>,
+        after which data consumers can <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#deserialize-json-ld-to-rdf-algorithm">deserialize JSON-LD to RDF</a>.
+    </p>
+    <p>
+        Since RDF datasets may contain many triples,
+        and JSON-LD documents don't have size limits,
+        such documents could in some cases become very large.
+        For these cases, the ability to serialize and deserialize JSON-LD in a <em>streaming</em> way offers many advantages.
+        Streaming processing allows large documents to be parsed with only a limited amount of memory,
+        and processed chunks can be emitted as soon as they are processed,
+        as opposed to waiting until the whole dataset or document has been processed.
+    </p>
+    <p>
+        The <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/">recommended processing algorithms</a>
+        do not work in a streaming manner, as these first load all required data in memory,
+        after which this data can be processed.
+        This note discusses the processing of JSON-LD in a streaming manner.
+        Concretely, a set of guidelines is introduced for efficiently serializing and deserializing JSON-LD in a streaming way.
+        These guidelines are encapsulated in a JSON-LD streaming document form, and a streaming RDF form.
+        These forms, when they are detected, allow implementations to apply streaming optimizations.
+      </p>
+    </section>
+    <section id="sotd" class="introductory"><h2>Status of This Document</h2><p><em>This section describes the status of this
+      document at the time of its publication. Other documents may supersede
+      this document. A list of current <abbr title="World Wide Web Consortium">W3C</abbr> publications and the latest revision
+      of this technical report can be found in the
+      <a href="https://www.w3.org/TR/"><abbr title="World Wide Web Consortium">W3C</abbr> technical reports index</a> at
+      https://www.w3.org/TR/.</em></p>
+      <p>
+        This is an unofficial proposal.
+      </p>
+    <p>
+    This document was published by the <a href="https://www.w3.org/2018/json-ld-wg/">JSON-LD Working Group</a> as a
+    First Public Working Group Note.
+    
+  </p><p>
+    <a href="https://github.com/w3c/json-ld-streaming/issues/">GitHub Issues</a> are preferred for
+          discussion of this specification.
+        
+    Alternatively, you can send comments to our mailing list.
+          Please send them to
+          <a href="mailto:public-json-ld-wg@w3.org">public-json-ld-wg@w3.org</a>
+          (<a href="https://lists.w3.org/Archives/Public/public-json-ld-wg/">archives</a>).
+        
+  </p><p>
+    Please see the Working Group's
+    <a href="https://w3c.github.io/json-ld-streaming/reports/">implementation report</a>.
+  </p><p>
+    Publication as a Working Group Note does not imply endorsement by the <abbr title="World Wide Web Consortium">W3C</abbr>
+    Membership. This is a draft document and may be updated, replaced or
+    obsoleted by other documents at any time. It is inappropriate to cite this
+    document as other than work in progress.
+  </p><p data-deliverer="107714">
+    
+        This document was produced by a group
+        operating under the
+        <a href="https://www.w3.org/Consortium/Patent-Policy/"><abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>.
+       The group does not expect this document to become a <abbr title="World Wide Web Consortium">W3C</abbr> Recommendation.
+    
+    
+  </p><p>
+                  This document is governed by the
+                  <a id="w3c_process_revision" href="https://www.w3.org/2019/Process-20190301/">1 March 2019 <abbr title="World Wide Web Consortium">W3C</abbr> Process Document</a>.
+                </p></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#introduction"><bdi class="secno">1. </bdi>Introduction</a></li><li class="tocline"><a class="tocxref" href="#conformance"><bdi class="secno">2. </bdi>Conformance</a></li><li class="tocline"><a class="tocxref" href="#streaming-document-form"><bdi class="secno">3. </bdi>Streaming Document Form</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#key-ordering-importance"><bdi class="secno">3.1 </bdi>Importance of Key Ordering</a></li><li class="tocline"><a class="tocxref" href="#key-ordering-required"><bdi class="secno">3.2 </bdi>Required Key Ordering</a></li><li class="tocline"><a class="tocxref" href="#key-ordering-recommended"><bdi class="secno">3.3 </bdi>Recommended Key Ordering</a></li><li class="tocline"><a class="tocxref" href="#streaming-document-examples"><bdi class="secno">3.4 </bdi>Examples</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#streaming-document-examples-valid"><bdi class="secno">3.4.1 </bdi>Valid Examples</a></li><li class="tocline"><a class="tocxref" href="#streaming-document-examples-nonrec"><bdi class="secno">3.4.2 </bdi>Valid, Non-recommended Examples</a></li><li class="tocline"><a class="tocxref" href="#streaming-document-examples-invalid"><bdi class="secno">3.4.3 </bdi>Invalid Examples</a></li></ol></li><li class="tocline"><a class="tocxref" href="#streaming-profile"><bdi class="secno">3.5 </bdi>Streaming Document Profile</a></li></ol></li><li class="tocline"><a class="tocxref" href="#streaming-rdf-form"><bdi class="secno">4. </bdi>Streaming RDF Form</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#triple-ordering-importance"><bdi class="secno">4.1 </bdi>Importance of Triple Ordering</a></li><li class="tocline"><a class="tocxref" href="#triple-ordering-recommended"><bdi class="secno">4.2 </bdi>Recommended Triple Ordering</a></li><li class="tocline"><a class="tocxref" href="#streaming-rdf-examples"><bdi class="secno">4.3 </bdi>Examples</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#streaming-rdf-example-graph"><bdi class="secno">4.3.1 </bdi>@graph grouping</a></li><li class="tocline"><a class="tocxref" href="#streaming-rdf-example-id"><bdi class="secno">4.3.2 </bdi>@id grouping</a></li><li class="tocline"><a class="tocxref" href="#streaming-rdf-example-property"><bdi class="secno">4.3.3 </bdi>Property grouping</a></li><li class="tocline"><a class="tocxref" href="#streaming-rdf-example-graph-id"><bdi class="secno">4.3.4 </bdi>@graph and @id grouping</a></li><li class="tocline"><a class="tocxref" href="#streaming-rdf-example-object"><bdi class="secno">4.3.5 </bdi>Subject and object grouping</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#streaming-processing"><bdi class="secno">5. </bdi>Streaming Processing</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#streaming-deserialization"><bdi class="secno">5.1 </bdi>Deserialization</a></li><li class="tocline"><a class="tocxref" href="#streaming-serialization"><bdi class="secno">5.2 </bdi>Serialization</a></li></ol></li><li class="tocline"><a class="tocxref" href="#references"><bdi class="secno">A. </bdi>References</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><bdi class="secno">A.1 </bdi>Normative references</a></li></ol></li></ol></nav>
+
+    <section id="introduction">
+      <h2 id="x1-introduction"><bdi class="secno">1. </bdi>Introduction<a class="self-link" aria-label="§" href="#introduction"></a></h2>
+      <p>
+          This document discusses the concerns on serializing and deserializing JSON-LD in a streaming manner.
+          This document is primarily intended for the following audiences:
+      </p>
+      <ul>
+          <li>
+              Software developers who want to implement streaming algorithms to serialize or deserialize JSON-LD documents.
+          </li>
+          <li>
+              Web authors and developers who want to publish JSON-LD in a streaming manner.
+          </li>
+          <li>
+              Web authors and developers who want to consume JSON-LD in a streaming manner.
+          </li>
+      </ul>
+      <p>
+          To understand the basics in this note you must first be familiar with
+          <cite><a data-no-xref="" href="https://tools.ietf.org/html/rfc8259">JSON</a></cite>, which is detailed in [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc8259" title="The JavaScript Object Notation (JSON) Data Interchange Format">RFC8259</a></cite>]. You must also understand the
+          JSON-LD syntax defined in the <cite><a data-no-xref="" href="https://www.w3.org/TR/json-ld11/">JSON-LD 1.1 Syntax specification</a></cite> [<cite><a class="bibref" data-link-type="biblio" href="#bib-json-ld11" title="JSON-LD 1.1">JSON-LD11</a></cite>],
+          which is the base syntax used for streaming processing.
+          To understand how JSON-LD maps to RDF, it is helpful to be
+          familiar with the basic RDF concepts [<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf11-concepts" title="RDF 1.1 Concepts and Abstract Syntax">RDF11-CONCEPTS</a></cite>].
+      </p>
+    </section>
+    
+    <section id="conformance"><h2 id="x2-conformance"><bdi class="secno">2. </bdi>Conformance<a class="self-link" aria-label="§" href="#conformance"></a></h2><p>
+      As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
+    </p><p>
+        The key words <em class="rfc2119">MAY</em>, <em class="rfc2119">MUST</em>, <em class="rfc2119">MUST NOT</em>, <em class="rfc2119">SHOULD</em>, and <em class="rfc2119">SHOULD NOT</em> in this document
+        are to be interpreted as described in
+        <a href="https://tools.ietf.org/html/bcp14">BCP 14</a>
+        [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc2119" title="Key words for use in RFCs to Indicate Requirement Levels">RFC2119</a></cite>] [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc8174" title="Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words">RFC8174</a></cite>]
+        when, and only when, they appear in all capitals, as shown here.
+      </p>
+      <p>
+          <a href="#dfn-streaming-rdf-deserializers" class="internalDFN" data-link-type="dfn">Streaming RDF Deserializers</a> and <a href="#dfn-streaming-rdf-serializers" class="internalDFN" data-link-type="dfn">Streaming RDF Serializers</a> can claim conformance to this specification.
+      </p>
+
+      <p>
+        A conforming <dfn data-lt="Streaming RDF Deserializers|Streaming RDF Deserializer" data-dfn-type="dfn" data-plurals="streaming rdf deserializers" id="dfn-streaming-rdf-deserializers">Streaming RDF Deserializer</dfn> is a system that can
+        <a href="#streaming-deserialization">deserialize JSON-LD to RDF</a>
+        for JSON-LD documents adhering to the <a href="streaming-document-form">Streaming Document Form</a>
+        as defined in this specification,
+        and is a conforming <a href="https://www.w3.org/TR/json-ld-api/#dfn-rdf-serializers-deserializers">RDF Deserializer</a>
+        according to the JSON-LD [<cite><a class="bibref" data-link-type="biblio" href="#bib-json-ld" title="JSON-LD 1.0">JSON-LD</a></cite>] specification minus the exceptions listed in this specification.
+      </p>
+      
+      <p>
+        A conforming <dfn data-lt="Streaming RDF Serializers|Streaming RDF Serializer" data-dfn-type="dfn" data-plurals="streaming rdf serializers" id="dfn-streaming-rdf-serializers">Streaming RDF Serializer</dfn> is a system that can
+        <a href="#streaming-serialization">serialize RDF to JSON-LD</a>
+        for RDF datasets adhering to the <a href="streaming-rdf-form">Streaming RDF Form</a>
+        as defined in this specification,
+        and is a conforming <a href="https://www.w3.org/TR/json-ld-api/#dfn-rdf-serializers-deserializers">RDF Serializer</a>
+        according to the JSON-LD [<cite><a class="bibref" data-link-type="biblio" href="#bib-json-ld" title="JSON-LD 1.0">JSON-LD</a></cite>] specification minus the exceptions listed in this specification.
+      </p>
+
+      <p>
+        The <a href="streaming-processing">processing discussion</a> in this specification merely contains implementation guidelines.
+        Thus, <a href="#dfn-streaming-rdf-deserializers" class="internalDFN" data-link-type="dfn">Streaming RDF Deserializers</a> and <a href="#dfn-streaming-rdf-serializers" class="internalDFN" data-link-type="dfn">Streaming RDF Serializers</a> may
+        implement the algorithms given in this specification in any way desired,
+        so long as the end result is indistinguishable from the result that would
+        be obtained by the specification's algorithms.
+      </p>
+
+      <div class="note" role="note" id="issue-container-generatedID"><div role="heading" class="note-title marker" id="h-note" aria-level="3"><span>Note</span></div><p class="">
+        Implementers can partially check their level of conformance to
+        this specification by successfully passing the test cases of the
+        <a href="https://w3c.github.io/json-ld-streaming/tests/">Streaming JSON-LD test suite</a>.
+        Note, however, that passing all the tests in the test
+        suite does not imply complete conformance to this specification. It only implies
+        that the implementation conforms to aspects tested by the test suite.
+      </p></div>
+    </section> 
+    
+    <section id="streaming-document-form">
+      <h2 id="x3-streaming-document-form"><bdi class="secno">3. </bdi>Streaming Document Form<a class="self-link" aria-label="§" href="#streaming-document-form"></a></h2>
+      <p>
+          There are <a class="externalDFN" href="https://www.w3.org/TR/json-ld/#forms-of-json-ld">multiple ways of describing data in JSON-LD</a>,
+          each having their own use cases.
+          This section introduces a <em>streaming JSON-LD document form</em>,
+          which enables JSON-LD documents to be <em>deserialized</em> in a streaming manner.
+      </p>
+
+      <section id="importance-of-key-ordering">
+        <h3 id="key-ordering-importance"><bdi class="secno">3.1 </bdi>Importance of Key Ordering<a class="self-link" aria-label="§" href="#key-ordering-importance"></a></h3>
+        <p>
+            The order in which key-value pairs occur in JSON-LD nodes conveys no meaning.
+            For instance, the following two JSON-LD documents have the same meaning, even though they are syntactically different.
+        </p>
+        <div class="example" id="example-1-name-homepage-and-image-come-after-id">
+        <div class="marker">
+    <a class="self-link" href="#example-1-name-homepage-and-image-come-after-id">Example<bdi> 1</bdi></a><span class="example-title">: Name, homepage and image come after @id</span>
+  </div> <pre aria-busy="false"><code class="hljs json">{
+  <span class="hljs-attr">"@context"</span>: <span class="hljs-string">"http://schema.org/"</span>,
+  <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/#me"</span>,
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Ruben Taelman"</span>,
+  <span class="hljs-attr">"url"</span>: <span class="hljs-string">"https://www.rubensworks.net/"</span>,
+  <span class="hljs-attr">"image"</span>: <span class="hljs-string">"https://www.rubensworks.net/img/ruben.jpg"</span>
+}</code></pre>
+      </div>
+        <div class="example" id="example-2-name-homepage-and-image-come-before-id">
+        <div class="marker">
+    <a class="self-link" href="#example-2-name-homepage-and-image-come-before-id">Example<bdi> 2</bdi></a><span class="example-title">: Name, homepage and image come before @id</span>
+  </div> <pre aria-busy="false"><code class="hljs json">{
+  <span class="hljs-attr">"@context"</span>: <span class="hljs-string">"http://schema.org/"</span>,
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Ruben Taelman"</span>,
+  <span class="hljs-attr">"url"</span>: <span class="hljs-string">"https://www.rubensworks.net/"</span>,
+  <span class="hljs-attr">"image"</span>: <span class="hljs-string">"https://www.rubensworks.net/img/ruben.jpg"</span>,
+  <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/#me"</span>
+}</code></pre>
+      </div>
+        <p>
+            In a streaming JSON-LD document, the order of certain keys is important.
+            This is because streaming JSON-LD processors may require the presence of some keys before others can be processed,
+            and ordering keys in certain ways may lead to better processing performance.
+        </p>
+        <p>
+            In the two snippets before, the first example can be processed more efficiently by a streaming processor.
+            Concretely, a streaming JSON-LD deserializer can emit an RDF triple each time a property (<code>"name"</code>, <code>"url"</code>, <code>"image"</code>) has been read, because the <code>"@id"</code> has been defined before.
+            This is because the <code>"@id"</code> defines the RDF subject,
+            the property key defines the RDF predicate,
+            and the property value defines RDF object.
+            This ensures that all required information is needed for constructing and emitting an RDF triple each time a property is encountered.
+        </p>
+        <p>
+            For the second example, where the <code>"@id"</code> is only defined at the end,
+            a streaming deserializer would have to <em>buffer</em> the properties until the <code>"@id"</code> key is encountered.
+            Since the RDF subject of our triples is defined via <code>"@id"</code>,
+            the RDF triples can only be emitted after this last key has been read.
+        </p>
+      </section>
+      
+      <section id="required-key-ordering">
+        <h3 id="key-ordering-required"><bdi class="secno">3.2 </bdi>Required Key Ordering<a class="self-link" aria-label="§" href="#key-ordering-required"></a></h3>
+        <p>
+            In order for a JSON-LD document to be a in a <dfn data-dfn-type="dfn" id="dfn-streaming-document-form">streaming document form</dfn>,
+            the keys in each JSON node <em class="rfc2119" title="MUST">MUST</em> be ordered according to the following order:
+        </p>
+        <ol>
+            <li><code>@context</code></li>
+            <li><code>@type</code></li>
+            <li><em>Other properties</em></li>
+        </ol>
+        <p>
+            Each of these keys is optional, and may be omitted.
+            Only those that are present must occur in the following order.
+        </p>
+        <p>
+            This order is important because <code>@context</code>
+            can change the meaning of all following entries in the node and its children.
+            Additionally, <code>@type</code> could indicate a <a class="externalDFN" href="https://www.w3.org/TR/json-ld/#dfn-type-scoped-context">type-scoped context</a>,
+            which may have the same implications of an <code>@context</code>.
+            This means that these <em class="rfc2119" title="MUST">MUST</em> always be processed before all other entries.
+        </p>
+        <div class="note" role="note" id="key-ordering-json"><div role="heading" class="note-title marker" id="h-note-0" aria-level="4"><span>Note</span></div><div class="" role="note">
+            <p class="">
+                Entries in nodes have a defined order when serialized as JSON.
+                <a href="https://tools.ietf.org/html/rfc8259#section-4">However, this this order is not always kept by JSON parsing libraries</a>.
+                This means that streaming processors <em class="rfc2119" title="MUST">MUST</em> make use of JSON parsers that preserve this order to be effective.
+            </p>
+        </div></div>
+        <div class="note" role="note" id="key-ordering-alias"><div role="heading" class="note-title marker" id="h-note-1" aria-level="4"><span>Note</span></div><div class="" role="note">
+            <p class="">
+                <code>@type</code> can be <a href="https://www.w3.org/TR/json-ld/#aliasing-keywords">aliased</a> to other keys,
+                for which the order also applies.
+            </p>
+        </div></div>
+      </section>
+      
+      <section id="recommended-key-ordering">
+        <h3 id="key-ordering-recommended"><bdi class="secno">3.3 </bdi>Recommended Key Ordering<a class="self-link" aria-label="§" href="#key-ordering-recommended"></a></h3>
+        <p>
+            In addition to the <a href="#key-ordering-required">required key ordering</a>,
+            an <code>@id</code> key <em class="rfc2119" title="SHOULD">SHOULD</em> be present as the first entry of the other properties,
+            right after <code>@context</code> and <code>@type</code>.
+        </p>
+        <p>
+            By placing <code>@id</code> before other properties in a node,
+            streaming deserializers can determine the subject of this node early on,
+            and they can immediately emit following properties as RDF triples as soon as they are read.
+        </p>
+        <p>
+            If a node does not define an explicit <code>@id</code>,
+            the subject of this node usually becomes an implicit <em>blank node</em>.
+            To improve potential processing performance,
+            it is recommended to always add an explicit <a class="externalDFN" href="https://www.w3.org/TR/rdf11-concepts/#dfn-blank-node-identifier">blank node identifier</a> in these cases using <code>@id</code>.
+        </p>
+        <p>
+            While not recommended, <code>@id</code> can also come after any other properties,
+            which requires the streaming deserializer to <em>buffer</em> these properties
+            until an <code>@id</code> is read, or the node closes.
+        </p>
+        <div class="note" role="note" id="key-ordering-recommended-for-who"><div role="heading" class="note-title marker" id="h-note-2" aria-level="4"><span>Note</span></div><div class="" role="note">
+            <p class="">
+            This recommended key ordering <em class="rfc2119" title="SHOULD">SHOULD</em> be followed by streaming document authors.
+            Streaming processors implementations <em class="rfc2119" title="MUST NOT">MUST NOT</em> assume that a given streaming document will adhere to this recommendation.
+            <br>
+            If a processor sees that a document does not adhere to this recommendation, then it <em class="rfc2119" title="MAY">MAY</em> produce a warning.
+            </p>
+        </div></div>
+      </section>
+      
+      <section id="examples">
+          <h3 id="streaming-document-examples"><bdi class="secno">3.4 </bdi>Examples<a class="self-link" aria-label="§" href="#streaming-document-examples"></a></h3>
+          <p>
+              Hereafter, a couple of JSON-LD document examples are listed that either adhere, adhere with non-recommended order, or do not adhere
+              to the <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>.
+          </p>
+          <section id="valid-examples">
+              <h4 id="streaming-document-examples-valid"><bdi class="secno">3.4.1 </bdi>Valid Examples<a class="self-link" aria-label="§" href="#streaming-document-examples-valid"></a></h4>
+              <div class="example" id="example-3-valid-streaming-document-with-context-id-and-other-properties">
+        <div class="marker">
+    <a class="self-link" href="#example-3-valid-streaming-document-with-context-id-and-other-properties">Example<bdi> 3</bdi></a><span class="example-title">: Valid streaming document with @context, @id, and other properties</span>
+  </div> <pre aria-busy="false"><code class="hljs json">{
+  <span class="hljs-attr">"@context"</span>: <span class="hljs-string">"http://schema.org/"</span>,
+  <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/#me"</span>,
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Ruben Taelman"</span>,
+  <span class="hljs-attr">"url"</span>: <span class="hljs-string">"https://www.rubensworks.net/"</span>,
+  <span class="hljs-attr">"image"</span>: <span class="hljs-string">"https://www.rubensworks.net/img/ruben.jpg"</span>
+}</code></pre>
+      </div>
+              <div class="example" id="example-4-valid-streaming-document-with-context-blank-id-and-other-properties">
+        <div class="marker">
+    <a class="self-link" href="#example-4-valid-streaming-document-with-context-blank-id-and-other-properties">Example<bdi> 4</bdi></a><span class="example-title">: Valid streaming document with @context, blank @id, and other properties</span>
+  </div> <pre aria-busy="false"><code class="hljs json">{
+  <span class="hljs-attr">"@context"</span>: <span class="hljs-string">"http://schema.org/"</span>,
+  <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"_:blank_node"</span>,
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Ruben Taelman"</span>,
+  <span class="hljs-attr">"url"</span>: <span class="hljs-string">"https://www.rubensworks.net/"</span>,
+  <span class="hljs-attr">"image"</span>: <span class="hljs-string">"https://www.rubensworks.net/img/ruben.jpg"</span>
+}</code></pre>
+      </div>
+              <div class="example" id="example-5-valid-streaming-document-with-nested-nodes">
+        <div class="marker">
+    <a class="self-link" href="#example-5-valid-streaming-document-with-nested-nodes">Example<bdi> 5</bdi></a><span class="example-title">: Valid streaming document with nested nodes</span>
+  </div> <pre aria-busy="false"><code class="hljs json">{
+  <span class="hljs-attr">"@context"</span>: <span class="hljs-string">"http://schema.org/"</span>,
+  <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/#me"</span>,
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Ruben Taelman"</span>,
+  <span class="hljs-attr">"url"</span>: <span class="hljs-string">"https://www.rubensworks.net/"</span>,
+  <span class="hljs-attr">"image"</span>: <span class="hljs-string">"https://www.rubensworks.net/img/ruben.jpg"</span>,
+  <span class="hljs-attr">"knows"</span>: {
+    <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://greggkellogg.net/foaf#me"</span>,
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Gregg Kellogg"</span>
+  }
+}</code></pre>
+      </div>
+              <div class="example" id="example-6-valid-streaming-document-with-nested-nodes-and-embedded-context">
+        <div class="marker">
+    <a class="self-link" href="#example-6-valid-streaming-document-with-nested-nodes-and-embedded-context">Example<bdi> 6</bdi></a><span class="example-title">: Valid streaming document with nested nodes and embedded context</span>
+  </div> <pre aria-busy="false"><code class="hljs json">{
+  <span class="hljs-attr">"@context"</span>: <span class="hljs-string">"http://schema.org/"</span>,
+  <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/#me"</span>,
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Ruben Taelman"</span>,
+  <span class="hljs-attr">"url"</span>: <span class="hljs-string">"https://www.rubensworks.net/"</span>,
+  <span class="hljs-attr">"image"</span>: <span class="hljs-string">"https://www.rubensworks.net/img/ruben.jpg"</span>,
+  <span class="hljs-attr">"knows"</span>: {
+    <span class="hljs-attr">"@context"</span>: {
+      <span class="hljs-attr">"name"</span>: <span class="hljs-string">"http://xmlns.com/foaf/0.1/name"</span>
+    },
+    <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://greggkellogg.net/foaf#me"</span>,
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Gregg Kellogg"</span>
+  }
+}</code></pre>
+      </div>
+              <div class="example" id="example-7-valid-streaming-document-with-context-type-scoped-context-id-and-other-properties">
+        <div class="marker">
+    <a class="self-link" href="#example-7-valid-streaming-document-with-context-type-scoped-context-id-and-other-properties">Example<bdi> 7</bdi></a><span class="example-title">: Valid streaming document with @context, @type-scoped context, @id, and other properties</span>
+  </div> <pre aria-busy="false"><code class="hljs json">{
+  <span class="hljs-attr">"@context"</span>: {
+    <span class="hljs-attr">"Person"</span>: {
+      <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"http://schema.org/Person"</span>,
+      <span class="hljs-attr">"@context"</span>: <span class="hljs-string">"http://schema.org/"</span>
+    }
+  },
+  <span class="hljs-attr">"@type"</span>: <span class="hljs-string">"Person"</span>,
+  <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/#me"</span>,
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Ruben Taelman"</span>,
+  <span class="hljs-attr">"url"</span>: <span class="hljs-string">"https://www.rubensworks.net/"</span>,
+  <span class="hljs-attr">"image"</span>: <span class="hljs-string">"https://www.rubensworks.net/img/ruben.jpg"</span>
+}</code></pre>
+      </div>
+          </section>
+          <section id="valid-non-recommended-examples">
+              <h4 id="streaming-document-examples-nonrec"><bdi class="secno">3.4.2 </bdi>Valid, Non-recommended Examples<a class="self-link" aria-label="§" href="#streaming-document-examples-nonrec"></a></h4>
+              <div class="example" id="example-8-non-recommended-streaming-document-with-context-and-without-id">
+        <div class="marker">
+    <a class="self-link" href="#example-8-non-recommended-streaming-document-with-context-and-without-id">Example<bdi> 8</bdi></a><span class="example-title">: Non-recommended streaming document with @context and without @id</span>
+  </div> <pre class="nohighlight">{
+  "@context": "http://schema.org/",
+  <span class="comment">// @id is missing, considered a blank node</span>
+  "name": "Ruben Taelman",
+  "url": "https://www.rubensworks.net/",
+  "image": "https://www.rubensworks.net/img/ruben.jpg"
+}</pre>
+      </div>
+              <div class="example" id="example-9-valid-streaming-document-without-context-and-id">
+        <div class="marker">
+    <a class="self-link" href="#example-9-valid-streaming-document-without-context-and-id">Example<bdi> 9</bdi></a><span class="example-title">: Valid streaming document without @context and @id</span>
+  </div> <pre class="nohighlight">{
+  <span class="comment">// @context is not required, but @id is recommended here</span>
+  "http://schema.org/name": "Ruben Taelman",
+  "http://schema.org/url": {"@id": "https://www.rubensworks.net/"},
+  "http://schema.org/image": {"@id": "https://www.rubensworks.net/img/ruben.jpg"}
+}</pre>
+      </div>
+          </section>
+          <section id="invalid-examples">
+              <h4 id="streaming-document-examples-invalid"><bdi class="secno">3.4.3 </bdi>Invalid Examples<a class="self-link" aria-label="§" href="#streaming-document-examples-invalid"></a></h4>
+              <div class="example" id="example-10-invalid-streaming-document-where-context-comes-too-late">
+        <div class="marker">
+    <a class="self-link" href="#example-10-invalid-streaming-document-where-context-comes-too-late">Example<bdi> 10</bdi></a><span class="example-title">: Invalid streaming document where @context comes too late</span>
+  </div> <pre class="nohighlight">{
+  "@id": "https://www.rubensworks.net/#me",
+  <span class="comment">// @context must come before @id</span>
+  "@context": "http://schema.org/",
+  "name": "Ruben Taelman",
+  "url": "https://www.rubensworks.net/",
+  "image": "https://www.rubensworks.net/img/ruben.jpg"
+}</pre>
+      </div>
+              <div class="example" id="example-11-invalid-streaming-document-where-type-comes-too-late">
+        <div class="marker">
+    <a class="self-link" href="#example-11-invalid-streaming-document-where-type-comes-too-late">Example<bdi> 11</bdi></a><span class="example-title">: Invalid streaming document where @type comes too late</span>
+  </div> <pre class="nohighlight">{
+  "http://schema.org/name": "Ruben Taelman",
+  "@type": "http://schema.org/Person", <span class="comment">// @type must come before properties</span>
+  "http://schema.org/url": {"@id": "https://www.rubensworks.net/"},
+  "http://schema.org/image": {"@id": "https://www.rubensworks.net/img/ruben.jpg"}
+}</pre>
+      </div>
+          </section>
+      </section>
+      
+      <section id="streaming-document-profile">
+        <h3 id="streaming-profile"><bdi class="secno">3.5 </bdi>Streaming Document Profile<a class="self-link" aria-label="§" href="#streaming-profile"></a></h3>
+        <p>
+            JSON-LD documents can be signaled or requested in <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>.
+            The profile URI identifying the <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>
+            is <code>http://www.w3.org/ns/json-ld#streaming</code>.
+        </p>
+        <p>
+            The following example illustrates how this profile parameter can be used to request a streaming document over HTTP.
+        </p>
+        <div class="example" data-ignore="" title="HTTP Request with profile requesting a streaming document">
+          <pre data-content-type="http" data-ignore="" aria-busy="false"><code class="hljs http" aria-busy="false"><span class="hljs-keyword">GET</span> <span class="hljs-string">/ordinary-json-document.json</span> HTTP/1.1
+<span class="hljs-attribute">Host</span>: example.com
+<span class="hljs-attribute">Accept</span>: application/ld+json;profile=http://www.w3.org/ns/json-ld#streaming</code></pre>
+          <p>Requests the server to return the requested resource as JSON-LD
+            in <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>.</p>
+        </div>
+      </section>
+
+    </section>
+    
+    <section id="streaming-rdf-form">
+      <h2 id="x4-streaming-rdf-form"><bdi class="secno">4. </bdi>Streaming RDF Form<a class="self-link" aria-label="§" href="#streaming-rdf-form"></a></h2>
+      <p>
+          This section introduces a <dfn data-dfn-type="dfn" id="dfn-streaming-RDF-dataset-form">streaming RDF dataset form</dfn>,
+          which enables RDF datasets to be processed in a streaming manner
+          so that they can efficiently <em>serialized</em> into JSON-LD by a streaming JSON-LD processor.
+      </p>
+      <section id="importance-of-triple-ordering">
+        <h3 id="triple-ordering-importance"><bdi class="secno">4.1 </bdi>Importance of Triple Ordering<a class="self-link" aria-label="§" href="#triple-ordering-importance"></a></h3>
+        <p>
+            The order in which RDF triples occur in an RDF dataset convey no meaning.
+            For instance, the following two RDF datasets (serialized in <a href="https://www.w3.org/TR/turtle/">Turtle</a>) have the same meaning,
+            even though they have a different order of triples.
+        </p>
+        <div class="example" id="example-12-a-first-order-of-triples">
+        <div class="marker">
+    <a class="self-link" href="#example-12-a-first-order-of-triples">Example<bdi> 12</bdi></a><span class="example-title">: A first order of triples</span>
+  </div> <pre data-content-type="text/turtle" aria-busy="false"><code class="hljs xml">@prefix schema: <span class="hljs-tag">&lt;<span class="hljs-name">http:</span>//<span class="hljs-attr">schema.org</span>/&gt;</span> .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/#<span class="hljs-attr">me</span>&gt;</span> schema:name "Ruben Taelman" .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/#<span class="hljs-attr">me</span>&gt;</span> schema:url <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/&gt;</span> .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">greggkellogg.net</span>/<span class="hljs-attr">foaf</span>#<span class="hljs-attr">me</span>&gt;</span> schema:name "Gregg Kellogg" .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">greggkellogg.net</span>/<span class="hljs-attr">foaf</span>#<span class="hljs-attr">me</span>&gt;</span> schema:url <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">greggkellogg.net</span>/&gt;</span> .</code></pre>
+      </div>
+        <div class="example" id="example-13-a-second-order-of-triples">
+        <div class="marker">
+    <a class="self-link" href="#example-13-a-second-order-of-triples">Example<bdi> 13</bdi></a><span class="example-title">: A second order of triples</span>
+  </div> <pre data-content-type="text/turtle" aria-busy="false"><code class="hljs xml">@prefix schema: <span class="hljs-tag">&lt;<span class="hljs-name">http:</span>//<span class="hljs-attr">schema.org</span>/&gt;</span> .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/#<span class="hljs-attr">me</span>&gt;</span> schema:name "Ruben Taelman" .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">greggkellogg.net</span>/<span class="hljs-attr">foaf</span>#<span class="hljs-attr">me</span>&gt;</span> schema:name "Gregg Kellogg" .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/#<span class="hljs-attr">me</span>&gt;</span> schema:url <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/&gt;</span> .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">greggkellogg.net</span>/<span class="hljs-attr">foaf</span>#<span class="hljs-attr">me</span>&gt;</span> schema:url <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">greggkellogg.net</span>/&gt;</span> .</code></pre>
+      </div>
+        <p>
+            For streaming JSON-LD processors, the order of RDF triples may be important.
+            Processors that read triples one by one, and convert them to a JSON-LD document in a streaming manner,
+            can benefit from having triples in a certain order.
+        </p>
+        <p>
+            For instance, the order from first snippet above can lead to more compact JSON-LD documents than the order from the second snippet
+            when handled by a streaming JSON-LD processor.
+            This is because the first order groups triples with the same subject,
+            which can be exploited during streaming JSON-LD serialization by using the same <code>"@id"</code> key.
+            The second order mixes subjects, which means that streaming JSON-LD serialization will have to assign separate <code>"@id"</code> keys
+            for each triple, resulting in duplicate <code>"@id"</code> keys.
+        </p>
+        <p>
+            Streaming JSON-LD serializations of both examples can be seen below.
+        </p>
+        <div class="example" id="example-14-more-compact-json-ld-serialization-of-the-first-order">
+        <div class="marker">
+    <a class="self-link" href="#example-14-more-compact-json-ld-serialization-of-the-first-order">Example<bdi> 14</bdi></a><span class="example-title">: More compact JSON-LD serialization of the first order</span>
+  </div> <pre aria-busy="false"><code class="hljs json">[
+  {
+    <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/#me"</span>,
+    <span class="hljs-attr">"http://schema.org/name"</span>: <span class="hljs-string">"Ruben Taelman"</span>,
+    <span class="hljs-attr">"http://schema.org/url"</span>: { <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/"</span> }
+  },
+  {
+    <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://greggkellogg.net/foaf#me"</span>,
+    <span class="hljs-attr">"http://schema.org/name"</span>: <span class="hljs-string">"Gregg Kellogg"</span>,
+    <span class="hljs-attr">"http://schema.org/url"</span>: { <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://greggkellogg.net/"</span> }
+  }
+]</code></pre>
+      </div>
+        <div class="example" id="example-15-less-compact-json-ld-serialization-of-the-second-order">
+        <div class="marker">
+    <a class="self-link" href="#example-15-less-compact-json-ld-serialization-of-the-second-order">Example<bdi> 15</bdi></a><span class="example-title">: Less compact JSON-LD serialization of the second order</span>
+  </div> <pre aria-busy="false"><code class="hljs json">[
+  {
+    <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/#me"</span>,
+    <span class="hljs-attr">"http://schema.org/name"</span>: <span class="hljs-string">"Ruben Taelman"</span>
+  },
+  {
+    <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/#me"</span>,
+    <span class="hljs-attr">"http://schema.org/name"</span>: <span class="hljs-string">"Gregg Kellogg"</span>
+  },
+  {
+    <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://greggkellogg.net/foaf#me"</span>,
+    <span class="hljs-attr">"http://schema.org/url"</span>: { <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/"</span> }
+  },
+  {
+    <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://greggkellogg.net/foaf#me"</span>,
+    <span class="hljs-attr">"http://schema.org/url"</span>: { <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://greggkellogg.net/"</span> }
+  }
+]</code></pre>
+      </div>
+      </section>
+      <section id="recommended-triple-ordering">
+        <h3 id="triple-ordering-recommended"><bdi class="secno">4.2 </bdi>Recommended Triple Ordering<a class="self-link" aria-label="§" href="#triple-ordering-recommended"></a></h3>
+        <p>
+            This section introduces <em>recommendations</em> for defining the order in an RDF dataset,
+            such that it can be processed more efficiently by <em>streaming JSON-LD processors</em>.
+        </p>
+        <ol>
+            <li>
+                <strong>Group triples with the same named graph.</strong>
+                <br>
+                Allows grouping of <code>@graph</code> nodes.
+            </li>
+            <li>
+                <strong>Group triples with the same subject.</strong>
+                <br>
+                Allows grouping of <code>@id</code> keys.
+            </li>
+            <li>
+                <strong>Group triples with the same predicate.</strong>
+                <br>
+                Allows grouping of property keys.
+            </li>
+            <li>
+                <strong>Group triples with a given term as named graph together with triples having this term as subject.</strong>
+                <br>
+                Allows the combination of <code>@graph</code> nodes with <code>@id</code>.
+            </li>
+            <li>
+                <strong>Group triples with a given term as object with triples having this term as subject.</strong>
+                <br>
+                Allows nesting of nodes within other nodes.
+            </li>
+        </ol>
+        <div class="note" role="note" id="triple-ordering-recommended-how"><div role="heading" class="note-title marker" id="h-note-3" aria-level="4"><span>Note</span></div><div class="" role="note">
+            <p class="">
+            One straightforward way to follow the first three recommendations is by sorting all triples (or quads)
+            in the order <em>graph</em>, <em>subject</em>, <em>predicate</em>, <em>object</em>.
+            <br>
+            Existing triple stored may already perform this kind of grouping automatically.
+            </p>
+            <p>
+            Note also that, depending on the triples,
+            it might not be possible to strictly comply with all these recommendations.
+            </p>
+        </div></div>
+        <p>
+            An RDF dataset that adheres to at least one of these recommendations is considered to have
+            a <a href="#dfn-streaming-RDF-dataset-form" class="internalDFN" data-link-type="dfn">streaming RDF dataset form</a>.
+        </p>
+      </section>
+      <section id="examples-0">
+          <h3 id="streaming-rdf-examples"><bdi class="secno">4.3 </bdi>Examples<a class="self-link" aria-label="§" href="#streaming-rdf-examples"></a></h3>
+          <p>
+              Hereafter, a couple of RDF datasets are listed, together with corresponding serialized JSON-LD in a streaming manner.
+              Each example illustrates the importance of the recommended triple ordering within
+              the <a href="#dfn-streaming-RDF-dataset-form" class="internalDFN" data-link-type="dfn">streaming RDF dataset form</a>.
+          </p>
+          <p>
+              The examples using named graphs are serialized in the <a href="https://www.w3.org/TR/trig/">TriG</a> format.
+          </p>
+          <section id="graph-grouping">
+              <h4 id="streaming-rdf-example-graph"><bdi class="secno">4.3.1 </bdi>@graph grouping<a class="self-link" aria-label="§" href="#streaming-rdf-example-graph"></a></h4>
+              <div class="example" id="example-16-triples-with-the-same-named-graph-are-grouped">
+        <div class="marker">
+    <a class="self-link" href="#example-16-triples-with-the-same-named-graph-are-grouped">Example<bdi> 16</bdi></a><span class="example-title">: Triples with the same named graph are grouped</span>
+  </div> <pre data-content-type="text/turtle" aria-busy="false"><code class="hljs xml">@prefix schema: <span class="hljs-tag">&lt;<span class="hljs-name">http:</span>//<span class="hljs-attr">schema.org</span>/&gt;</span> .
+<span class="hljs-tag">&lt;<span class="hljs-name">http:</span>//<span class="hljs-attr">example.org</span>/<span class="hljs-attr">graph1</span>&gt;</span> {
+  <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/#<span class="hljs-attr">me</span>&gt;</span> schema:name "Ruben Taelman" .
+}
+<span class="hljs-tag">&lt;<span class="hljs-name">http:</span>//<span class="hljs-attr">example.org</span>/<span class="hljs-attr">graph1</span>&gt;</span> {
+  <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/#<span class="hljs-attr">me</span>&gt;</span> schema:url <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/&gt;</span> .
+}
+<span class="hljs-tag">&lt;<span class="hljs-name">http:</span>//<span class="hljs-attr">example.org</span>/<span class="hljs-attr">graph2</span>&gt;</span> {
+  <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">greggkellogg.net</span>/<span class="hljs-attr">foaf</span>#<span class="hljs-attr">me</span>&gt;</span> schema:name "Gregg Kellogg" .
+}
+<span class="hljs-tag">&lt;<span class="hljs-name">http:</span>//<span class="hljs-attr">example.org</span>/<span class="hljs-attr">graph2</span>&gt;</span> {
+  <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">greggkellogg.net</span>/<span class="hljs-attr">foaf</span>#<span class="hljs-attr">me</span>&gt;</span> schema:url <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">greggkellogg.net</span>/&gt;</span> .
+}</code></pre>
+      </div>
+              <div class="example" id="example-17-triples-with-the-same-named-graph-can-be-grouped-within-the-same-graph-block">
+        <div class="marker">
+    <a class="self-link" href="#example-17-triples-with-the-same-named-graph-can-be-grouped-within-the-same-graph-block">Example<bdi> 17</bdi></a><span class="example-title">: Triples with the same named graph can be grouped within the same @graph block</span>
+  </div> <pre aria-busy="false"><code class="hljs json">[
+  {
+    <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"http://example.org/graph1"</span>,
+    <span class="hljs-attr">"@graph"</span>: [
+      {
+        <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/#me"</span>,
+        <span class="hljs-attr">"http://schema.org/name"</span>: <span class="hljs-string">"Ruben Taelman"</span>,
+        <span class="hljs-attr">"http://schema.org/url"</span>: { <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/"</span> }
+      }
+    ]
+  },
+  {
+    <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"http://example.org/graph2"</span>,
+    <span class="hljs-attr">"@graph"</span>: [
+      {
+        <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://greggkellogg.net/foaf#me"</span>,
+        <span class="hljs-attr">"http://schema.org/name"</span>: <span class="hljs-string">"Gregg Kellogg"</span>,
+        <span class="hljs-attr">"http://schema.org/url"</span>: { <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://greggkellogg.net/"</span> }
+      }
+    ]
+  }
+]</code></pre>
+      </div>
+          </section>
+          <section id="id-grouping">
+              <h4 id="streaming-rdf-example-id"><bdi class="secno">4.3.2 </bdi>@id grouping<a class="self-link" aria-label="§" href="#streaming-rdf-example-id"></a></h4>
+              <div class="example" id="example-18-triples-with-the-same-subject-are-grouped">
+        <div class="marker">
+    <a class="self-link" href="#example-18-triples-with-the-same-subject-are-grouped">Example<bdi> 18</bdi></a><span class="example-title">: Triples with the same subject are grouped</span>
+  </div> <pre data-content-type="text/turtle" aria-busy="false"><code class="hljs xml">@prefix schema: <span class="hljs-tag">&lt;<span class="hljs-name">http:</span>//<span class="hljs-attr">schema.org</span>/&gt;</span> .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/#<span class="hljs-attr">me</span>&gt;</span> schema:name "Ruben Taelman" .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/#<span class="hljs-attr">me</span>&gt;</span> schema:url <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/&gt;</span> .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">greggkellogg.net</span>/<span class="hljs-attr">foaf</span>#<span class="hljs-attr">me</span>&gt;</span> schema:name "Gregg Kellogg" .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">greggkellogg.net</span>/<span class="hljs-attr">foaf</span>#<span class="hljs-attr">me</span>&gt;</span> schema:url <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">greggkellogg.net</span>/&gt;</span> .</code></pre>
+      </div>
+              <div class="example" id="example-19-triples-with-the-same-subject-can-be-grouped-within-the-same-id-block">
+        <div class="marker">
+    <a class="self-link" href="#example-19-triples-with-the-same-subject-can-be-grouped-within-the-same-id-block">Example<bdi> 19</bdi></a><span class="example-title">: Triples with the same subject can be grouped within the same @id block</span>
+  </div> <pre aria-busy="false"><code class="hljs json">[
+  {
+    <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/#me"</span>,
+    <span class="hljs-attr">"http://schema.org/name"</span>: <span class="hljs-string">"Ruben Taelman"</span>,
+    <span class="hljs-attr">"http://schema.org/url"</span>: { <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/"</span> }
+  },
+  {
+    <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://greggkellogg.net/foaf#me"</span>,
+    <span class="hljs-attr">"http://schema.org/name"</span>: <span class="hljs-string">"Gregg Kellogg"</span>,
+    <span class="hljs-attr">"http://schema.org/url"</span>: { <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://greggkellogg.net/"</span> }
+  }
+]</code></pre>
+      </div>
+          </section>
+          <section id="property-grouping">
+              <h4 id="streaming-rdf-example-property"><bdi class="secno">4.3.3 </bdi>Property grouping<a class="self-link" aria-label="§" href="#streaming-rdf-example-property"></a></h4>
+              <div class="example" id="example-20-triples-with-the-same-predicate-are-grouped">
+        <div class="marker">
+    <a class="self-link" href="#example-20-triples-with-the-same-predicate-are-grouped">Example<bdi> 20</bdi></a><span class="example-title">: Triples with the same predicate are grouped</span>
+  </div> <pre data-content-type="text/turtle" aria-busy="false"><code class="hljs xml">@prefix schema: <span class="hljs-tag">&lt;<span class="hljs-name">http:</span>//<span class="hljs-attr">schema.org</span>/&gt;</span> .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/#<span class="hljs-attr">me</span>&gt;</span> schema:name "Ruben" .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/#<span class="hljs-attr">me</span>&gt;</span> schema:name "Ruben Taelman" .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/#<span class="hljs-attr">me</span>&gt;</span> schema:url <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/&gt;</span> .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/#<span class="hljs-attr">me</span>&gt;</span> schema:url <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">github.com</span>/<span class="hljs-attr">rubensworks</span>/&gt;</span> .</code></pre>
+      </div>
+              <div class="example" id="example-21-triples-with-the-same-predicate-can-be-grouped-within-the-same-property-array">
+        <div class="marker">
+    <a class="self-link" href="#example-21-triples-with-the-same-predicate-can-be-grouped-within-the-same-property-array">Example<bdi> 21</bdi></a><span class="example-title">: Triples with the same predicate can be grouped within the same property array</span>
+  </div> <pre aria-busy="false"><code class="hljs json">[
+  {
+    <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/#me"</span>,
+    <span class="hljs-attr">"http://schema.org/name"</span>: [
+      <span class="hljs-string">"Ruben"</span>,
+      <span class="hljs-string">"Ruben Taelman"</span>
+    ],
+    <span class="hljs-attr">"http://schema.org/url"</span>: [
+      { <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/"</span> },
+      { <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://github.com/rubensworks/"</span> }
+    ]
+  }
+]</code></pre>
+      </div>
+          </section>
+          <section id="graph-and-id-grouping">
+              <h4 id="streaming-rdf-example-graph-id"><bdi class="secno">4.3.4 </bdi>@graph and @id grouping<a class="self-link" aria-label="§" href="#streaming-rdf-example-graph-id"></a></h4>
+              <div class="example" id="example-22-statements-about-a-named-graph-are-group-with-triples-within-this-named-graph">
+        <div class="marker">
+    <a class="self-link" href="#example-22-statements-about-a-named-graph-are-group-with-triples-within-this-named-graph">Example<bdi> 22</bdi></a><span class="example-title">: Statements about a named graph are group with triples within this named graph</span>
+  </div> <pre data-content-type="text/turtle" aria-busy="false"><code class="hljs xml">@prefix schema: <span class="hljs-tag">&lt;<span class="hljs-name">http:</span>//<span class="hljs-attr">schema.org</span>/&gt;</span> .
+<span class="hljs-tag">&lt;<span class="hljs-name">http:</span>//<span class="hljs-attr">example.org</span>/<span class="hljs-attr">graph1</span>&gt;</span> {
+  <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/#<span class="hljs-attr">me</span>&gt;</span> schema:name "Ruben Taelman" .
+}
+<span class="hljs-tag">&lt;<span class="hljs-name">http:</span>//<span class="hljs-attr">example.org</span>/<span class="hljs-attr">graph1</span>&gt;</span> {
+  <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/#<span class="hljs-attr">me</span>&gt;</span> schema:url <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/&gt;</span> .
+}
+<span class="hljs-tag">&lt;<span class="hljs-name">http:</span>//<span class="hljs-attr">example.org</span>/<span class="hljs-attr">graph1</span>&gt;</span> schema:name "Graph 1" .
+<span class="hljs-tag">&lt;<span class="hljs-name">http:</span>//<span class="hljs-attr">example.org</span>/<span class="hljs-attr">graph2</span>&gt;</span> {
+  <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">greggkellogg.net</span>/<span class="hljs-attr">foaf</span>#<span class="hljs-attr">me</span>&gt;</span> schema:name "Gregg Kellogg" .
+}
+<span class="hljs-tag">&lt;<span class="hljs-name">http:</span>//<span class="hljs-attr">example.org</span>/<span class="hljs-attr">graph2</span>&gt;</span> {
+  <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">greggkellogg.net</span>/<span class="hljs-attr">foaf</span>#<span class="hljs-attr">me</span>&gt;</span> schema:url <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">greggkellogg.net</span>/&gt;</span> .
+}
+<span class="hljs-tag">&lt;<span class="hljs-name">http:</span>//<span class="hljs-attr">example.org</span>/<span class="hljs-attr">graph2</span>&gt;</span> schema:name "Graph 2" .</code></pre>
+      </div>
+              <div class="example" id="example-23-statements-about-a-named-graph-can-be-attached-within-the-same-graph-block">
+        <div class="marker">
+    <a class="self-link" href="#example-23-statements-about-a-named-graph-can-be-attached-within-the-same-graph-block">Example<bdi> 23</bdi></a><span class="example-title">: Statements about a named graph can be attached within the same @graph block</span>
+  </div> <pre aria-busy="false"><code class="hljs json">[
+  {
+    <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"http://example.org/graph1"</span>,
+    <span class="hljs-attr">"@graph"</span>: [
+      {
+        <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/#me"</span>,
+        <span class="hljs-attr">"http://schema.org/name"</span>: <span class="hljs-string">"Ruben Taelman"</span>,
+        <span class="hljs-attr">"http://schema.org/url"</span>: { <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/"</span> }
+      }
+    ],
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Graph 1"</span>
+  },
+  {
+    <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"http://example.org/graph2"</span>,
+    <span class="hljs-attr">"@graph"</span>: [
+      {
+        <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://greggkellogg.net/foaf#me"</span>,
+        <span class="hljs-attr">"http://schema.org/name"</span>: <span class="hljs-string">"Gregg Kellogg"</span>,
+        <span class="hljs-attr">"http://schema.org/url"</span>: { <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://greggkellogg.net/"</span> }
+      }
+    ],
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Graph 2"</span>
+  }
+]</code></pre>
+      </div>
+          </section>
+          <section id="subject-and-object-grouping">
+              <h4 id="streaming-rdf-example-object"><bdi class="secno">4.3.5 </bdi>Subject and object grouping<a class="self-link" aria-label="§" href="#streaming-rdf-example-object"></a></h4>
+              <div class="example" id="example-24-triples-about-a-subject-come-right-after-triples-having-this-as-object">
+        <div class="marker">
+    <a class="self-link" href="#example-24-triples-about-a-subject-come-right-after-triples-having-this-as-object">Example<bdi> 24</bdi></a><span class="example-title">: Triples about a subject come right after triples having this as object</span>
+  </div> <pre data-content-type="text/turtle" aria-busy="false"><code class="hljs xml">@prefix schema: <span class="hljs-tag">&lt;<span class="hljs-name">http:</span>//<span class="hljs-attr">schema.org</span>/&gt;</span> .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/#<span class="hljs-attr">me</span>&gt;</span> schema:name "Ruben Taelman" .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">www.rubensworks.net</span>/#<span class="hljs-attr">me</span>&gt;</span> schema:knows <span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">greggkellogg.net</span>/<span class="hljs-attr">foaf</span>#<span class="hljs-attr">me</span>&gt;</span> .
+<span class="hljs-tag">&lt;<span class="hljs-name">https:</span>//<span class="hljs-attr">greggkellogg.net</span>/<span class="hljs-attr">foaf</span>#<span class="hljs-attr">me</span>&gt;</span> schema:knows "Gregg Kellogg" .</code></pre>
+      </div>
+              <div class="example" id="example-25-triples-can-be-chained-in-nested-nodes">
+        <div class="marker">
+    <a class="self-link" href="#example-25-triples-can-be-chained-in-nested-nodes">Example<bdi> 25</bdi></a><span class="example-title">: Triples can be chained in nested nodes</span>
+  </div> <pre aria-busy="false"><code class="hljs json">[
+  {
+    <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://www.rubensworks.net/#me"</span>,
+    <span class="hljs-attr">"http://schema.org/name"</span>: <span class="hljs-string">"Ruben Taelman"</span>,
+    <span class="hljs-attr">"http://schema.org/knows"</span>: {
+      <span class="hljs-attr">"@id"</span>: <span class="hljs-string">"https://greggkellogg.net/foaf#me"</span>,
+      <span class="hljs-attr">"http://schema.org/name"</span>: <span class="hljs-string">"Gregg Kellogg"</span>
+    }
+  }
+]</code></pre>
+      </div>
+          </section>
+      </section>
+    </section>
+    
+    <section id="streaming-processing">
+      <h2 id="x5-streaming-processing"><bdi class="secno">5. </bdi>Streaming Processing<a class="self-link" aria-label="§" href="#streaming-processing"></a></h2>
+      <p>
+          Whenever a JSON-LD document is present in <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>,
+          or if an RDF dataset is present in a <a href="#dfn-streaming-RDF-dataset-form" class="internalDFN" data-link-type="dfn">streaming RDF dataset form</a>,
+          a processor <em class="rfc2119" title="MAY">MAY</em> process these in a streaming manner.
+      </p>
+      <p>
+          This section describes high-level guidelines for processing JSON-LD in a streaming manner.
+          Concretely, guidelines are given for <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#deserialize-json-ld-to-rdf-algorithm">deserializing JSON-LD to RDF</a>, and <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#serialize-rdf-as-json-ld-algorithm">serializing RDF to JSON-LD</a>.
+          Further details on processing can be found in <a href="https://www.w3.org/TR/json-ld-api/">the JSON-LD processing algorithms</a>.
+      </p>
+      <section id="deserialization">
+        <h3 id="streaming-deserialization"><bdi class="secno">5.1 </bdi>Deserialization<a class="self-link" aria-label="§" href="#streaming-deserialization"></a></h3>
+        <p>
+            A streaming deserializer <em class="rfc2119" title="MAY">MAY</em> be implemented by considering a JSON-LD document as a stream of incoming characters.
+            By reading character-by-character, a deserializer can detect the contained JSON nodes and its key-value pairs.
+        </p>
+        <p>
+            A streaming deserializer <em class="rfc2119" title="MUST">MUST</em> assume that the <a href="#key-ordering-required">required key ordering</a> of a <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document</a> is present. If a different order is detected, an error <em class="rfc2119" title="MUST">MUST</em> be thrown with error code <code>"invalid streaming key order"</code>.
+        </p>
+        <p>
+            The first expected entry in a node is <code>@context</code>.
+            If such an entry is present, all following entries in this node can make use of it, possibly inheriting parts of the context from parent nodes.
+            If such an entry is not present, only contexts from parent nodes are considered for this node.
+        </p>
+        <p>
+            If an <code>@type</code> entry (or any alias of <code>@type</code>) is detected,
+            it is checked whether or not it defines a type-scoped context according to the current node's context.
+            If this defines a type-scoped context, the context for the current node is overridden.
+            <br>
+            Additionally, the <code>@type</code> must emit <code>rdf:type</code> triples based on the current node's subject and values.
+            This subject will possibly only be determined later on, which will require buffering of these incomplete triples.
+        </p>
+        <div class="note" role="note" id="issue-container-generatedID-0"><div role="heading" class="note-title marker" id="h-note-4" aria-level="4"><span>Note</span></div><p class="">
+            In case multiple type-scoped contexts apply,
+            they must <em>not</em> be processed by order of appearance,
+            but using the lexicographical order.
+        </p></div>
+        <p>
+            If an <code>@id</code> entry is detected, the RDF subject for the current node is defined for later usage.
+            Any other entries that are detected before <code>@id</code> must be buffered until <code>@id</code> is found, or the node closes (which sets the subject to a fresh blank node).
+        </p>
+        <p>
+            For every other property, the default JSON-LD algorithms are followed based on the current node's subject.
+        </p>
+        <p>
+            As an example of a system architecture of a streaming JSON-LD deserializer can be found in <a href="https://www.rubensworks.net/blog/2019/03/13/streaming-rdf-parsers/">this blog post</a>.
+        </p>
+      </section>
+      <section id="serialization">
+        <h3 id="streaming-serialization"><bdi class="secno">5.2 </bdi>Serialization<a class="self-link" aria-label="§" href="#streaming-serialization"></a></h3>
+        <p>
+            A streaming JSON-LD serializer reads triples one by one,
+            and outputs a JSON-LD document character-by-character,
+            which can be emitted in a streaming manner.
+            <br>
+            This <em class="rfc2119" title="MAY">MAY</em> be a JSON-LD document in the <a href="#dfn-streaming-document-form" class="internalDFN" data-link-type="dfn">streaming document form</a>.
+        </p>
+        <p>
+            A streaming serializer can benefit from having <a href="#triple-ordering-recommended">triples ordered</a> following a <a href="#dfn-streaming-RDF-dataset-form" class="internalDFN" data-link-type="dfn">streaming RDF dataset form</a>,
+            but it <em class="rfc2119" title="SHOULD NOT">SHOULD NOT</em> assume that RDF datasets follow this form in full.
+        </p>
+        <p>
+            As a basis, a streaming serializer can produce an array of
+            <a href="https://www.w3.org/TR/json-ld11/#dfn-node-object">node objects</a> or
+            <a href="https://www.w3.org/TR/json-ld11/#dfn-graph-object">graph objects</a>,
+            each one representing a single RDF triple/quad.
+        </p>
+        <p>
+            On top of this base case, several optimizations can be applied to achieve a more compact representation in JSON-LD.
+            These optimizations are dependent on the surrounding triples, which is determine by the overall triple order.
+        </p>
+        <p>
+            When a <a class="externalDFN" href="https://www.w3.org/TR/json-ld-syntaxt/#the-context">JSON-LD context</a>
+            is passed to a streaming serializer, <a class="externalDFN" href="https://www.w3.org/TR/json-ld-api/#compaction">compaction techniques</a>
+            <em class="rfc2119" title="MAY">MAY</em> be applied.
+            For instance, instead of writing properties as full IRIs, they can be <em>compacted</em> based on the presence of terms and prefixes in the context.
+        </p>
+        <p>
+            Due to the chained nature of RDF lists, serializing them to JSON-LD with the <code>@list</code> keyword in a streaming way may not always be possible,
+            since you may not know beforehand if a triple is part of a valid RDF list.
+            Optionally, a streaming RDF serializer <em class="rfc2119" title="MAY">MAY</em> provide an alternative method to emit <code>@list</code> keywords.
+        </p>
+        <p>
+            Since streaming RDF processors process triples one by one,
+            so that they don't need to keep all triples in memory,
+            they loose the ability to deduplicate triples.
+            As such, a streaming JSON-LD serializer <em class="rfc2119" title="MAY">MAY</em> produce JSON-LD that contains duplicate triples.
+        </p>
+      </section>
+    </section>
+  
+
+<section id="references" class="appendix"><h2 id="a-references"><bdi class="secno">A. </bdi>References<a class="self-link" aria-label="§" href="#references"></a></h2><section id="normative-references">
+    <h3 id="a-1-normative-references"><bdi class="secno">A.1 </bdi>Normative references<a class="self-link" aria-label="§" href="#normative-references"></a></h3>
+    <dl class="bibliography">
+      <dt id="bib-json-ld">[JSON-LD]</dt><dd><a href="https://www.w3.org/TR/json-ld/"><cite>JSON-LD 1.0</cite></a>. Manu Sporny; Gregg Kellogg; Markus Lanthaler.  W3C. 16 January 2014. W3C Recommendation. URL: <a href="https://www.w3.org/TR/json-ld/">https://www.w3.org/TR/json-ld/</a></dd><dt id="bib-json-ld11">[JSON-LD11]</dt><dd><a href="https://www.w3.org/TR/json-ld11/"><cite>JSON-LD 1.1</cite></a>. Gregg Kellogg; Pierre-Antoine Champin; Dave Longley.  W3C. 18 October 2019. W3C Working Draft. URL: <a href="https://www.w3.org/TR/json-ld11/">https://www.w3.org/TR/json-ld11/</a></dd><dt id="bib-rdf11-concepts">[RDF11-CONCEPTS]</dt><dd><a href="https://www.w3.org/TR/rdf11-concepts/"><cite>RDF 1.1 Concepts and Abstract Syntax</cite></a>. Richard Cyganiak; David Wood; Markus Lanthaler.  W3C. 25 February 2014. W3C Recommendation. URL: <a href="https://www.w3.org/TR/rdf11-concepts/">https://www.w3.org/TR/rdf11-concepts/</a></dd><dt id="bib-rfc2119">[RFC2119]</dt><dd><a href="https://tools.ietf.org/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. S. Bradner.  IETF. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a></dd><dt id="bib-rfc8174">[RFC8174]</dt><dd><a href="https://tools.ietf.org/html/rfc8174"><cite>Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</cite></a>. B. Leiba.  IETF. May 2017. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc8174">https://tools.ietf.org/html/rfc8174</a></dd><dt id="bib-rfc8259">[RFC8259]</dt><dd><a href="https://tools.ietf.org/html/rfc8259"><cite>The JavaScript Object Notation (JSON) Data Interchange Format</cite></a>. T. Bray, Ed..  IETF. December 2017. Internet Standard. URL: <a href="https://tools.ietf.org/html/rfc8259">https://tools.ietf.org/html/rfc8259</a></dd>
+    </dl>
+  </section></section><p role="navigation" id="back-to-top">
+    <a href="#title"><abbr title="Back to Top">↑</abbr></a>
+  </p><script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script></body></html>
