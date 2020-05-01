@@ -34,8 +34,8 @@
   <body>
     <section id="abstract">
       <p>
-        JSON-LD [[JSON-LD]] offers a JSON-based serialization for Linked Data.
-        One of the primary uses of JSON-LD is its ability to exchange RDF [[RDF11-CONCEPTS]] data across the Web.
+        JSON-LD [[JSON-LD11]] offers a JSON-based serialization for Linked Data.
+        One of the primary uses of JSON-LD is its ability to exchange RDF [[?RDF11-CONCEPTS]] data across the Web.
         This can be done by first <a data-cite="JSON-LD11-API#serialize-rdf-as-json-ld-algorithm">serializing RDF to JSON-LD</a>,
         after which data consumers can <a data-cite="JSON-LD11-API#deserialize-json-ld-to-rdf-algorithm">deserialize JSON-LD to RDF</a>.
     </p>
@@ -87,7 +87,7 @@
           JSON-LD syntax defined in [[[JSON-LD11]]] [[JSON-LD11]],
           which is the base syntax used for streaming processing.
           To understand how JSON-LD maps to RDF, it is helpful to be
-          familiar with the basic RDF concepts [[RDF11-CONCEPTS]].
+          familiar with the basic RDF concepts [[?RDF11-CONCEPTS]].
       </p>
     </section>
     
@@ -102,7 +102,7 @@
         for JSON-LD documents adhering to the <a>Streaming Document Form</a>
         as defined in this specification,
         and is a conforming <a data-cite="JSON-LD11-API#dfn-rdf-serializers-deserializers">RDF Deserializer</a>
-        according to the JSON-LD [[JSON-LD]] specification minus the exceptions listed in this specification.
+        according to the JSON-LD [[JSON-LD11]] specification minus the exceptions listed in this specification.
       </p>
       
       <p>
@@ -111,7 +111,7 @@
         for RDF datasets adhering to the <a>streaming RDF dataset form</a>
         as defined in this specification,
         and is a conforming <a data-cite="JSON-LD11-API#dfn-rdf-serializers-deserializers">RDF Serializer</a>
-        according to the JSON-LD [[JSON-LD]] specification minus the exceptions listed in this specification.
+        according to the JSON-LD [[JSON-LD11]] specification minus the exceptions listed in this specification.
       </p>
 
       <p>
@@ -256,7 +256,7 @@
         </div>
       </section>
       
-      <section>
+      <section class="informative">
           <h3 id="streaming-document-examples">Examples</h3>
           <p>
               Hereafter, a couple of JSON-LD document examples are listed that either adhere, adhere with non-recommended order, or do not adhere
@@ -406,7 +406,7 @@
         <h3 id="triple-ordering-importance">Importance of Triple Ordering</h3>
         <p>
             The order in which RDF triples occur in an RDF dataset convey no meaning.
-            For instance, the following two RDF datasets (serialized in [[[Turtle]]] [[Turtle]]) have the same meaning,
+            For instance, the following two RDF datasets (serialized in [[[?Turtle]]] [[?Turtle]]) have the same meaning,
             even though they have a different order of triples.
         </p>
         <pre class="example" data-transform="updateExample"
@@ -532,7 +532,7 @@
             a <a>streaming RDF dataset form</a>.
         </p>
       </section>
-      <section>
+      <section class="informative">
           <h3 id="streaming-rdf-examples">Examples</h3>
           <p>
               Hereafter, a couple of RDF datasets are listed, together with corresponding serialized JSON-LD in a streaming manner.
