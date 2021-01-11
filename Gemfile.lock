@@ -140,7 +140,7 @@ GEM
       rdf (~> 3.1)
     rdf-xsd (3.1.0)
       rdf (~> 3.1)
-    redcarpet (3.5.0)
+    redcarpet (3.5.1)
     shex (0.6.0)
       ebnf (~> 1.2)
       json-ld (~> 3.1)
