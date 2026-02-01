@@ -1701,7 +1701,7 @@
       "expectErrorCode": "invalid typed value",
       "option": {"specVersion": "json-ld-1.1"}
     }, {
-      "@id": "#t0124",
+      "@id": "#te124",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest", "jld:StreamTest"],
       "name": "compact IRI as @vocab",
       "purpose": "Verifies that @vocab defined as a compact IRI expands properly",
@@ -1709,7 +1709,7 @@
       "expect": "stream-toRdf/e124-out.nq",
       "option": {"specVersion": "json-ld-1.1"}
     }, {
-      "@id": "#t0125",
+      "@id": "#te125",
       "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest", "jld:StreamTest"],
       "name": "term as @vocab",
       "purpose": "Verifies that @vocab defined as a term expands properly",
